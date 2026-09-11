@@ -1,0 +1,36 @@
+# Secrets and local environment
+.env
+.env.*
+*.pem
+*.key
+
+# Python / JS caches
+__pycache__/
+*.pyc
+.cache/
+node_modules/
+.next/
+dist/
+build/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+
+# PRIVATE / CONFIDENTIAL BUSINESS DATA
+# Never commit raw SAP/customer/cost exports to this public repository.
+40-Data/raw/
+40-Data/private/
+40-Data/imports/
+*.xlsx
+*.xls
+*.csv
+*.parquet
+*.db
+*.sqlite
+
+# Allow intentionally sanitized examples/templates
+!40-Data/examples/*.csv
+!40-Data/templates/*.csv
