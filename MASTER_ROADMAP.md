@@ -16,15 +16,15 @@ Deliverable: `10-Strategy/Business Model.md`
 Primary objective: identify the first 20–50 products worth selling.
 
 Run in order:
-- [ ] Query 00 — identify exact Twin Disc manufacturer record/FirmCode.
-- [ ] Query 01 — top Twin Disc items, 5 years.
-- [ ] Query 02 — top Twin Disc items, 10 years.
-- [ ] Query 03 — top Twin Disc customers, 5 years.
-- [ ] Query 04 — top Twin Disc items, 12 months.
-- [ ] Query 05 — complete Twin Disc sales ledger, 10 years.
-- [ ] Query 06 — Twin Disc item master.
-- [ ] Query 07 — SAP price-list directory.
-- [ ] Query 08 — Twin Disc prices from selected list.
+- [x] Query 00 — identify exact Twin Disc manufacturer record/FirmCode (44 Twin Disc, 45 Twin Disc - Anneson, 46 Twin Disc - Rockford).
+- [x] Query 01 — top Twin Disc items, 5 years.
+- [x] Query 02 — top Twin Disc items, 10 years.
+- [x] Query 03 — top Twin Disc customers, 5 years.
+- [x] Query 04 — top Twin Disc items, 12 months.
+- [x] Query 05 — complete Twin Disc sales ledger, 10 years.
+- [x] Query 06 — Twin Disc item master.
+- [x] Query 07 — SAP price-list directory (List 1: A) Price List CAD selected for V1).
+- [x] Query 08 — Twin Disc prices from selected list.
 
 Why the windows:
 - 12 months = current momentum.
@@ -105,11 +105,11 @@ Automate local SAP-export ingestion, cleaning, aggregation, scoring, application
 Dashboard groups: products, prospects, and business economics.
 
 ## V1 Definition of Done
-- [ ] Manufacturer record confirmed.
-- [ ] 12-month, 5-year, and 10-year sales views produced.
-- [ ] Complete sales ledger and item master available locally.
-- [ ] Correct SAP price list identified.
-- [ ] Top customer analysis complete.
+- [x] Manufacturer record confirmed.
+- [x] 12-month, 5-year, and 10-year sales views produced.
+- [x] Complete sales ledger and item master available locally.
+- [x] Correct SAP price list identified for V1 analysis: List 1 (A) Price List CAD.
+- [x] Top customer analysis complete.
 - [ ] First 20–50 product opportunities selected.
 - [ ] Product families and applications mapped.
 - [ ] Margin and opportunity scoring working.
@@ -118,4 +118,12 @@ Dashboard groups: products, prospects, and business economics.
 - [ ] First real RFQ, sale, MarIndustrial purchase, and actual margin recorded.
 
 ## Current Next Action
-Run `40-Data/sap-queries/00_find_twin_disc_manufacturer.sql` in SAP. Record the exact `FirmCode` and `FirmName`, then update the remaining queries if required before exporting data.
+Review the generated V1 product-opportunity analysis and validate the first 20–50 candidate SKUs. Before using revenue as a ranking input, add document currency (and ideally a system-currency line total) to the raw SAP sales ledger because the current revenue exports can mix CAD and USD.
+
+### Phase 1 analysis notes
+- Manufacturer codes confirmed: 44 Twin Disc, 45 Twin Disc - Anneson, 46 Twin Disc - Rockford.
+- Current item/pricing exports contain item records for 44 and 46; no item-master rows appeared for 45.
+- Price List 1 (`A) Price List CAD`) is the V1 list-price reference.
+- The V1 analysis rebuilds 12M/5Y/10Y item metrics from the raw invoice-line ledger by ItemCode so description changes do not split one SKU into multiple aggregate rows.
+- MarIndustrial internal transactions are excluded from market-demand scoring.
+- Revenue is reference-only until currency-safe fields are added.
