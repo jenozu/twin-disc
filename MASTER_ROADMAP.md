@@ -52,10 +52,14 @@ Classify each candidate into PTO, PTO component, clutch, clutch component, trans
 
 Deliverable: normalized product master.
 
+Progress: Batch 01 complete for the first 10 priority SKUs in `40-Data/derived/phase2_product_master_batch01.csv`.
+
 ## Phase 3 — Equipment & Application Intelligence
 For each priority SKU map: Twin Disc model, product family, equipment type, engine compatibility, power/torque range where available, applications, industries, OEM equipment, replacement components, related Twin Disc products, and documentation sources.
 
 Deliverable: application database.
+
+Progress: Batch 01 application/OEM research complete in `90-Sources/product-research/phase3_application_intelligence_batch01.md`. Continue in 10-SKU batches using the evidence rules in `10-Strategy/Phase 2-3 Workflow.md`.
 
 ## Phase 4 — Product Relationship Database
 Build assembly/component/application relationships such as Engine → PTO → driven equipment and Assembly → clutch/bearing/seal/ring gear.
