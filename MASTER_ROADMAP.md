@@ -62,6 +62,8 @@ Deliverable: application database.
 Progress: Batch 01 application/OEM research complete in `90-Sources/product-research/phase3_application_intelligence_batch01.md`. Continue in 10-SKU batches using the evidence rules in `10-Strategy/Phase 2-3 Workflow.md`.
 
 ## Phase 4 — Product Relationship Database
+
+Data foundation now available: SAP BOM/product-tree export (Query 11), SKU × customer relationships from the currency-safe sales ledger, WH01 stock, purchase-cost history, and open-PO data. Keep raw/customer/cost data local and out of the public repository.
 Build assembly/component/application relationships such as Engine → PTO → driven equipment and Assembly → clutch/bearing/seal/ring gear.
 
 Deliverable: product relationship graph/table.
@@ -114,7 +116,7 @@ Dashboard groups: products, prospects, and business economics.
 - [x] Complete sales ledger and item master available locally.
 - [x] Correct SAP price list identified for V1 analysis: List 1 (A) Price List CAD.
 - [x] Top customer analysis complete.
-- [ ] First 20–50 product opportunities selected.
+- [ ] First 20–50 product opportunities selected. V2 enrichment is complete; shortlist narrowing is now active.
 - [ ] Product families and applications mapped.
 - [ ] Margin and opportunity scoring working.
 - [ ] Basic product database and website live.
