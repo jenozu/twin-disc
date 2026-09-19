@@ -4,6 +4,8 @@
 Phase 1 SAP Product Intelligence extraction is COMPLETE. V1 product-opportunity analysis is COMPLETE. Phase 2 product classification and Phase 3 application intelligence are ACTIVE.
 
 ## Completed
+- [x] Supplemental SAP exports 09–13 completed: currency-safe sales ledger, WH01 inventory, SAP BOM relationships, 5Y purchase history, and open purchase orders.
+- [x] V2 launch-analysis workbook generated locally with currency-safe sales, acquisition-cost evidence, inventory, open-PO, BOM, and SKU-customer reference layers.
 - [x] Repository and Trade-Brain-style structure established.
 - [x] Public-repo data safety rules added.
 - [x] Master roadmap added.
@@ -28,6 +30,9 @@ Phase 1 SAP Product Intelligence extraction is COMPLETE. V1 product-opportunity 
 - SP211P304 and SP111P340 have a source-status conflict: Twin Disc engineering drawings contain obsolete-for-production/service-replacement notes while Palmer Johnson currently lists those assemblies as active. Confirm current sellable/supersession status before publishing.
 
 ## In Progress
+- [ ] Use the V2 launch analysis to narrow the first 20–30 launch SKUs.
+- [ ] Build buyer archetypes from SKU × customer purchasing patterns.
+- [ ] Begin Phase 4 product relationships using SAP BOM + documented OEM/technical relationships.
 - [ ] Continue Phase 2 classification across the next priority-SKU batch.
 - [ ] Continue Phase 3 exact equipment/OEM mapping.
 - [ ] Review/validate the first 20–50 SKU launch shortlist.
