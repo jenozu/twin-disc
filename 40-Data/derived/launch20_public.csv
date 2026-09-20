@@ -1,0 +1,21 @@
+ItemCode,PublicProductFamily,LaunchRole,Phase23Status,ResearchConfidence,PublicationStatus
+SP211P304-TWD,SP211P / SP211HP3,Hero PTO assembly,Researched,High,Verify current/supersession status
+SP111P340-TWD,SP111P / SP111HP3,Hero PTO assembly,Researched,High,Verify current/supersession status
+CX110P315-TWD,CX110P / C110HP3,Hero PTO assembly,Researched,High,Application copy ready; exact machine claims still need evidence
+CX110P418-TWD,CX110P,Hero PTO assembly,Researched,Medium-High,Application copy ready; exact variant fit still needs evidence
+CX108P405-TWD,CX108P / C108HP4,Hero PTO assembly,Researched,High,Application copy ready; exact machine claims still need evidence
+SP314C006-TWD,SP314,Clutch/service component,Researched,Medium-High,Avoid broad compatibility claims
+SP314S120-TWD,SP314S / SP314SB1,Hero PTO assembly,Researched,High,Family copy ready; exact S120 equipment fit still needs evidence
+SP211C006-TWD,SP211,Clutch/service component,Researched,High,Strong exact-cross-reference candidate
+SP111C006-TWD,SP111,Clutch/service component,Researched,High,Strong exact-cross-reference candidate
+A6518A-TWD,SP314SB1 relationship,Drive-ring/service component,Researched,High,Strong long-tail candidate
+CX107P405-TWD,CX107P,Hero PTO assembly,Researched,High,Application copy ready; exact machine claims still need evidence
+CX110C005-TWD,CX110,Clutch/service component,Researched,High,Verify SAP replacement claim before publish
+SP314C002-TWD,SP314P,Clutch/service component,Researched,High,Re-verify secondary OEM refs before publish
+IT1071028B-TWD,AM220,Pump-drive input component,Researched,High,Strong technical candidate
+SP318C003-TWD,SP318,High-value clutch/service component,Researched,High,Excellent exact-cross-reference candidate
+6926E-TWD,SP318 / SP318SBO,Drive-ring/service component,Researched,High,Excellent exact equipment candidate
+O5499E-TWD,IBF314 / IB314P,Sintered friction component,Researched,High,Strong service-part candidate
+5659P-TWD,IBF314 / IB314P,Friction/service component,Researched,High,Strong service-part candidate
+A5579D-TWD,SP111,Friction/drive component,Researched,High/Medium,SP111 ready; SP211 compatibility needs verification
+CX108P305-TWD,CX108P / C108HP3,Hero PTO assembly,Researched,High,Application copy ready; exact machine claims still need evidence
