@@ -52,14 +52,14 @@ Classify each candidate into PTO, PTO component, clutch, clutch component, trans
 
 Deliverable: normalized product master.
 
-Progress: Batch 01 complete for the first 10 priority SKUs in `40-Data/derived/phase2_product_master_batch01.csv`.
+Progress: COMPLETE for the initial Launch 20. Batch 01 is stored in `40-Data/derived/phase2_product_master_batch01.csv`; Batch 02 is stored in `40-Data/derived/phase2_product_master_batch02.csv`. The sanitized launch set is stored in `40-Data/derived/launch20_public.csv`.
 
 ## Phase 3 — Equipment & Application Intelligence
 For each priority SKU map: Twin Disc model, product family, equipment type, engine compatibility, power/torque range where available, applications, industries, OEM equipment, replacement components, related Twin Disc products, and documentation sources.
 
 Deliverable: application database.
 
-Progress: Batch 01 application/OEM research complete in `90-Sources/product-research/phase3_application_intelligence_batch01.md`. Continue in 10-SKU batches using the evidence rules in `10-Strategy/Phase 2-3 Workflow.md`.
+Progress: COMPLETE for the initial Launch 20. Research is stored in `90-Sources/product-research/phase3_application_intelligence_batch01.md` and `phase3_application_intelligence_batch02.md`. Compatibility claims follow the Exact / Family / Unverified evidence rules in `10-Strategy/Phase 2-3 Workflow.md`.
 
 ## Phase 4 — Product Relationship Database
 
@@ -67,6 +67,8 @@ Data foundation now available: SAP BOM/product-tree export (Query 11), SKU × cu
 Build assembly/component/application relationships such as Engine → PTO → driven equipment and Assembly → clutch/bearing/seal/ring gear.
 
 Deliverable: product relationship graph/table.
+
+Progress: ACTIVE. Initial sanitized OEM/equipment/component relationships are stored in `40-Data/derived/phase4_product_relationships_public_batch01.csv`. Confidential SAP BOM/customer/cost relationships remain local.
 
 ## Phase 5 — E-commerce Product Database
 Fields: SKU, manufacturer, part number, title, description, family, application, compatible equipment/engines, retail price, reseller cost, web price, margin, weight/dimensions, stock/lead time, country of origin, images/docs, SEO terms, and publication status.
@@ -116,15 +118,15 @@ Dashboard groups: products, prospects, and business economics.
 - [x] Complete sales ledger and item master available locally.
 - [x] Correct SAP price list identified for V1 analysis: List 1 (A) Price List CAD.
 - [x] Top customer analysis complete.
-- [ ] First 20–50 product opportunities selected. V2 enrichment is complete; shortlist narrowing is now active.
-- [ ] Product families and applications mapped.
-- [ ] Margin and opportunity scoring working.
+- [x] First 20 product opportunities selected for the initial launch catalogue.
+- [x] Product families and applications mapped for the Launch 20.
+- [x] Margin and opportunity scoring working as a scenario model; actual reseller cost still requires MarIndustrial terms.
 - [ ] Basic product database and website live.
 - [ ] Initial prospect database and CRM working.
 - [ ] First real RFQ, sale, MarIndustrial purchase, and actual margin recorded.
 
 ## Current Next Action
-Review the generated V1 product-opportunity analysis and validate the first 20–50 candidate SKUs. Before using revenue as a ranking input, add document currency (and ideally a system-currency line total) to the raw SAP sales ledger because the current revenue exports can mix CAD and USD.
+Complete Phase 4 relationship modeling for the Launch 20, then build Phase 5 website-ready product records. In parallel, turn confidential SKU × customer patterns into non-confidential buyer archetypes and use verified OEM/equipment/application evidence to seed the external prospect database.
 
 ### Phase 1 analysis notes
 - Manufacturer codes confirmed: 44 Twin Disc, 45 Twin Disc - Anneson, 46 Twin Disc - Rockford.
@@ -132,4 +134,5 @@ Review the generated V1 product-opportunity analysis and validate the first 20�
 - Price List 1 (`A) Price List CAD`) is the V1 list-price reference.
 - The V1 analysis rebuilds 12M/5Y/10Y item metrics from the raw invoice-line ledger by ItemCode so description changes do not split one SKU into multiple aggregate rows.
 - MarIndustrial internal transactions are excluded from market-demand scoring.
-- Revenue is reference-only until currency-safe fields are added.
+- Supplemental Query 09 added document currency and Row Total (SC), allowing a common system-currency sales measure. Confirm the company's system currency before treating SC as CAD in final economics.
+- Raw SAP customer, cost, inventory, purchasing, and open-PO data remains local and must not be committed to this public repository.
