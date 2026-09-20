@@ -1,0 +1,25 @@
+SourceSKU,RelationshipType,Target,EvidenceLevel,SourceURL
+SP211P304-TWD,MEMBER_OF,SP211P / SP211HP3,Exact family/assembly,https://www.pjpower.com/products/twindisc/ptos/sp211p
+SP211P304-TWD,OEM_CROSS_REFERENCE,Bandit 900-6915-74,Exact,https://www.pjpower.com/products/twindisc/ptos/sp211p
+SP211C006-TWD,OEM_CROSS_REFERENCE,Bandit 900-6943-78,Exact,https://www.pjpower.com/products/twindisc/ptos/sp211p
+SP211C006-TWD,OEM_CROSS_REFERENCE,Morbark 24541-258,Exact,https://www.pjpower.com/products/twindisc/ptos/sp211p
+SP211C006-TWD,OEM_CROSS_REFERENCE,Terex 04U421V3609,Exact,https://www.pjpower.com/products/twindisc/ptos/sp211p
+SP111C006-TWD,OEM_CROSS_REFERENCE,Bandit 900-6944-34,Exact,https://www.pjpower.com/products/twindisc/ptos/sp111p
+CX110C005-TWD,OEM_CROSS_REFERENCE,Vermeer 603643003,Exact,https://www.pjpower.com/products/twin-disc/ptos/cx110p
+SP314C002-TWD,OEM_CROSS_REFERENCE,Bandit 900-1914-95 / 900-6917-10,Secondary specialist,https://www.earthsaverparts.com/twin-disc-sp314-clutch-pack/
+SP314C002-TWD,OEM_CROSS_REFERENCE,Morbark 24542-628,Secondary specialist,https://www.earthsaverparts.com/twin-disc-sp314-clutch-pack/
+SP314C002-TWD,OEM_CROSS_REFERENCE,Vermeer 156154001,Secondary specialist,https://www.earthsaverparts.com/twin-disc-sp314-clutch-pack/
+IT1071028B-TWD,COMPONENT_OF,Twin Disc AM220 pump drive,Exact official drawing,https://twindisc.com/downloads/1029015N.pdf
+SP318C003-TWD,OEM_CROSS_REFERENCE,Terex 70012123,Exact,https://www.pjpower.com/products/twindisc/ptos/sp318p
+SP318C003-TWD,OEM_CROSS_REFERENCE,Vermeer 154820001,Exact,https://www.pjpower.com/products/twindisc/ptos/sp318p
+SP318C003-TWD,OEM_CROSS_REFERENCE,Bandit 900-6914-08,Exact,https://www.pjpower.com/products/twindisc/ptos/sp318p
+SP318C003-TWD,OEM_CROSS_REFERENCE,Trelan 00CLU-398,Exact,https://www.pjpower.com/products/twindisc/ptos/sp318p
+6926E-TWD,USED_IN,Bandit Beast 2680 / Twin Disc SP318SBO PTO,Exact equipment manual,https://www.stephensonequipment.com/wp-content/uploads/2023/08/bandit-beast-grinder-2680.pdf
+6926E-TWD,OEM_CROSS_REFERENCE,Bandit 900-1915-13,Exact retailer/OEM mapping,https://shop.moderngroup.com/900-1915-13-clutch-drive-ring-for-318-twin-disc-6926e/
+6926E-TWD,SUPERSEDED_BY,Bandit 900-6955-20,Exact retailer replacement note,https://shop.moderngroup.com/900-1915-13-clutch-drive-ring-for-318-twin-disc-6926e/
+O5499E-TWD,COMPONENT_OF,Twin Disc IBF314 PTO family,Authorized dealer,https://www.dieselpartsdirect.com/tdo5499e
+5659P-TWD,COMPONENT_OF,Twin Disc IBF314 PTO family,Authorized dealer,https://www.dieselpartsdirect.com/twin-disc-ibf314-power-take-offs-parts
+A5579D-TWD,COMPONENT_OF,Twin Disc SP111 PTO family,Authorized dealer,https://www.dieselpartsdirect.com/twin-disc-sp111-power-take-offs-parts
+A5579D-TWD,POSSIBLE_COMPATIBILITY,SP211 / SP211HP3,Secondary aftermarket - verify,https://ca.fridayparts.com/72-teeth-11-fiber-clutch-disk-wtd-11-001-a5579d-for-twin-disc-power-take-off-c111-sp111-spe211
+CX107P405-TWD,MEMBER_OF,Twin Disc CX107P family,Exact active assembly,https://www.pjpower.com/products/twindisc/ptos/cx107p
+CX108P305-TWD,MEMBER_OF,Twin Disc CX108P / C108HP3 family,Exact active assembly,https://www.pjpower.com/products/twindisc/ptos/cx108p
