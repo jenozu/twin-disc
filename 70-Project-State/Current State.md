@@ -1,56 +1,54 @@
 # Current State
 
 ## Status
-Phase 1 SAP Product Intelligence extraction is COMPLETE. V1 product-opportunity analysis is COMPLETE. Phase 2 product classification and Phase 3 application intelligence are ACTIVE.
+Phase 1 SAP Product Intelligence is COMPLETE. The initial 20-SKU launch catalogue has been selected. Phase 2 product classification and Phase 3 application intelligence are COMPLETE for the Launch 20. Phase 4 product relationships are ACTIVE.
 
 ## Completed
-- [x] Supplemental SAP exports 09–13 completed: currency-safe sales ledger, WH01 inventory, SAP BOM relationships, 5Y purchase history, and open purchase orders.
-- [x] V2 launch-analysis workbook generated locally with currency-safe sales, acquisition-cost evidence, inventory, open-PO, BOM, and SKU-customer reference layers.
 - [x] Repository and Trade-Brain-style structure established.
 - [x] Public-repo data safety rules added.
-- [x] Master roadmap added.
 - [x] Twin Disc manufacturer records confirmed: 44 Twin Disc, 45 Twin Disc - Anneson, 46 Twin Disc - Rockford.
-- [x] Queries 01–08 run and exported locally.
-- [x] Price List 1 (A) Price List CAD selected as the V1 list-price reference.
-- [x] 10-year raw sales ledger, item master, price list, 12M/5Y/10Y product views, and 5Y customer view analyzed.
-- [x] V1 product opportunity workbook generated.
-- [x] Initial top-50 candidate ranking generated using demand, recency, customer breadth, ticket value, and prospectability.
-- [x] Phase 2–3 evidence rules and batch workflow documented.
-- [x] Phase 2 Batch 01 classification completed for the first 10 priority SKUs.
-- [x] Phase 3 Batch 01 family applications/OEM cross-references/equipment evidence researched.
+- [x] SAP Queries 01–13 completed locally, including currency-safe sales, WH01 inventory, SAP BOMs, purchase history, and open POs.
+- [x] V1 product-opportunity workbook generated.
+- [x] V2 launch-analysis workbook generated with system-currency sales, inventory, purchase-cost evidence, open POs, BOMs, and SKU × customer history.
+- [x] Initial Top 50 ranked by demand, recency, customer breadth, ticket value, and prospectability.
+- [x] Phase 2–3 evidence rules and research workflow documented.
+- [x] Phase 2/3 Batch 01 completed for the first 10 priority SKUs.
+- [x] Phase 2/3 Batch 02 completed for the additional 10 Launch-20 SKUs.
+- [x] Launch 20 selected using demand, recent activity, customer breadth, stock/availability, application clarity, and exact part-number/OEM-search value rather than simply taking V1 ranks 1–20.
+- [x] Public Launch-20 catalogue written to `40-Data/derived/launch20_public.csv`.
+- [x] Phase 4 public relationship database started in `40-Data/derived/phase4_product_relationships_public_batch01.csv`.
+- [x] V3 launch-analysis workbook generated locally with Launch 20 and Phase 4 relationship sheets.
 
 ## Important Findings
-- The raw sales ledger has 6,068 invoice lines and 1,149 unique Twin Disc item codes.
-- The item master contains 7,602 Twin Disc/Rockford records; 7,321 are active.
-- 4,813 item records have a positive CAD list price.
-- 593 externally sold products show positive 5-year demand after excluding the MarIndustrial internal customer.
-- Revenue fields are not currency-safe because document currency was not included in the export. Revenue is excluded from the V1 opportunity score.
-- SAP aggregate queries can split one ItemCode across multiple rows when the description changes. The V1 analysis therefore rebuilds metrics from the raw ledger by ItemCode.
-- The first research batch confirms that several top SKUs have strong OEM/aftermarket search paths, especially SP211P304, SP211C006, SP111C006, SP314S120, and A6518A.
-- SP211P304 and SP111P340 have a source-status conflict: Twin Disc engineering drawings contain obsolete-for-production/service-replacement notes while Palmer Johnson currently lists those assemblies as active. Confirm current sellable/supersession status before publishing.
+- Several lower-ranked service parts were promoted over stale/low-demand assemblies. In particular O5499E, 5659P, A5579D, and CX108P305 strengthen the launch catalogue with recurring service demand and clearer application/search paths.
+- CX110C005 has an exact Vermeer cross-reference (603643003).
+- SP318C003 has strong published OEM search paths including Terex, Vermeer, Bandit, and Trelan cross-references.
+- 6926E has exact Bandit Beast 2680 / SP318SBO equipment evidence plus a Bandit part-number path.
+- O5499E and 5659P map into the IBF314 high-inertia PTO service market, including crusher/tub-grinder applications.
+- IT1071028B is an official AM220 pump-drive input assembly and opens a distinct hydraulic/drilling-equipment prospect segment.
+- SP211P304 and SP111P340 still require current sellable/supersession verification before publication because public sources conflict on status.
+- Confidential SAP customer names, costs, inventory, and purchasing data remain local only. The public repository contains sanitized/derived product research only.
 
 ## In Progress
-- [ ] Use the V2 launch analysis to narrow the first 20–30 launch SKUs.
-- [ ] Build buyer archetypes from SKU × customer purchasing patterns.
-- [ ] Begin Phase 4 product relationships using SAP BOM + documented OEM/technical relationships.
-- [ ] Continue Phase 2 classification across the next priority-SKU batch.
-- [ ] Continue Phase 3 exact equipment/OEM mapping.
-- [ ] Review/validate the first 20–50 SKU launch shortlist.
-- [ ] Confirm reseller discount economics by SKU/product family.
-- [ ] Convert verified cross-references into product-page SEO terms and prospect-search terms.
+- [ ] Expand Phase 4 assembly/component/OEM/equipment/supersession relationships for all Launch-20 products.
+- [ ] Verify secondary OEM cross-references before public compatibility claims.
+- [ ] Build buyer archetypes and external prospect-search templates for each Launch-20 SKU.
+- [ ] Start Phase 5 website-ready e-commerce product records.
+- [ ] Confirm reseller economics and operating permissions with MarIndustrial.
 
 ## Blocked / Needs Human Input
-- Final reseller terms and permissions with MarIndustrial.
-- Confirmation that the 40% supplier discount applies to the shortlisted SKUs.
-- Currency-safe SAP sales export if revenue will be used for ranking.
-- Current sellable/supersession confirmation for products with conflicting public status evidence.
+- Final reseller relationship, branding permission, warranty/returns/drop-ship rules, and permitted use of employer data.
+- Actual reseller discount/cost charged to the future business.
+- Confirmation of SAP company system currency before treating Row Total (SC) as CAD for final economics.
+- Current orderability/supersession status for SP211P304 and SP111P340.
+- Final verification of secondary-source OEM cross-references before publication.
 
 ## Next Actions
-1. Research Batch 02 (next 10 high-priority SKUs).
-2. Validate supersession/current-order status for SP211P304 and SP111P340 through MarIndustrial/Twin Disc ordering data.
-3. Promote exact OEM cross-reference products into the initial launch catalogue.
-4. Build product relationship records for assembly → clutch → drive ring/service component.
-5. Begin prospect searches using exact OEM cross-reference and equipment evidence rather than generic industry lists.
+1. Complete Phase 4 relationship records for the Launch 20.
+2. Build Phase 5 website-ready product records from verified Phase 2–4 data.
+3. Convert SKU × customer patterns into buyer archetypes without publishing confidential customer history.
+4. Build the first external prospect database using exact OEM/equipment/application evidence.
+5. Begin website MVP once the first product records pass publication checks.
 
-## V1 Milestone
-Select and validate the first 20–50 Twin Disc SKUs using observed demand, recency, customer breadth, economics, application clarity, OEM cross-references, and verified equipment evidence.
+## Current Milestone
+The initial 20-SKU catalogue is now selected and researched. The project has moved from product discovery into relationship modeling, product-data production, and buyer acquisition.
