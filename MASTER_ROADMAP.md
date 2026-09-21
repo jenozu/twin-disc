@@ -81,6 +81,18 @@ Progress: COMPLETE for the Launch 20.
 ## Phase 5 — E-commerce Product Database
 Fields: SKU, manufacturer, part number, title, description, family, application, compatible equipment/engines, retail price, reseller cost, web price, margin, weight/dimensions, stock/lead time, country of origin, images/docs, SEO terms, and publication status.
 
+Progress: ACTIVE.
+
+- Product database schema: `20-Architecture/Product Database Schema.md`
+- Public Launch-20 catalog index: `40-Data/derived/phase5_product_catalog_index_public.csv`
+- Product-copy Batch 01: `40-Data/derived/phase5_product_copy_batch01_public.csv`
+- Research/copy notes: `90-Sources/product-research/phase5_product_copy_batch01.md`
+- All 20 launch products now have structured Phase-5 records in the local workbook.
+- 18 products are DRAFT; `SP211P304-TWD` and `SP111P340-TWD` remain HOLD.
+- Batch 01 full page copy is complete for `SP211C006-TWD`, `SP318C003-TWD`, `CX110C005-TWD`, `A6518A-TWD`, and `6926E-TWD`.
+- Public pricing mode remains RFQ until reseller terms are confirmed.
+- Internal list price, cost scenarios, margin assumptions, and WH01 inventory remain local-only.
+
 ## Phase 6 — Website MVP
 Required: search by part number, category/product pages, pricing/availability or RFQ, checkout/contact capture, shipping, order confirmation, and analytics.
 
@@ -130,12 +142,13 @@ Dashboard groups: products, prospects, and business economics.
 - [x] Product families and applications mapped for the Launch 20.
 - [x] Margin and opportunity scoring working as a scenario model; actual reseller cost still requires MarIndustrial terms.
 - [x] Product relationship database complete for the Launch 20, with evidence scope and publication rules.
-- [ ] Basic product database and website live.
+- [x] Basic product database structure created with all Launch-20 records.
+- [ ] Website live.
 - [ ] Initial prospect database and CRM working.
 - [ ] First real RFQ, sale, MarIndustrial purchase, and actual margin recorded.
 
 ## Current Next Action
-Begin Phase 5 using `40-Data/derived/phase5_handoff_public.csv`. Draft the 18 READY products first, keeping `SP211P304-TWD` and `SP111P340-TWD` on HOLD until their current Twin Disc service-replacement/order path is confirmed. Use Phase 4 `PublishRule` values to control what may be stated as exact compatibility versus family-level application context.
+Continue Phase 5 by drafting the remaining 13 DRAFT product pages in evidence-controlled batches. Keep `SP211P304-TWD` and `SP111P340-TWD` on HOLD. In parallel, collect the remaining checkout-readiness fields: approved reseller pricing rules, live availability method, weights/dimensions, country of origin, product images/rights, warranty/returns language, taxes, and shipping behavior. Once the next product-copy batches are complete, begin Phase 6 website MVP implementation from the Phase-5 catalog.
 
 ### Phase 1 analysis notes
 - Manufacturer codes confirmed: 44 Twin Disc, 45 Twin Disc - Anneson, 46 Twin Disc - Rockford.
