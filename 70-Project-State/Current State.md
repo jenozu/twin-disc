@@ -1,7 +1,7 @@
 # Current State
 
 ## Status
-Phase 1 SAP Product Intelligence is COMPLETE. The initial 20-SKU launch catalogue has been selected. Phase 2 product classification and Phase 3 application intelligence are COMPLETE for the Launch 20. Phase 4 product relationships are ACTIVE.
+Phase 1 SAP Product Intelligence is COMPLETE. The initial 20-SKU launch catalogue has been selected. Phase 2 product classification, Phase 3 application intelligence, and Phase 4 product relationships are COMPLETE for the Launch 20. Phase 5 e-commerce product-data production is READY TO START.
 
 ## Completed
 - [x] Repository and Trade-Brain-style structure established.
@@ -16,24 +16,28 @@ Phase 1 SAP Product Intelligence is COMPLETE. The initial 20-SKU launch catalogu
 - [x] Phase 2/3 Batch 02 completed for the additional 10 Launch-20 SKUs.
 - [x] Launch 20 selected using demand, recent activity, customer breadth, stock/availability, application clarity, and exact part-number/OEM-search value rather than simply taking V1 ranks 1–20.
 - [x] Public Launch-20 catalogue written to `40-Data/derived/launch20_public.csv`.
-- [x] Phase 4 public relationship database started in `40-Data/derived/phase4_product_relationships_public_batch01.csv`.
-- [x] V3 launch-analysis workbook generated locally with Launch 20 and Phase 4 relationship sheets.
+- [x] Phase 4 public relationship master completed in `40-Data/derived/phase4_product_relationships_public.csv`.
+- [x] Phase 4 coverage matrix completed in `40-Data/derived/phase4_relationship_coverage_public.csv`.
+- [x] Product relationship schema documented in `20-Architecture/Product Relationship Schema.md`.
+- [x] Phase 5 handoff queue created in `40-Data/derived/phase5_handoff_public.csv`.
+- [x] V4 Phase-4-complete workbook generated locally with public relationships, private SAP relationships, coverage, and Phase 5 handoff sheets.
+- [x] 18 Launch-20 products cleared for Phase 5 drafting under evidence-specific publication rules.
 
 ## Important Findings
 - Several lower-ranked service parts were promoted over stale/low-demand assemblies. In particular O5499E, 5659P, A5579D, and CX108P305 strengthen the launch catalogue with recurring service demand and clearer application/search paths.
 - CX110C005 has an exact Vermeer cross-reference (603643003).
 - SP318C003 has strong published OEM search paths including Terex, Vermeer, Bandit, and Trelan cross-references.
-- 6926E has exact Bandit Beast 2680 / SP318SBO equipment evidence plus a Bandit part-number path.
+- 6926E has exact Bandit Beast 3680 Track / SP318SBO equipment evidence. The earlier Beast 2680 reference was corrected during Phase 4 validation.
 - O5499E and 5659P map into the IBF314 high-inertia PTO service market, including crusher/tub-grinder applications.
 - IT1071028B is an official AM220 pump-drive input assembly and opens a distinct hydraulic/drilling-equipment prospect segment.
-- SP211P304 and SP111P340 still require current sellable/supersession verification before publication because public sources conflict on status.
+- A6518A has exact Bandit Beast 3680 / SP314SB1 equipment evidence.
+- SP211P304 and SP111P340 remain on HOLD because official Twin Disc drawings identify service-replacement numbers; confirm the current orderable number before publishing or selling under the old assembly number.
 - Confidential SAP customer names, costs, inventory, and purchasing data remain local only. The public repository contains sanitized/derived product research only.
 
 ## In Progress
-- [ ] Expand Phase 4 assembly/component/OEM/equipment/supersession relationships for all Launch-20 products.
-- [ ] Verify secondary OEM cross-references before public compatibility claims.
+- [ ] Build Phase 5 website-ready e-commerce product records for the 18 READY products.
+- [ ] Verify remaining secondary OEM cross-references before upgrading `Review` relationships to publishable exact equivalence.
 - [ ] Build buyer archetypes and external prospect-search templates for each Launch-20 SKU.
-- [ ] Start Phase 5 website-ready e-commerce product records.
 - [ ] Confirm reseller economics and operating permissions with MarIndustrial.
 
 ## Blocked / Needs Human Input
@@ -44,11 +48,11 @@ Phase 1 SAP Product Intelligence is COMPLETE. The initial 20-SKU launch catalogu
 - Final verification of secondary-source OEM cross-references before publication.
 
 ## Next Actions
-1. Complete Phase 4 relationship records for the Launch 20.
-2. Build Phase 5 website-ready product records from verified Phase 2–4 data.
-3. Convert SKU × customer patterns into buyer archetypes without publishing confidential customer history.
-4. Build the first external prospect database using exact OEM/equipment/application evidence.
-5. Begin website MVP once the first product records pass publication checks.
+1. Begin Phase 5 with the 18 READY products in `40-Data/derived/phase5_handoff_public.csv`.
+2. Draft structured product records using Phase 4 publication rules: exact claims only where `PublishRule=Yes`; family applications remain family-level.
+3. Keep SP211P304 and SP111P340 on HOLD until current service-replacement/order numbers are confirmed.
+4. Convert SKU × customer patterns into buyer archetypes without publishing confidential customer history.
+5. Begin the website MVP once the first Phase 5 records pass publication checks.
 
 ## Current Milestone
-The initial 20-SKU catalogue is now selected and researched. The project has moved from product discovery into relationship modeling, product-data production, and buyer acquisition.
+The initial 20-SKU catalogue is selected, researched, and relationship-mapped. Phase 4 is complete. Eighteen products are ready for Phase 5 product-record drafting; two remain held for service-replacement verification.
