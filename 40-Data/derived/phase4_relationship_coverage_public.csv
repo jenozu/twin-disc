@@ -1,0 +1,21 @@
+Priority,ItemCode,Description,ModelFamily,FamilyOrTypeMapped,ApplicationPathMapped,ExactOEMXrefs,ExactEquipmentLinks,ReplacementLinks,PublicExactRelations,FamilyOnlyRelations,Phase5Readiness
+1,SP211P304-TWD,35798 P.T.O. (C006) BB,SP211P / SP211HP3,Yes,Yes,1,0,1,2,4,HOLD — verify service replacement/current sellable number
+2,SP111P340-TWD,PTO (C004) (JS212 QC),SP111P / SP111HP3,Yes,Yes,0,0,1,1,4,HOLD — verify service replacement/current sellable number
+3,CX110P315-TWD,35965 P.T.O.,CX110P / C110HP3,Yes,Yes,0,0,0,1,5,READY — family/application claims only
+4,CX110P418-TWD,14134 P.T.O. (C001),CX110P,Yes,Yes,0,0,0,1,5,READY — family/application claims only
+5,CX108P405-TWD,18557 P.T.O.,CX108P / C108HP4,Yes,Yes,0,0,0,1,4,READY — family/application claims only
+6,SP314C006-TWD,35595 CLUTCH 3-1/4 (S697) BB SIP,SP314,Yes,Yes,0,0,0,2,5,READY — family/application claims only
+7,SP314S120-TWD,PTO SP314SB1,SP314S / SP314SB1,Yes,Yes,0,0,0,2,5,READY — family/application claims only
+8,SP211C006-TWD,35250 CLUTCH 2-5/16 (S745) BB,SP211,Yes,Yes,4,0,0,6,0,READY — exact search/compatibility relationships available
+9,SP111C006-TWD,35253 CLUTCH 2-0    (S670) BB,SP111,Yes,Yes,1,0,0,3,0,READY — exact search/compatibility relationships available
+10,A6518A-TWD,"RING DRG  3x(14"" S.I.P.)",SP314SB1 relationship,Yes,Yes,0,1,0,3,0,READY — exact search/compatibility relationships available
+11,CX107P405-TWD,15291 P.T.O.,CX107P,Yes,Yes,0,0,0,1,4,READY — family/application claims only
+12,CX110C005-TWD,38860 CLUTCH 1-3/4  (replaces CX110C002),CX110 clutch family,Yes,Yes,1,0,0,3,0,READY — exact search/compatibility relationships available
+13,SP314C002-TWD,35222 CLUTCH 3-1/4 (S697) BB,SP314P,Yes,Yes,0,0,0,2,5,READY — family/application claims only
+14,IT1071028B-TWD,INPUT ASSY AM220 SAE3-11.5,AM220 pump drive input assembly,Yes,Yes,0,0,0,2,3,READY — family/application claims only
+15,SP318C003-TWD,37299 CLUTCH 4-5/16 (S777) BB,SP318,Yes,Yes,4,0,0,6,5,READY — exact search/compatibility relationships available
+16,6926E-TWD,"RING DRG  3x(18"" S.I.P.)",SP318 / SP318SBO drive ring,Yes,Yes,0,1,1,2,0,READY — exact search/compatibility relationships available
+17,O5499E-TWD,"FRICT ACIER 14""IB,SP,PO",IBF314 / IB314P,Yes,Yes,0,0,0,2,3,READY — family/application claims only
+18,5659P-TWD,"FRICT-1,14""IB,SL,PO",IBF314 / IB314P,Yes,Yes,0,0,0,3,3,READY — family/application claims only
+19,A5579D-TWD,"FRICT-1,11""CL/X,SP,PO",SP111 (exact authorized-dealer evidence); SP211 compatibility secondary,Yes,Yes,0,0,0,2,0,READY — family/application claims only
+20,CX108P305-TWD,"POWER TAKE-OFF, C108HP3",CX108P / C108HP3,Yes,Yes,0,0,0,1,4,READY — family/application claims only
