@@ -1,7 +1,7 @@
 # Current State
 
 ## Status
-Phase 1 SAP Product Intelligence is COMPLETE. The initial 20-SKU launch catalogue has been selected. Phase 2 product classification, Phase 3 application intelligence, and Phase 4 product relationships are COMPLETE for the Launch 20. Phase 5 e-commerce product-data production is READY TO START.
+Phase 1 SAP Product Intelligence is COMPLETE. The initial 20-SKU launch catalogue has been selected. Phase 2 product classification, Phase 3 application intelligence, and Phase 4 product relationships are COMPLETE for the Launch 20. Phase 5 e-commerce product-data production is ACTIVE.
 
 ## Completed
 - [x] Repository and Trade-Brain-style structure established.
@@ -22,6 +22,11 @@ Phase 1 SAP Product Intelligence is COMPLETE. The initial 20-SKU launch catalogu
 - [x] Phase 5 handoff queue created in `40-Data/derived/phase5_handoff_public.csv`.
 - [x] V4 Phase-4-complete workbook generated locally with public relationships, private SAP relationships, coverage, and Phase 5 handoff sheets.
 - [x] 18 Launch-20 products cleared for Phase 5 drafting under evidence-specific publication rules.
+- [x] Phase 5 product-database schema created in `20-Architecture/Product Database Schema.md`.
+- [x] Public Launch-20 product catalog index created in `40-Data/derived/phase5_product_catalog_index_public.csv`.
+- [x] All 20 launch products structured in the local Phase 5 workbook with private pricing/stock fields separated from public-safe fields.
+- [x] Product-copy Batch 01 completed for SP211C006, SP318C003, CX110C005, A6518A, and 6926E.
+- [x] Public pricing mode set to RFQ until reseller terms are confirmed.
 
 ## Important Findings
 - Several lower-ranked service parts were promoted over stale/low-demand assemblies. In particular O5499E, 5659P, A5579D, and CX108P305 strengthen the launch catalogue with recurring service demand and clearer application/search paths.
@@ -35,7 +40,8 @@ Phase 1 SAP Product Intelligence is COMPLETE. The initial 20-SKU launch catalogu
 - Confidential SAP customer names, costs, inventory, and purchasing data remain local only. The public repository contains sanitized/derived product research only.
 
 ## In Progress
-- [ ] Build Phase 5 website-ready e-commerce product records for the 18 READY products.
+- [ ] Draft Phase 5 product-copy batches for the remaining 13 DRAFT products.
+- [ ] Collect shipping weight/dimensions, country of origin, image assets/rights, warranty/returns rules, and shipping/tax requirements.
 - [ ] Verify remaining secondary OEM cross-references before upgrading `Review` relationships to publishable exact equivalence.
 - [ ] Build buyer archetypes and external prospect-search templates for each Launch-20 SKU.
 - [ ] Confirm reseller economics and operating permissions with MarIndustrial.
@@ -48,11 +54,11 @@ Phase 1 SAP Product Intelligence is COMPLETE. The initial 20-SKU launch catalogu
 - Final verification of secondary-source OEM cross-references before publication.
 
 ## Next Actions
-1. Begin Phase 5 with the 18 READY products in `40-Data/derived/phase5_handoff_public.csv`.
-2. Draft structured product records using Phase 4 publication rules: exact claims only where `PublishRule=Yes`; family applications remain family-level.
-3. Keep SP211P304 and SP111P340 on HOLD until current service-replacement/order numbers are confirmed.
+1. Draft the remaining 13 DRAFT product pages using the Phase 5 schema and Phase 4 publication rules.
+2. Keep SP211P304 and SP111P340 on HOLD until current service-replacement/order numbers are confirmed.
+3. Add missing checkout-readiness data: dimensions/weight, COO, images, warranty/returns, shipping and taxes.
 4. Convert SKU × customer patterns into buyer archetypes without publishing confidential customer history.
-5. Begin the website MVP once the first Phase 5 records pass publication checks.
+5. Begin Phase 6 website MVP implementation from the Phase 5 product database once the next copy batches are complete.
 
 ## Current Milestone
-The initial 20-SKU catalogue is selected, researched, and relationship-mapped. Phase 4 is complete. Eighteen products are ready for Phase 5 product-record drafting; two remain held for service-replacement verification.
+Phase 5 foundation is established: all 20 launch products have structured product records, the public/private field boundary is defined, five high-confidence product pages have full copy, and 18 products remain draftable while two stay held for service-replacement verification.
