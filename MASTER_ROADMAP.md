@@ -68,7 +68,15 @@ Build assembly/component/application relationships such as Engine → PTO → dr
 
 Deliverable: product relationship graph/table.
 
-Progress: ACTIVE. Initial sanitized OEM/equipment/component relationships are stored in `40-Data/derived/phase4_product_relationships_public_batch01.csv`. Confidential SAP BOM/customer/cost relationships remain local.
+Progress: COMPLETE for the Launch 20.
+
+- Public relationship master: `40-Data/derived/phase4_product_relationships_public.csv`
+- Coverage matrix: `40-Data/derived/phase4_relationship_coverage_public.csv`
+- Relationship schema: `20-Architecture/Product Relationship Schema.md`
+- Phase 5 drafting queue: `40-Data/derived/phase5_handoff_public.csv`
+- Confidential SAP BOM/customer/cost relationships remain local and are not treated as public compatibility evidence.
+- 18 of 20 launch products are ready for Phase 5 drafting.
+- `SP211P304-TWD` and `SP111P340-TWD` remain on HOLD until their current Twin Disc service-replacement/order path is confirmed.
 
 ## Phase 5 — E-commerce Product Database
 Fields: SKU, manufacturer, part number, title, description, family, application, compatible equipment/engines, retail price, reseller cost, web price, margin, weight/dimensions, stock/lead time, country of origin, images/docs, SEO terms, and publication status.
@@ -121,12 +129,13 @@ Dashboard groups: products, prospects, and business economics.
 - [x] First 20 product opportunities selected for the initial launch catalogue.
 - [x] Product families and applications mapped for the Launch 20.
 - [x] Margin and opportunity scoring working as a scenario model; actual reseller cost still requires MarIndustrial terms.
+- [x] Product relationship database complete for the Launch 20, with evidence scope and publication rules.
 - [ ] Basic product database and website live.
 - [ ] Initial prospect database and CRM working.
 - [ ] First real RFQ, sale, MarIndustrial purchase, and actual margin recorded.
 
 ## Current Next Action
-Complete Phase 4 relationship modeling for the Launch 20, then build Phase 5 website-ready product records. In parallel, turn confidential SKU × customer patterns into non-confidential buyer archetypes and use verified OEM/equipment/application evidence to seed the external prospect database.
+Begin Phase 5 using `40-Data/derived/phase5_handoff_public.csv`. Draft the 18 READY products first, keeping `SP211P304-TWD` and `SP111P340-TWD` on HOLD until their current Twin Disc service-replacement/order path is confirmed. Use Phase 4 `PublishRule` values to control what may be stated as exact compatibility versus family-level application context.
 
 ### Phase 1 analysis notes
 - Manufacturer codes confirmed: 44 Twin Disc, 45 Twin Disc - Anneson, 46 Twin Disc - Rockford.
