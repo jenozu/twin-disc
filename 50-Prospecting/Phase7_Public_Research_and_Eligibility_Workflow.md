@@ -4,8 +4,9 @@ Public-safe workflow documentation ONLY. Keep employer customer data, match resu
 
 ## Research checkpoint (2026-09-27)
 - [x] Assemble an Ontario research queue: 45 additional regional candidates and 7 retained pending-review candidates (52 total).
-- [x] Independently recheck current public business activities of 10 research candidates against their official websites. Private verification worksheet contains dated links and follow-ups.
-- [ ] Recheck the remaining 42 companies' current services, existence, official contact channels and locations; correct or remove stale entries.
+- [x] Independently recheck advertised activities of an initial 10 research candidates against official websites.
+- [x] Conduct a second official-site research pass for 10 additional existing queue candidates (including hydraulic, marine, mining and machining businesses); findings recorded in a separate updated private workbook. These are public activity verifications, not customer clearance or verified Twin Disc compatibility.
+- [ ] Recheck remaining candidates not covered by either research pass. Reconcile overlap and the seven retained companies before calculating a unique verified-company total; correct or remove stale entries.
 - [ ] Document independent equipment makes/models and actual mechanical PTO, clutch, pump-drive or marine-transmission service capability where publicly evidenced.
 - [ ] Associate any proposed Twin Disc part only with Phase 4 supported relationship evidence. Separate family application hypotheses from exact verified fit.
 - [ ] Test any out-of-GTA supply-gap hypothesis against objective availability and lead-time evidence, rather than assuming geographic scarcity.
