@@ -28,3 +28,12 @@ Suggested states: RESEARCH ONLY > PUBLICLY VERIFIED > ELIGIBILITY REVIEW > CLEAR
 
 ## Next milestone
 Continue official-site verification and equipment research while retaining the seven unresolved earlier companies; perform real customer exclusion only under an authorized process. No record is currently being declared cleared by this public workflow.
+## Additional Ontario discovery expansion (2026-09-27)
+
+- [x] Identify 45 further *distinct-by-normalized-name* Ontario companies beyond the initial 52 research candidates. The broader public research pool now has 97 company-name entries before alias/corporate-family consolidation.
+- [x] Record first-party company pages where available and clearly flag chamber or trade-association-only evidence for official-site re-verification. Research encompasses 13 Southwestern, 6 Central, 5 Eastern, and 21 Northern Ontario additions.
+- [ ] Review all 45 added firms' live status, exact equipment relevance and parent/subsidiary relationships. Some are exploratory adjacent providers, not established Twin Disc purchasers.
+- [ ] Run approved customer-exclusion checks before clearing any additional firms. All newly discovered names remain **DO NOT CONTACT**.
+- [ ] Reconcile related companies (including parent/subsidiary and former-owner relationships) before reporting unique eligible prospect counts.
+
+The separate, private 45-company evidence workbook is intentionally not committed here.
