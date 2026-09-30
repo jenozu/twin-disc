@@ -37,3 +37,28 @@ Continue official-site verification and equipment research while retaining the s
 - [ ] Reconcile related companies (including parent/subsidiary and former-owner relationships) before reporting unique eligible prospect counts.
 
 The separate, private 45-company evidence workbook is intentionally not committed here.
+
+
+## Entity and equipment relevance pass (2026-09-30)
+
+- [x] Review the 38 additional Ontario candidates that had no strong direct-name match in the private suppression pass.
+- [x] Check known public trade names, legal-name variants, and major related business names against the named private suppression records. No additional exact or very-strong named matches were found in this known-alias pass. Private customer data and match results remain outside GitHub.
+- [x] Classify public product/application relevance using the Phase 8 rubric without claiming exact Twin Disc fit:
+  - 16 = **A** — documented equipment/application overlaps a Launch-20 family application strongly enough for deeper equipment-model research.
+  - 10 = **B** — relevant industry/service capability, but equipment/product path remains unclear.
+  - 12 = **C** — weak/generic current Launch-20 fit; retain only where future catalogue expansion may justify it.
+  - 0 = **A+** — no reviewed public source confirmed a specific Twin Disc unit or launch SKU in a candidate's equipment.
+- [x] Identify corporate-group handling requirements from public evidence, including Emsco/Hewitt, Oaken's multi-branch dealer network, and Central Machine & Marine/The Machining Group relationships.
+- [x] Build a 16-company P1 deeper-research queue centered on public evidence for pumps, compressors/blowers, forestry, crushers/conveyors, or other Phase-4 application paths.
+- [ ] For P1 companies, identify actual equipment makes/models and verify Twin Disc relationships against equipment manuals, OEM parts books, or other source-backed evidence.
+- [ ] Do not convert geography into an "underserved" claim without independent availability/lead-time or prospect-reported evidence.
+
+### Immediate equipment-research priorities
+
+The strongest public application signals in this pass include:
+- crusher/conveyor and mining-maintenance contractors;
+- forestry equipment sales/service businesses;
+- industrial pump and dewatering specialists;
+- rotating-equipment shops repairing pumps, blowers, compressors, and gearboxes.
+
+Use Phase 4 publication rules: a family/application match is a research path, not exact compatibility. Exact equipment or SKU claims require independent source evidence.
