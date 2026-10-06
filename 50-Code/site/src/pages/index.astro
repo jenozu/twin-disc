@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { publicProducts } from "../data/products";
+---
+<BaseLayout title="Industrial PTO, Clutch & Pump-Drive Parts">
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Industrial powertrain parts</div>
+      <h1>Find the right part without guessing.</h1>
+      <p class="lead">Search Twin Disc PTO, clutch, friction and pump-drive part numbers, then send an RFQ with your equipment details for compatibility verification.</p>
+      <div class="actions">
+        <a class="button" href="/products">Search {publicProducts.length} launch products</a>
+        <a class="button button-secondary" href="/rfq">Request a quote</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="eyebrow">Lean MVP</div>
+    <h2>Built around part-number search and RFQs.</h2>
+    <div class="grid">
+      <article class="card">
+        <span class="tag">01</span>
+        <h3>Search by part number</h3>
+        <p>Quickly check the initial catalogue using a Twin Disc or known part number.</p>
+      </article>
+      <article class="card">
+        <span class="tag">02</span>
+        <h3>Verify the application</h3>
+        <p>Provide machine, engine, PTO/clutch model, serial or OEM information before ordering.</p>
+      </article>
+      <article class="card">
+        <span class="tag">03</span>
+        <h3>Request a quote</h3>
+        <p>Pricing remains RFQ-based while availability, freight and exact fit are confirmed.</p>
+      </article>
+    </div>
+  </section>
+</BaseLayout>
