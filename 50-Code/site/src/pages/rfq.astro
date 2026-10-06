@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout title="Request a Quote | Industrial Powertrain Parts">
+  <section class="section container">
+    <div class="eyebrow">RFQ</div>
+    <h1 style="font-size: clamp(2.3rem, 5vw, 4rem)">Request a quote</h1>
+    <p class="lead">For the best match, include whatever identification information you have. You do not need every field.</p>
+
+    <form id="rfq-form">
+      <label>
+        Part number
+        <input id="part" name="part" placeholder="e.g. SP318C003" />
+      </label>
+      <label>
+        Equipment make & model
+        <input name="equipment" placeholder="e.g. Bandit Beast 3680" />
+      </label>
+      <label>
+        Engine make & model
+        <input name="engine" placeholder="If known" />
+      </label>
+      <label>
+        PTO / clutch / transmission model or serial
+        <input name="drive" placeholder="Tag, serial number or OEM number" />
+      </label>
+      <label>
+        What do you need?
+        <textarea name="message" placeholder="Describe the part, failure, quantity, or application."></textarea>
+      </label>
+      <label>
+        Email
+        <input type="email" name="email" required placeholder="you@company.com" />
+      </label>
+
+      <button class="button" type="submit">Prepare RFQ</button>
+      <p class="fine-print">MVP mode: this currently prepares the request in your browser. Email delivery will be connected before public launch.</p>
+    </form>
+
+    <div id="rfq-result" class="notice" hidden>
+      <strong>RFQ captured for testing.</strong>
+      <p id="rfq-summary"></p>
+    </div>
+  </section>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const part = document.querySelector<HTMLInputElement>("#part");
+    if (part && params.get("part")) part.value = params.get("part") ?? "";
+
+    const form = document.querySelector<HTMLFormElement>("#rfq-form");
+    const result = document.querySelector<HTMLElement>("#rfq-result");
+    const summary = document.querySelector<HTMLElement>("#rfq-summary");
+
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const details = [...data.entries()]
+        .filter(([, value]) => String(value).trim())
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(" | ");
+      if (summary) summary.textContent = details;
+      if (result) result.hidden = false;
+      result?.scrollIntoView({ behavior: "smooth" });
+    });
+  </script>
+</BaseLayout>
