@@ -11,39 +11,103 @@ export function getStaticPaths() {
 
 const { product } = Astro.props;
 ---
-<BaseLayout title={`${product.partNumber} | Industrial Powertrain Parts`} description={`RFQ page for Twin Disc ${product.partNumber}. Compatibility must be verified before ordering.`}>
-  <section class="section container detail">
-    <div>
-      <div class="eyebrow">{product.family}</div>
-      <h1 style="font-size: clamp(2.3rem, 5vw, 4rem)">{product.partNumber}</h1>
-      <p class="lead">{product.title}</p>
+<BaseLayout
+  title={`${product.partNumber} | Powertrain Parts`}
+  description={`RFQ and identification page for Twin Disc ${product.partNumber}. Compatibility must be verified before ordering.`}
+>
+  <section class="product-masthead">
+    <div class="shell">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/products">Catalogue</a>
+        <span aria-hidden="true">/</span>
+        <span translate="no">{product.partNumber}</span>
+      </nav>
 
-      <div class="notice">
-        <strong>Compatibility check required.</strong><br />
-        Do not order from the part number alone. Send the equipment make/model, engine, PTO or clutch tag, serial number, OEM number, or clear nameplate photos when available.
+      <div class="product-title-grid">
+        <div>
+          <p class="kicker">{product.family}</p>
+          <h1 class="part-hero" translate="no">{product.partNumber}</h1>
+          <p class="product-subtitle">{product.title}</p>
+        </div>
+
+        <div class="product-status">
+          <span>PRICING</span>
+          <strong>Request for Quote</strong>
+          <span>FITMENT</span>
+          <strong>Verification Required</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section shell product-sheet">
+    <div class="product-main">
+      <div class="section-rule">
+        <span>01</span>
+        <h2>Product Identification</h2>
       </div>
 
-      <p>This lean catalogue intentionally avoids unsupported equipment-fit claims. Exact compatibility and availability should be confirmed before a quote becomes an order.</p>
+      <div class="spec-table">
+        <div>
+          <span>Manufacturer</span>
+          <strong translate="no">Twin Disc</strong>
+        </div>
+        <div>
+          <span>Part Number</span>
+          <strong class="mono" translate="no">{product.partNumber}</strong>
+        </div>
+        <div>
+          <span>Product Family</span>
+          <strong>{product.family}</strong>
+        </div>
+        <div>
+          <span>Model Family</span>
+          <strong>{product.modelFamily}</strong>
+        </div>
+        <div>
+          <span>Page Type</span>
+          <strong>{product.pageType}</strong>
+        </div>
+        <div>
+          <span>Price</span>
+          <strong>RFQ</strong>
+        </div>
+      </div>
 
-      <div class="actions">
-        <a class="button" href={`/rfq?part=${encodeURIComponent(product.partNumber)}`}>Request quote</a>
-        <a class="button button-secondary" href="/products">Back to catalogue</a>
+      <div class="section-rule">
+        <span>02</span>
+        <h2>Compatibility Standard</h2>
+      </div>
+
+      <div class="verification-copy">
+        <p>
+          Do not order from a part number alone when the application is uncertain. Exact compatibility and current availability should be verified before the quote becomes an order.
+        </p>
+        <p>
+          The strongest identifiers are the PTO or clutch tag, serial number, OEM number, equipment model and engine model.
+        </p>
       </div>
     </div>
 
-    <dl class="specs">
-      <dt>Manufacturer</dt>
-      <dd>Twin Disc</dd>
-      <dt>Part number</dt>
-      <dd>{product.partNumber}</dd>
-      <dt>Product family</dt>
-      <dd>{product.family}</dd>
-      <dt>Model family</dt>
-      <dd>{product.modelFamily}</dd>
-      <dt>Page type</dt>
-      <dd>{product.pageType}</dd>
-      <dt>Pricing</dt>
-      <dd>Request a quote</dd>
-    </dl>
+    <aside class="quote-panel">
+      <div class="quote-panel__header">
+        <span>RFQ / PART ID</span>
+        <span class="status-dot">OPEN</span>
+      </div>
+      <div class="quote-panel__body">
+        <h2>Verify This Part</h2>
+        <p>Send the equipment information you have. Not every field is required.</p>
+
+        <ul class="check-list">
+          <li>Equipment make & model</li>
+          <li>Engine make & model</li>
+          <li>PTO / clutch tag or serial</li>
+          <li>OEM part number</li>
+        </ul>
+
+        <a class="button button-block" href={`/rfq?part=${encodeURIComponent(product.partNumber)}`}>Request Quote</a>
+        <a class="text-link text-link-center" href="/products">Return to Catalogue</a>
+      </div>
+    </aside>
   </section>
 </BaseLayout>
