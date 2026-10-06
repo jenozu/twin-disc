@@ -4,11 +4,15 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  canonicalUrl?: string;
+  structuredData?: Record<string, unknown>[];
 }
 
 const {
   title = "Powertrain Parts",
-  description = "Independent sourcing and RFQ support for Twin Disc PTO, clutch, friction and pump-drive parts."
+  description = "Independent sourcing and RFQ support for Twin Disc PTO, clutch, friction and pump-drive parts.",
+  canonicalUrl,
+  structuredData = [],
 } = Astro.props;
 ---
 <!doctype html>
@@ -18,7 +22,15 @@ const {
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0f171d" />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     <title>{title}</title>
+    {structuredData.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to Content</a>
