@@ -132,6 +132,8 @@ Complete in this order:
    - [x] Pre-fill model/part context when a visitor clicks Request Quote.
    - [x] Preserve the existing generic RFQ path for visitors with incomplete identification.
    - [ ] Validate required/optional fields and RFQ confirmation behavior.
+   - [x] Add optional multi-image upload field for nameplate, serial-tag, equipment and damage photos.
+   - [ ] Connect uploaded images to the eventual RFQ delivery backend/email workflow.
 
 3. **Breadcrumbs**
    - [x] Model-page breadcrumbs implemented.

@@ -81,6 +81,18 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           </label>
 
           <label>
+            Photos (Optional)
+            <input
+              id="photos"
+              type="file"
+              name="photos"
+              accept="image/*,.heic,.heif"
+              multiple
+            />
+            <span class="field-help">Add up to 5 nameplate, serial-tag, equipment or damage photos.</span>
+          </label>
+
+          <label>
             Email Address *
             <input
               type="email"
@@ -112,8 +124,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     if (part && params.get("part")) part.value = params.get("part") ?? "";
 
     const form = document.querySelector<HTMLFormElement>("#rfq-form");
+    const photos = document.querySelector<HTMLInputElement>("#photos");
     const result = document.querySelector<HTMLElement>("#rfq-result");
     const summary = document.querySelector<HTMLElement>("#rfq-summary");
+
+    photos?.addEventListener("change", () => {
+      const count = photos.files?.length ?? 0;
+      photos.setCustomValidity(count > 5 ? "Please select no more than 5 images." : "");
+      photos.setAttribute("aria-invalid", count > 5 ? "true" : "false");
+    });
 
     form?.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -126,10 +145,21 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       }
       email?.removeAttribute("aria-invalid");
 
+      if (photos && !photos.validity.valid) {
+        photos.reportValidity();
+        photos.focus();
+        return;
+      }
+
       const data = new FormData(form);
       const details = [...data.entries()]
-        .filter(([, value]) => String(value).trim())
-        .map(([key, value]) => `${key}: ${value}`)
+        .filter(([, value]) => {
+          if (value instanceof File) return value.size > 0;
+          return String(value).trim();
+        })
+        .map(([key, value]) =>
+          value instanceof File ? `${key}: ${value.name}` : `${key}: ${value}`
+        )
         .join(" | ");
 
       if (summary) summary.textContent = details;
