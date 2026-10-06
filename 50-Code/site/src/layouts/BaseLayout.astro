@@ -7,8 +7,8 @@ interface Props {
 }
 
 const {
-  title = "Industrial Powertrain Parts",
-  description = "Independent sourcing and RFQ support for Twin Disc PTO, clutch and pump-drive parts."
+  title = "Powertrain Parts",
+  description = "Independent sourcing and RFQ support for Twin Disc PTO, clutch, friction and pump-drive parts."
 } = Astro.props;
 ---
 <!doctype html>
@@ -17,27 +17,69 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#0f171d" />
     <title>{title}</title>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to Content</a>
+
+    <div class="utility-bar" aria-hidden="true">
+      <div class="shell utility-bar__inner">
+        <span>Independent Industrial Parts Sourcing</span>
+        <span>RFQ-Based · Compatibility Verified Before Order</span>
+      </div>
+    </div>
+
     <header class="site-header">
-      <a class="brand" href="/">Powertrain Parts</a>
-      <nav aria-label="Main navigation">
-        <a href="/products">Products</a>
-        <a class="button button-small" href="/rfq">Request a quote</a>
-      </nav>
+      <div class="shell site-header__inner">
+        <a class="brand" href="/" aria-label="Powertrain Parts home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-copy">
+            <strong>POWERTRAIN</strong>
+            <span>PARTS</span>
+          </span>
+        </a>
+
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="/products">Catalogue</a>
+          <a href="/rfq">Part Identification</a>
+          <a class="button button-compact" href="/rfq">Request Quote</a>
+        </nav>
+      </div>
     </header>
 
-    <main>
+    <main id="main-content">
       <slot />
     </main>
 
-    <footer>
-      <div>
-        <strong>Independent industrial parts sourcing</strong>
-        <p>Part numbers and manufacturer names are used for identification. Compatibility must be verified before ordering.</p>
+    <footer class="site-footer">
+      <div class="shell footer-grid">
+        <div>
+          <a class="brand brand-footer" href="/">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <span class="brand-copy">
+              <strong>POWERTRAIN</strong>
+              <span>PARTS</span>
+            </span>
+          </a>
+          <p class="footer-copy">Independent sourcing for industrial PTO, clutch, friction and pump-drive components.</p>
+        </div>
+
+        <div class="footer-meta">
+          <strong>Ordering Standard</strong>
+          <p>Compatibility and availability are verified before a quote becomes an order.</p>
+        </div>
+
+        <div class="footer-meta">
+          <strong>Manufacturer Reference</strong>
+          <p><span translate="no">Twin Disc</span> names and part numbers are used for product identification.</p>
+        </div>
       </div>
-      <p class="fine-print">This site is independent and is not presented as an official Twin Disc website.</p>
+
+      <div class="shell footer-bottom">
+        <span>Independent supplier · Not an official <span translate="no">Twin Disc</span> website</span>
+        <a href="/rfq">Request Quote</a>
+      </div>
     </footer>
   </body>
 </html>
