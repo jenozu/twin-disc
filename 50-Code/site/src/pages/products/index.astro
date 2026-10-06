@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { publicProducts } from "../../data/products";
+---
+<BaseLayout title="Product Catalogue | Industrial Powertrain Parts">
+  <section class="section container">
+    <div class="eyebrow">Catalogue</div>
+    <h1 style="font-size: clamp(2.3rem, 5vw, 4rem)">Search parts</h1>
+    <p class="lead">Start with a part number, product family or Twin Disc model family.</p>
+
+    <input id="product-search" class="search" type="search" placeholder="Try SP318C003, clutch, CX110..." aria-label="Search products" />
+
+    <div class="product-grid" id="product-grid">
+      {publicProducts.map((product) => (
+        <a
+          class="product-card"
+          href={`/products/${product.sku.toLowerCase()}`}
+          data-search={`${product.partNumber} ${product.title} ${product.family} ${product.modelFamily}`.toLowerCase()}
+        >
+          <span class="tag">{product.family}</span>
+          <strong>{product.partNumber}</strong>
+          <small>{product.modelFamily}</small>
+        </a>
+      ))}
+    </div>
+
+    <p id="no-results" hidden>No matching products found in the launch catalogue.</p>
+  </section>
+
+  <script>
+    const input = document.querySelector<HTMLInputElement>("#product-search");
+    const cards = [...document.querySelectorAll<HTMLElement>(".product-card")];
+    const empty = document.querySelector<HTMLElement>("#no-results");
+
+    input?.addEventListener("input", () => {
+      const query = input.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach((card) => {
+        const show = !query || (card.dataset.search ?? "").includes(query);
+        card.hidden = !show;
+        if (show) visible++;
+      });
+      if (empty) empty.hidden = visible !== 0;
+    });
+  </script>
+</BaseLayout>
