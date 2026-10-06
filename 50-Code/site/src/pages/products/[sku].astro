@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { publicProducts } from "../../data/products";
+
+export function getStaticPaths() {
+  return publicProducts.map((product) => ({
+    params: { sku: product.sku.toLowerCase() },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+---
+<BaseLayout title={`${product.partNumber} | Industrial Powertrain Parts`} description={`RFQ page for Twin Disc ${product.partNumber}. Compatibility must be verified before ordering.`}>
+  <section class="section container detail">
+    <div>
+      <div class="eyebrow">{product.family}</div>
+      <h1 style="font-size: clamp(2.3rem, 5vw, 4rem)">{product.partNumber}</h1>
+      <p class="lead">{product.title}</p>
+
+      <div class="notice">
+        <strong>Compatibility check required.</strong><br />
+        Do not order from the part number alone. Send the equipment make/model, engine, PTO or clutch tag, serial number, OEM number, or clear nameplate photos when available.
+      </div>
+
+      <p>This lean catalogue intentionally avoids unsupported equipment-fit claims. Exact compatibility and availability should be confirmed before a quote becomes an order.</p>
+
+      <div class="actions">
+        <a class="button" href={`/rfq?part=${encodeURIComponent(product.partNumber)}`}>Request quote</a>
+        <a class="button button-secondary" href="/products">Back to catalogue</a>
+      </div>
+    </div>
+
+    <dl class="specs">
+      <dt>Manufacturer</dt>
+      <dd>Twin Disc</dd>
+      <dt>Part number</dt>
+      <dd>{product.partNumber}</dd>
+      <dt>Product family</dt>
+      <dd>{product.family}</dd>
+      <dt>Model family</dt>
+      <dd>{product.modelFamily}</dd>
+      <dt>Page type</dt>
+      <dd>{product.pageType}</dd>
+      <dt>Pricing</dt>
+      <dd>Request a quote</dd>
+    </dl>
+  </section>
+</BaseLayout>
