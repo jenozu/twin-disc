@@ -1,0 +1,43 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Industrial Powertrain Parts",
+  description = "Independent sourcing and RFQ support for Twin Disc PTO, clutch and pump-drive parts."
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">Powertrain Parts</a>
+      <nav aria-label="Main navigation">
+        <a href="/products">Products</a>
+        <a class="button button-small" href="/rfq">Request a quote</a>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <div>
+        <strong>Independent industrial parts sourcing</strong>
+        <p>Part numbers and manufacturer names are used for identification. Compatibility must be verified before ordering.</p>
+      </div>
+      <p class="fine-print">This site is independent and is not presented as an official Twin Disc website.</p>
+    </footer>
+  </body>
+</html>
