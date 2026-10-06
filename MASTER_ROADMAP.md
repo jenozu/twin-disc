@@ -156,6 +156,7 @@ Complete in this order:
    - [x] Generate sitemap entries for the homepage, RFQ page, catalogue, public SKU pages and model pages. Category entries will be added when category pages exist.
    - [ ] Exclude HOLD/non-public content.
    - [ ] Verify all sitemap URLs return HTTP 200.
+   - [ ] Publish `robots.txt` and point it to the XML sitemap.
 
 7. **Canonical tags**
    - [x] Canonical URL support implemented in the shared layout.
