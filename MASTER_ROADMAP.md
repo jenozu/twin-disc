@@ -153,7 +153,7 @@ Complete in this order:
    - [ ] Add useful category copy, product listings and internal links rather than thin index pages.
 
 6. **XML sitemap**
-   - [ ] Generate sitemap entries for the homepage, RFQ page, catalogue, category pages, SKU pages and model pages.
+   - [x] Generate sitemap entries for the homepage, RFQ page, catalogue, public SKU pages and model pages. Category entries will be added when category pages exist.
    - [ ] Exclude HOLD/non-public content.
    - [ ] Verify all sitemap URLs return HTTP 200.
 
