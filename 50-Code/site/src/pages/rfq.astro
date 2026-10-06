@@ -1,45 +1,108 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
-<BaseLayout title="Request a Quote | Industrial Powertrain Parts">
-  <section class="section container">
-    <div class="eyebrow">RFQ</div>
-    <h1 style="font-size: clamp(2.3rem, 5vw, 4rem)">Request a quote</h1>
-    <p class="lead">For the best match, include whatever identification information you have. You do not need every field.</p>
+<BaseLayout title="Request a Quote | Powertrain Parts">
+  <section class="page-masthead">
+    <div class="shell masthead-grid">
+      <div>
+        <p class="kicker">RFQ / Part Identification</p>
+        <h1>Send the details you have.</h1>
+      </div>
+      <p class="masthead-copy">
+        A tag, serial number or OEM number is usually more useful than a long description. Complete only the fields you know.
+      </p>
+    </div>
+  </section>
 
-    <form id="rfq-form">
-      <label>
-        Part number
-        <input id="part" name="part" placeholder="e.g. SP318C003" />
-      </label>
-      <label>
-        Equipment make & model
-        <input name="equipment" placeholder="e.g. Bandit Beast 3680" />
-      </label>
-      <label>
-        Engine make & model
-        <input name="engine" placeholder="If known" />
-      </label>
-      <label>
-        PTO / clutch / transmission model or serial
-        <input name="drive" placeholder="Tag, serial number or OEM number" />
-      </label>
-      <label>
-        What do you need?
-        <textarea name="message" placeholder="Describe the part, failure, quantity, or application."></textarea>
-      </label>
-      <label>
-        Email
-        <input type="email" name="email" required placeholder="you@company.com" />
-      </label>
+  <section class="section shell rfq-layout">
+    <aside class="rfq-guide">
+      <div class="guide-block">
+        <span class="guide-label">BEST IDENTIFIER</span>
+        <strong>PTO / clutch tag or serial</strong>
+        <p>A clear model or serial number usually provides the fastest path to verification.</p>
+      </div>
+      <div class="guide-block">
+        <span class="guide-label">ALSO USEFUL</span>
+        <strong>Machine & engine details</strong>
+        <p>Equipment make/model and engine make/model help narrow the application.</p>
+      </div>
+      <div class="guide-block">
+        <span class="guide-label">IF AVAILABLE</span>
+        <strong>OEM part number</strong>
+        <p>Cross-reference numbers can help identify a service or replacement path.</p>
+      </div>
+    </aside>
 
-      <button class="button" type="submit">Prepare RFQ</button>
-      <p class="fine-print">MVP mode: this currently prepares the request in your browser. Email delivery will be connected before public launch.</p>
-    </form>
+    <div class="rfq-panel">
+      <div class="rfq-panel__header">
+        <span>TECHNICAL INTAKE</span>
+        <span>Fields marked * are required</span>
+      </div>
 
-    <div id="rfq-result" class="notice" hidden>
-      <strong>RFQ captured for testing.</strong>
-      <p id="rfq-summary"></p>
+      <form id="rfq-form" novalidate>
+        <fieldset>
+          <legend>Part Information</legend>
+          <div class="form-grid">
+            <label>
+              Part Number
+              <input id="part" name="part" placeholder="SP318C003…" autocomplete="off" spellcheck="false" />
+            </label>
+            <label>
+              OEM Part Number
+              <input name="oem" placeholder="If available…" autocomplete="off" spellcheck="false" />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Equipment Information</legend>
+          <div class="form-grid">
+            <label>
+              Equipment Make & Model
+              <input name="equipment" placeholder="Bandit Beast 3680…" autocomplete="off" />
+            </label>
+            <label>
+              Engine Make & Model
+              <input name="engine" placeholder="If known…" autocomplete="off" />
+            </label>
+          </div>
+
+          <label>
+            PTO / Clutch / Transmission Model or Serial
+            <input name="drive" placeholder="Tag, serial number or model…" autocomplete="off" spellcheck="false" />
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Request Details</legend>
+          <label>
+            What Do You Need?
+            <textarea name="message" placeholder="Part needed, quantity, failure symptoms or application details…"></textarea>
+          </label>
+
+          <label>
+            Email Address *
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="you@company.com…"
+              autocomplete="email"
+              spellcheck="false"
+            />
+          </label>
+        </fieldset>
+
+        <div class="form-submit">
+          <button class="button button-large" type="submit">Prepare RFQ</button>
+          <p>Prototype mode: email delivery will be connected before public launch.</p>
+        </div>
+      </form>
+
+      <div id="rfq-result" class="result-panel" role="status" aria-live="polite" hidden>
+        <strong>RFQ Captured for Testing</strong>
+        <p id="rfq-summary"></p>
+      </div>
     </div>
   </section>
 
@@ -54,14 +117,24 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
     form?.addEventListener("submit", (event) => {
       event.preventDefault();
+
+      const email = form.elements.namedItem("email") as HTMLInputElement | null;
+      if (email && !email.validity.valid) {
+        email.setAttribute("aria-invalid", "true");
+        email.focus();
+        return;
+      }
+      email?.removeAttribute("aria-invalid");
+
       const data = new FormData(form);
       const details = [...data.entries()]
         .filter(([, value]) => String(value).trim())
         .map(([key, value]) => `${key}: ${value}`)
         .join(" | ");
+
       if (summary) summary.textContent = details;
       if (result) result.hidden = false;
-      result?.scrollIntoView({ behavior: "smooth" });
+      result?.scrollIntoView({ behavior: "smooth", block: "center" });
     });
   </script>
 </BaseLayout>
