@@ -114,7 +114,7 @@ Work through the following website phases in order. A later phase may be researc
 - [x] Product JSON-LD schema.
 - [x] FAQPage JSON-LD schema.
 - [ ] Deploy and verify all model-level URLs return HTTP 200 on the VPS.
-- [ ] Verify the production build contains both existing SKU pages and the 10 model-level SEO pages.
+- [x] Verify the production build contains both existing SKU pages and the 10 model-level SEO pages.
 - [ ] Validate rendered Product and FAQ structured data after deployment.
 
 **Phase 1 exit condition:** all model pages build successfully, render unique metadata/content, and are reachable on the live domain without breaking existing SKU pages.
@@ -129,8 +129,8 @@ Complete in this order:
 
 2. **Model-specific RFQ workflow**
    - [ ] Build model-aware RFQ fields using each product's `quoteRequiredFields`.
-   - [ ] Pre-fill model/part context when a visitor clicks Request Quote.
-   - [ ] Preserve the existing generic RFQ path for visitors with incomplete identification.
+   - [x] Pre-fill model/part context when a visitor clicks Request Quote.
+   - [x] Preserve the existing generic RFQ path for visitors with incomplete identification.
    - [ ] Validate required/optional fields and RFQ confirmation behavior.
 
 3. **Breadcrumbs**
