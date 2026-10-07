@@ -32,6 +32,125 @@ export const products: Product[] = [
   { priority: 20, sku: "CX108P305-TWD", partNumber: "CX108P305", title: "Twin Disc CX108P305", family: "Other Component", modelFamily: "CX108P / C108HP3", pageType: "Product", status: "DRAFT" },
 ];
 
+export type ProductNoteGroup = {
+  heading: string;
+  items: string[];
+};
+
+export const productNotes: Record<string, ProductNoteGroup[]> = {
+  SP211P304: [
+    {
+      heading: "Cross references / replacement",
+      items: [
+        "Bandit reference: 900-6915-74",
+        "Twin Disc service replacement: PX1039839C",
+      ],
+    },
+  ],
+  SP111P340: [
+    {
+      heading: "Factory replacement",
+      items: ["Twin Disc service replacement: PX1039800D"],
+    },
+  ],
+  SP211C006: [
+    {
+      heading: "OEM cross references",
+      items: [
+        "Bandit: 900-6943-78",
+        "Morbark: 24541-258",
+        "Terex: 04U421V3609",
+        "Gear Products: 600-30063-1",
+      ],
+    },
+  ],
+  SP111C006: [
+    {
+      heading: "OEM cross reference",
+      items: ["Bandit: 900-6944-34"],
+    },
+  ],
+  A6518A: [
+    {
+      heading: "Alternate reference",
+      items: [
+        "PEC aftermarket reference: 14X-154",
+        "Commonly associated with the Twin Disc SP314SB1 family",
+      ],
+    },
+  ],
+  CX110C005: [
+    {
+      heading: "OEM cross reference",
+      items: ["Vermeer: 603643003"],
+    },
+  ],
+  SP314C002: [
+    {
+      heading: "OEM cross references",
+      items: [
+        "Bandit: 900-1914-95",
+        "Bandit: 900-6917-10",
+        "Morbark: 24542-628",
+        "Vermeer: 156154001",
+      ],
+    },
+  ],
+  IT1071028B: [
+    {
+      heading: "Compatible applications",
+      items: [
+        "Published Twin Disc drawings use this input assembly in AM110, AM220 and AM330 pump-drive configurations",
+        "Verify flywheel, housing and BOM configuration before ordering",
+      ],
+    },
+  ],
+  SP318C003: [
+    {
+      heading: "OEM cross references",
+      items: [
+        "Terex: 70012123",
+        "Vermeer: 154820001",
+        "Bandit: 900-6914-08",
+        "Trelan: 00CLU-398",
+      ],
+    },
+  ],
+  "6926E": [
+    {
+      heading: "OEM cross references",
+      items: [
+        "Bandit legacy reference: 900-1915-13",
+        "Bandit replacement reference reported for this application: 900-6955-20",
+      ],
+    },
+  ],
+  O5499E: [
+    {
+      heading: "Application note",
+      items: ["Used in Twin Disc IBF314 PTO / clutch applications"],
+    },
+  ],
+  "5659P": [
+    {
+      heading: "Aftermarket interchange",
+      items: [
+        "WPT reference: W14-07-901",
+        "Verify disc dimensions and the complete clutch configuration before ordering",
+      ],
+    },
+  ],
+  A5579D: [
+    {
+      heading: "Alternate reference",
+      items: [
+        "Aftermarket reference: WTD-11-001 / WTD11001",
+        "Associated with C111, SP111, SPE211 and SP211-family PTO applications",
+      ],
+    },
+  ],
+};
+
 export const publicProducts = products.filter((product) => product.status === "DRAFT");
 
 /* -------------------------------------------------------------------------- */
