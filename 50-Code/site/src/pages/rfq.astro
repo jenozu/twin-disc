@@ -1,0 +1,170 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout title="Request a Quote | Powertrain Parts">
+  <section class="page-masthead">
+    <div class="shell masthead-grid">
+      <div>
+        <p class="kicker">RFQ / Part Identification</p>
+        <h1>Send the details you have.</h1>
+      </div>
+      <p class="masthead-copy">
+        A tag, serial number or OEM number is usually more useful than a long description. Complete only the fields you know.
+      </p>
+    </div>
+  </section>
+
+  <section class="section shell rfq-layout">
+    <aside class="rfq-guide">
+      <div class="guide-block">
+        <span class="guide-label">BEST IDENTIFIER</span>
+        <strong>PTO / clutch tag or serial</strong>
+        <p>A clear model or serial number usually provides the fastest path to verification.</p>
+      </div>
+      <div class="guide-block">
+        <span class="guide-label">ALSO USEFUL</span>
+        <strong>Machine & engine details</strong>
+        <p>Equipment make/model and engine make/model help narrow the application.</p>
+      </div>
+      <div class="guide-block">
+        <span class="guide-label">IF AVAILABLE</span>
+        <strong>OEM part number</strong>
+        <p>Cross-reference numbers can help identify a service or replacement path.</p>
+      </div>
+    </aside>
+
+    <div class="rfq-panel">
+      <div class="rfq-panel__header">
+        <span>TECHNICAL INTAKE</span>
+        <span>Fields marked * are required</span>
+      </div>
+
+      <form id="rfq-form" novalidate>
+        <fieldset>
+          <legend>Part Information</legend>
+          <div class="form-grid">
+            <label>
+              Part Number
+              <input id="part" name="part" placeholder="SP318C003…" autocomplete="off" spellcheck="false" />
+            </label>
+            <label>
+              OEM Part Number
+              <input name="oem" placeholder="If available…" autocomplete="off" spellcheck="false" />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Equipment Information</legend>
+          <div class="form-grid">
+            <label>
+              Equipment Make & Model
+              <input name="equipment" placeholder="Bandit Beast 3680…" autocomplete="off" />
+            </label>
+            <label>
+              Engine Make & Model
+              <input name="engine" placeholder="If known…" autocomplete="off" />
+            </label>
+          </div>
+
+          <label>
+            PTO / Clutch / Transmission Model or Serial
+            <input name="drive" placeholder="Tag, serial number or model…" autocomplete="off" spellcheck="false" />
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Request Details</legend>
+          <label>
+            What Do You Need?
+            <textarea name="message" placeholder="Part needed, quantity, failure symptoms or application details…"></textarea>
+          </label>
+
+          <label>
+            Photos (Optional)
+            <input
+              id="photos"
+              type="file"
+              name="photos"
+              accept="image/*,.heic,.heif"
+              multiple
+            />
+            <span class="field-help">Add up to 5 nameplate, serial-tag, equipment or damage photos.</span>
+          </label>
+
+          <label>
+            Email Address *
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="you@company.com…"
+              autocomplete="email"
+              spellcheck="false"
+            />
+          </label>
+        </fieldset>
+
+        <div class="form-submit">
+          <button class="button button-large" type="submit">Prepare RFQ</button>
+          <p>Prototype mode: email delivery will be connected before public launch.</p>
+        </div>
+      </form>
+
+      <div id="rfq-result" class="result-panel" role="status" aria-live="polite" hidden>
+        <strong>RFQ Captured for Testing</strong>
+        <p id="rfq-summary"></p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const part = document.querySelector<HTMLInputElement>("#part");
+    if (part && params.get("part")) part.value = params.get("part") ?? "";
+
+    const form = document.querySelector<HTMLFormElement>("#rfq-form");
+    const photos = document.querySelector<HTMLInputElement>("#photos");
+    const result = document.querySelector<HTMLElement>("#rfq-result");
+    const summary = document.querySelector<HTMLElement>("#rfq-summary");
+
+    photos?.addEventListener("change", () => {
+      const count = photos.files?.length ?? 0;
+      photos.setCustomValidity(count > 5 ? "Please select no more than 5 images." : "");
+      photos.setAttribute("aria-invalid", count > 5 ? "true" : "false");
+    });
+
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const email = form.elements.namedItem("email") as HTMLInputElement | null;
+      if (email && !email.validity.valid) {
+        email.setAttribute("aria-invalid", "true");
+        email.focus();
+        return;
+      }
+      email?.removeAttribute("aria-invalid");
+
+      if (photos && !photos.validity.valid) {
+        photos.reportValidity();
+        photos.focus();
+        return;
+      }
+
+      const data = new FormData(form);
+      const details = [...data.entries()]
+        .filter(([, value]) => {
+          if (value instanceof File) return value.size > 0;
+          return String(value).trim();
+        })
+        .map(([key, value]) =>
+          value instanceof File ? `${key}: ${value.name}` : `${key}: ${value}`
+        )
+        .join(" | ");
+
+      if (summary) summary.textContent = details;
+      if (result) result.hidden = false;
+      result?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  </script>
+</BaseLayout>

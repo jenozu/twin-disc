@@ -1,0 +1,148 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { publicProducts } from "../data/products";
+
+const families = [...new Set(publicProducts.map((product) => product.family))];
+const featured = publicProducts.slice(0, 6);
+---
+<BaseLayout title="Industrial PTO, Clutch & Pump-Drive Parts">
+  <section class="hero">
+    <div class="shell hero-grid">
+      <div class="hero-copy">
+        <p class="kicker">Industrial Powertrain Catalogue</p>
+        <h1>Find the part. Verify the application.</h1>
+        <p class="hero-lead">
+          Search <span translate="no">Twin Disc</span> part numbers and product families, then send the equipment details needed to confirm fit before ordering.
+        </p>
+
+        <form class="hero-search" action="/products" method="get">
+          <label for="hero-part-search">Search Part Number or Model Family</label>
+          <div class="search-control">
+            <input
+              id="hero-part-search"
+              name="q"
+              type="search"
+              placeholder="SP318C003, CX110, clutch…"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button type="submit">Search Catalogue</button>
+          </div>
+        </form>
+
+        <div class="hero-meta" aria-label="Catalogue summary">
+          <div>
+            <strong>{publicProducts.length}</strong>
+            <span>Launch Products</span>
+          </div>
+          <div>
+            <strong>{families.length}</strong>
+            <span>Product Families</span>
+          </div>
+          <div>
+            <strong>RFQ</strong>
+            <span>Pricing Mode</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-technical" aria-label="Part identification requirements">
+        <div class="technical-header">
+          <span>PART IDENTIFICATION</span>
+          <span class="status-dot">VERIFY</span>
+        </div>
+        <div class="technical-body">
+          <p>The fastest path to a reliable match is the information already on the machine.</p>
+          <dl class="identity-list">
+            <div>
+              <dt>Preferred</dt>
+              <dd>PTO / clutch tag or serial</dd>
+            </div>
+            <div>
+              <dt>Useful</dt>
+              <dd>OEM part number</dd>
+            </div>
+            <div>
+              <dt>Useful</dt>
+              <dd>Equipment make & model</dd>
+            </div>
+            <div>
+              <dt>Helpful</dt>
+              <dd>Engine make & model</dd>
+            </div>
+          </dl>
+          <a class="text-link" href="/rfq">Send Equipment Details <span aria-hidden="true">→</span></a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-tight shell">
+    <div class="section-heading">
+      <div>
+        <p class="kicker">Launch Catalogue</p>
+        <h2>Search by the number you already have.</h2>
+      </div>
+      <a class="text-link" href="/products">View All {publicProducts.length} Products <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="featured-list">
+      <div class="featured-list__head" aria-hidden="true">
+        <span>Part Number</span>
+        <span>Family</span>
+        <span>Model Family</span>
+        <span></span>
+      </div>
+      {featured.map((product) => (
+        <a class="featured-row" href={`/products/${product.sku.toLowerCase()}`}>
+          <strong translate="no">{product.partNumber}</strong>
+          <span>{product.family}</span>
+          <span>{product.modelFamily}</span>
+          <span class="row-arrow" aria-hidden="true">↗</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="process">
+    <div class="shell process-grid">
+      <div class="process-intro">
+        <p class="kicker kicker-light">How It Works</p>
+        <h2>Technical sourcing, without the guesswork.</h2>
+        <p>Part numbers start the search. Equipment evidence finishes it.</p>
+      </div>
+
+      <div class="process-steps">
+        <article>
+          <span class="step-index">01</span>
+          <div>
+            <h3>Search the Catalogue</h3>
+            <p>Use a part number, clutch family, PTO model or known OEM reference.</p>
+          </div>
+        </article>
+        <article>
+          <span class="step-index">02</span>
+          <div>
+            <h3>Confirm the Application</h3>
+            <p>Share machine, engine, tag, serial or nameplate information when available.</p>
+          </div>
+        </article>
+        <article>
+          <span class="step-index">03</span>
+          <div>
+            <h3>Receive an RFQ Response</h3>
+            <p>Availability, exact fit and freight are checked before an order is placed.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section shell cta-band">
+    <div>
+      <p class="kicker">Have a Tag, Serial or OEM Number?</p>
+      <h2>Send the details you already have.</h2>
+    </div>
+    <a class="button button-large" href="/rfq">Start Part Identification</a>
+  </section>
+</BaseLayout>

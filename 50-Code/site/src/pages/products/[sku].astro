@@ -1,0 +1,351 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  SITE_URL,
+  SPEC_DISCLAIMER,
+  buildFaqSchema,
+  buildProductSchema,
+  categoryLabels,
+  getProductUrl,
+  getRelatedProducts,
+  productNotes,
+  publicProducts,
+  twinDiscProducts,
+} from "../../data/products";
+import type { Product, ProductModel } from "../../data/products";
+
+type RouteProps =
+  | { kind: "sku"; product: Product }
+  | { kind: "model"; product: ProductModel };
+
+export function getStaticPaths() {
+  return [
+    ...publicProducts.map((product) => ({
+      params: { sku: product.sku.toLowerCase() },
+      props: { kind: "sku" as const, product },
+    })),
+    ...twinDiscProducts.map((product) => ({
+      params: { sku: product.id },
+      props: { kind: "model" as const, product },
+    })),
+  ];
+}
+
+const route = Astro.props as RouteProps;
+const skuProduct = route.kind === "sku" ? route.product : undefined;
+const modelProduct = route.kind === "model" ? route.product : undefined;
+
+const title = modelProduct
+  ? modelProduct.metaTitle
+  : skuProduct
+    ? skuProduct.partNumber + " | Powertrain Parts"
+    : "Powertrain Parts";
+
+const description = modelProduct
+  ? modelProduct.metaDescription
+  : skuProduct
+    ? "RFQ and identification page for Twin Disc " +
+      skuProduct.partNumber +
+      ". Compatibility must be verified before ordering."
+    : "Independent sourcing and RFQ support for Twin Disc powertrain products.";
+
+const canonicalUrl = modelProduct
+  ? getProductUrl(modelProduct)
+  : skuProduct
+    ? SITE_URL + "/products/" + skuProduct.sku.toLowerCase() + "/"
+    : SITE_URL + "/products/";
+
+const structuredData = modelProduct
+  ? [buildProductSchema(modelProduct), buildFaqSchema(modelProduct)]
+  : [];
+
+const relatedProducts = modelProduct ? getRelatedProducts(modelProduct) : [];
+const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalUrl={canonicalUrl}
+  structuredData={structuredData}
+>
+  {modelProduct ? (
+    <>
+      <section class="product-masthead">
+        <div class="shell">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/products">Catalogue</a>
+            <span aria-hidden="true">/</span>
+            <span>{categoryLabels[modelProduct.category]}</span>
+            <span aria-hidden="true">/</span>
+            <span translate="no">{modelProduct.modelName}</span>
+          </nav>
+
+          <div class="product-title-grid">
+            <div>
+              <p class="kicker">{categoryLabels[modelProduct.category]}</p>
+              <h1 class="model-hero" translate="no">{modelProduct.h1}</h1>
+              <p class="product-subtitle">{modelProduct.heroSubtitle}</p>
+            </div>
+
+            <div class="product-status">
+              <span>PRICING</span>
+              <strong>Request for Quote</strong>
+              <span>FITMENT</span>
+              <strong>Serial / BOM Verification</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section shell product-sheet">
+        <div class="product-main">
+          <div class="section-rule">
+            <span>01</span>
+            <h2>Product Overview</h2>
+          </div>
+
+          <div class="model-intro">
+            <p>{modelProduct.introParagraph}</p>
+          </div>
+
+          {modelProduct.aliases && modelProduct.aliases.length > 0 && (
+            <p class="model-aliases">
+              <strong>Also referenced as:</strong> {modelProduct.aliases.join(", ")}
+            </p>
+          )}
+
+          <div class="section-rule model-section-gap">
+            <span>02</span>
+            <h2>Technical Specifications</h2>
+          </div>
+
+          <div class="spec-table">
+            {modelProduct.specs.map((spec) => (
+              <div>
+                <span>{spec.label}</span>
+                <strong>{spec.value}</strong>
+              </div>
+            ))}
+          </div>
+
+          <p class="spec-disclaimer">{SPEC_DISCLAIMER}</p>
+
+          <div class="section-rule model-section-gap">
+            <span>03</span>
+            <h2>Common Applications</h2>
+          </div>
+
+          <div class="application-grid">
+            {modelProduct.commonApplications.map((application) => (
+              <span>{application}</span>
+            ))}
+          </div>
+
+          <div class="section-rule model-section-gap">
+            <span>04</span>
+            <h2>Technical FAQs</h2>
+          </div>
+
+          <div class="faq-list">
+            {modelProduct.faqs.map((faq) => (
+              <details class="faq-item">
+                <summary>{faq.question}</summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+
+          {relatedProducts.length > 0 && (
+            <>
+              <div class="section-rule model-section-gap">
+                <span>05</span>
+                <h2>Related Twin Disc Products</h2>
+              </div>
+
+              <div class="related-product-list">
+                {relatedProducts.map((related) => (
+                  <a href={"/products/" + related.id + "/"}>
+                    <span>{categoryLabels[related.category]}</span>
+                    <strong>{related.modelName}</strong>
+                    <b aria-hidden="true">→</b>
+                  </a>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        <aside class="quote-panel">
+          <div class="quote-panel__header">
+            <span>RFQ / MODEL ID</span>
+            <span class="status-dot">OPEN</span>
+          </div>
+          <div class="quote-panel__body">
+            <h2>Verify Your Unit</h2>
+            <p>
+              Send the identifiers you have. We use them to reduce fitment risk before a quote becomes an order.
+            </p>
+
+            <ul class="check-list">
+              {(modelProduct.quoteRequiredFields ?? [
+                "Full model number",
+                "Serial number",
+                "BOM / assembly number",
+                "Application details",
+              ]).map((field) => (
+                <li>{field}</li>
+              ))}
+            </ul>
+
+            <a
+              class="button button-block"
+              href={"/rfq?part=" + encodeURIComponent(modelProduct.modelName)}
+            >
+              Request Quote
+            </a>
+            <a class="text-link text-link-center" href="/products">Return to Catalogue</a>
+          </div>
+        </aside>
+      </section>
+    </>
+  ) : skuProduct ? (
+    <>
+      <section class="product-masthead">
+        <div class="shell">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/products">Catalogue</a>
+            <span aria-hidden="true">/</span>
+            <span translate="no">{skuProduct.partNumber}</span>
+          </nav>
+
+          <div class="product-title-grid">
+            <div>
+              <p class="kicker">{skuProduct.family}</p>
+              <h1 class="part-hero" translate="no">{skuProduct.partNumber}</h1>
+              <p class="product-subtitle">{skuProduct.title}</p>
+            </div>
+
+            <div class="product-status">
+              <span>PRICING</span>
+              <strong>Request for Quote</strong>
+              <span>FITMENT</span>
+              <strong>Verification Required</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section shell product-sheet">
+        <div class="product-main">
+          <div class="section-rule">
+            <span>01</span>
+            <h2>Product Identification</h2>
+          </div>
+
+          <div class="spec-table">
+            <div>
+              <span>Manufacturer</span>
+              <strong translate="no">Twin Disc</strong>
+            </div>
+            <div>
+              <span>Part Number</span>
+              <strong class="mono" translate="no">{skuProduct.partNumber}</strong>
+            </div>
+            <div>
+              <span>Product Family</span>
+              <strong>{skuProduct.family}</strong>
+            </div>
+            <div>
+              <span>Model Family</span>
+              <strong>{skuProduct.modelFamily}</strong>
+            </div>
+            <div>
+              <span>Page Type</span>
+              <strong>{skuProduct.pageType}</strong>
+            </div>
+            <div>
+              <span>Price</span>
+              <strong>RFQ</strong>
+            </div>
+          </div>
+
+          <details class="product-notes">
+            <summary>
+              <span>Notes</span>
+              <span class="product-notes__toggle" aria-hidden="true">+</span>
+            </summary>
+
+            <div class="product-notes__body">
+              <div class="product-note-group">
+                <h3>Product / model information</h3>
+                <ul>
+                  <li><strong>Model family:</strong> {skuProduct.modelFamily}</li>
+                  <li><strong>Part type:</strong> {skuProduct.pageType}</li>
+                </ul>
+              </div>
+
+              {skuNotes.map((note) => (
+                <div class="product-note-group">
+                  <h3>{note.heading}</h3>
+                  <ul>
+                    {note.items.map((item) => (
+                      <li translate="no">{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+
+              <div class="product-note-group product-note-group--warning">
+                <h3>Fitment verification</h3>
+                <p>
+                  Cross-reference, replacement and application information is provided as a research aid. Confirm the exact PTO or clutch tag, serial number, BOM / assembly number and equipment configuration before ordering.
+                </p>
+              </div>
+            </div>
+          </details>
+
+          <div class="section-rule notes-following-section">
+            <span>02</span>
+            <h2>Compatibility Standard</h2>
+          </div>
+
+          <div class="verification-copy">
+            <p>
+              Do not order from a part number alone when the application is uncertain. Exact compatibility and current availability should be verified before the quote becomes an order.
+            </p>
+            <p>
+              The strongest identifiers are the PTO or clutch tag, serial number, OEM number, equipment model and engine model.
+            </p>
+          </div>
+        </div>
+
+        <aside class="quote-panel">
+          <div class="quote-panel__header">
+            <span>RFQ / PART ID</span>
+            <span class="status-dot">OPEN</span>
+          </div>
+          <div class="quote-panel__body">
+            <h2>Verify This Part</h2>
+            <p>Send the equipment information you have. Not every field is required.</p>
+
+            <ul class="check-list">
+              <li>Equipment make & model</li>
+              <li>Engine make & model</li>
+              <li>PTO / clutch tag or serial</li>
+              <li>OEM part number</li>
+            </ul>
+
+            <a
+              class="button button-block"
+              href={"/rfq?part=" + encodeURIComponent(skuProduct.partNumber)}
+            >
+              Request Quote
+            </a>
+            <a class="text-link text-link-center" href="/products">Return to Catalogue</a>
+          </div>
+        </aside>
+      </section>
+    </>
+  ) : null}
+</BaseLayout>
