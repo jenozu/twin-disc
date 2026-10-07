@@ -8,6 +8,7 @@ import {
   categoryLabels,
   getProductUrl,
   getRelatedProducts,
+  productNotes,
   publicProducts,
   twinDiscProducts,
 } from "../../data/products";
@@ -59,6 +60,7 @@ const structuredData = modelProduct
   : [];
 
 const relatedProducts = modelProduct ? getRelatedProducts(modelProduct) : [];
+const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
 ---
 
 <BaseLayout
@@ -268,7 +270,42 @@ const relatedProducts = modelProduct ? getRelatedProducts(modelProduct) : [];
             </div>
           </div>
 
-          <div class="section-rule">
+          <details class="product-notes">
+            <summary>
+              <span>Notes</span>
+              <span class="product-notes__toggle" aria-hidden="true">+</span>
+            </summary>
+
+            <div class="product-notes__body">
+              <div class="product-note-group">
+                <h3>Product / model information</h3>
+                <ul>
+                  <li><strong>Model family:</strong> {skuProduct.modelFamily}</li>
+                  <li><strong>Part type:</strong> {skuProduct.pageType}</li>
+                </ul>
+              </div>
+
+              {skuNotes.map((note) => (
+                <div class="product-note-group">
+                  <h3>{note.heading}</h3>
+                  <ul>
+                    {note.items.map((item) => (
+                      <li translate="no">{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+
+              <div class="product-note-group product-note-group--warning">
+                <h3>Fitment verification</h3>
+                <p>
+                  Cross-reference, replacement and application information is provided as a research aid. Confirm the exact PTO or clutch tag, serial number, BOM / assembly number and equipment configuration before ordering.
+                </p>
+              </div>
+            </div>
+          </details>
+
+          <div class="section-rule notes-following-section">
             <span>02</span>
             <h2>Compatibility Standard</h2>
           </div>
