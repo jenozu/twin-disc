@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from "astro:transitions";
 import "lenis/dist/lenis.css";
 import "../styles/global.css";
 import "../styles/motion.css";
@@ -34,7 +33,6 @@ const {
     {structuredData.map((schema) => (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     ))}
-    <ClientRouter />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to Content</a>
@@ -103,14 +101,13 @@ const {
 
       const startMotion = () => bootMotion();
 
-      document.addEventListener("astro:before-swap", teardownMotion);
-      document.addEventListener("astro:page-load", startMotion);
-
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", startMotion, { once: true });
       } else {
         startMotion();
       }
+
+      window.addEventListener("pagehide", teardownMotion, { once: true });
     </script>
   </body>
 </html>
