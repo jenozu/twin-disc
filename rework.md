@@ -15,7 +15,7 @@ The external design guide is being used primarily for its **Astro-friendly inter
 - **Smooth scroll:** Lenis
 - **Scroll animation:** GSAP + ScrollTrigger
 - **Lightweight/basic scroll effects:** native CSS where it is the better tool
-- **Page transitions:** Astro View Transitions / ClientRouter
+- **Page transitions:** native cross-document View Transitions in Astro; ClientRouter only if a later interaction genuinely requires SPA-style routing
 - **Motion accessibility:** `prefers-reduced-motion` respected throughout
 
 ## Safety / rollback
@@ -35,29 +35,31 @@ The external design guide is being used primarily for its **Astro-friendly inter
 - [x] Add this `rework.md` tracker
 
 ## 1.2 Motion dependencies
-- [ ] Add GSAP
-- [ ] Add ScrollTrigger integration
-- [ ] Add Lenis
-- [ ] Import Lenis recommended CSS
-- [ ] Keep Astro as the framework; no React/Framer dependency
+- [x] Add GSAP
+- [x] Add ScrollTrigger integration
+- [x] Add Lenis
+- [x] Import Lenis recommended CSS
+- [x] Keep Astro as the framework; no React/Framer dependency
 
 ## 1.3 Shared motion runtime
-- [ ] Create one reusable motion bootstrap module
-- [ ] Synchronize Lenis with GSAP's ticker
-- [ ] Synchronize Lenis scroll events with ScrollTrigger
-- [ ] Add lifecycle cleanup/re-init for Astro client-side navigation
-- [ ] Respect reduced-motion preferences
-- [ ] Add reusable `data-reveal` hooks for later batches
+- [x] Create one reusable motion bootstrap module
+- [x] Synchronize Lenis with GSAP's ticker
+- [x] Synchronize Lenis scroll events with ScrollTrigger
+- [x] Add clean page-lifecycle teardown/re-init
+- [x] Respect reduced-motion preferences
+- [x] Add reusable `data-reveal` hooks for later batches
 
 ## 1.4 View transitions
-- [ ] Enable Astro ClientRouter site-wide
-- [ ] Add restrained page-transition timing
-- [ ] Avoid transitions on reduced-motion preferences
+- [x] Enable native cross-document view transitions site-wide
+- [x] Keep full-page Astro navigation so existing catalogue/RFQ scripts remain simple and reliable
+- [x] Add restrained page-transition timing
+- [x] Avoid transitions on reduced-motion preferences
+- [ ] Reconsider ClientRouter only if a later feature needs SPA-style persistent state
 
 ## 1.5 Design/motion tokens
-- [ ] Add shared duration/easing/distance tokens
-- [ ] Keep the existing industrial colour/typography system
-- [ ] Add motion utility classes only; no major page redesign yet
+- [x] Add shared duration/easing/distance tokens
+- [x] Keep the existing industrial colour/typography system
+- [x] Add motion utility hooks only; no major page redesign yet
 
 ## 1.6 Batch 1 verification
 - [ ] `npm install`
