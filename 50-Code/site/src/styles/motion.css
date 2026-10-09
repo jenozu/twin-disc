@@ -1,3 +1,7 @@
+@view-transition {
+  navigation: auto;
+}
+
 :root {
   --motion-fast: 160ms;
   --motion-base: 280ms;
