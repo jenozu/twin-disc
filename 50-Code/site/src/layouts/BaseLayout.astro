@@ -1,5 +1,8 @@
 ---
+import { ClientRouter } from "astro:transitions";
+import "lenis/dist/lenis.css";
 import "../styles/global.css";
+import "../styles/motion.css";
 
 interface Props {
   title?: string;
@@ -31,6 +34,7 @@ const {
     {structuredData.map((schema) => (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     ))}
+    <ClientRouter />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to Content</a>
@@ -93,5 +97,20 @@ const {
         <a href="/rfq">Request Quote</a>
       </div>
     </footer>
+
+    <script>
+      import { bootMotion, teardownMotion } from "../scripts/motion";
+
+      const startMotion = () => bootMotion();
+
+      document.addEventListener("astro:before-swap", teardownMotion);
+      document.addEventListener("astro:page-load", startMotion);
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", startMotion, { once: true });
+      } else {
+        startMotion();
+      }
+    </script>
   </body>
 </html>
