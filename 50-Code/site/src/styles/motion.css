@@ -1,0 +1,45 @@
+:root {
+  --motion-fast: 160ms;
+  --motion-base: 280ms;
+  --motion-slow: 560ms;
+  --motion-distance: 18px;
+  --ease-standard: cubic-bezier(.2, .8, .2, 1);
+  --ease-emphasized: cubic-bezier(.16, 1, .3, 1);
+}
+
+::view-transition-old(root) {
+  animation: twd-page-out var(--motion-fast) var(--ease-standard) both;
+}
+
+::view-transition-new(root) {
+  animation: twd-page-in var(--motion-base) var(--ease-emphasized) both;
+}
+
+@keyframes twd-page-out {
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes twd-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+[data-reveal] {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+
+  [data-reveal] {
+    will-change: auto;
+  }
+}
