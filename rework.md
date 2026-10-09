@@ -62,6 +62,8 @@ The external design guide is being used primarily for its **Astro-friendly inter
 - [x] Add motion utility hooks only; no major page redesign yet
 
 ## 1.6 Batch 1 verification
+> Run this verification from an isolated VPS worktree/checkout of `website-premium-v2` so the currently deployed `website-mvp` `dist/` directory is not overwritten.
+
 - [ ] `npm install`
 - [ ] `npm run build`
 - [ ] Verify homepage, catalogue, product page and RFQ still render
