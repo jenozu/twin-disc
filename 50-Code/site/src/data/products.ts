@@ -1032,7 +1032,7 @@ export const twinDiscProducts: ProductModel[] = [
       'emergency Twin Disc rebuild kit',
       'emergency Twin Disc parts shipment',
       // Commercial intent
-      'authorized Twin Disc parts distributor',
+      'independent Twin Disc parts sourcing',
       'Twin Disc overhaul kits supplier',
       // Model-specific intent
       'Twin Disc marine transmission rebuild kit',
