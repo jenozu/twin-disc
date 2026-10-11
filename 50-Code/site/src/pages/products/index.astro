@@ -1,0 +1,139 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { categoryLabels, publicProducts, twinDiscProducts } from "../../data/products";
+
+const families = [...new Set(publicProducts.map((product) => product.family))];
+---
+<BaseLayout title="Product Catalogue | Powertrain Parts">
+  <section class="page-masthead">
+    <div class="shell masthead-grid">
+      <div>
+        <p class="kicker">Product Catalogue</p>
+        <h1>Industrial powertrain parts.</h1>
+      </div>
+      <p class="masthead-copy">
+        Search by part number, product family or <span translate="no">Twin Disc</span> model family. Compatibility is verified before ordering.
+      </p>
+    </div>
+  </section>
+
+  <section class="catalogue shell">
+    <div class="catalogue-tools">
+      <div class="catalogue-search">
+        <label for="product-search">Search Catalogue</label>
+        <input
+          id="product-search"
+          type="search"
+          placeholder="SP318C003, clutch, CX110…"
+          autocomplete="off"
+          spellcheck="false"
+          aria-describedby="search-status"
+        />
+      </div>
+
+      <div class="catalogue-summary">
+        <span><strong id="result-count">{publicProducts.length}</strong> Results</span>
+        <span>{families.length} Product Families</span>
+      </div>
+    </div>
+
+    <p id="search-status" class="sr-only" aria-live="polite"></p>
+
+    <div class="catalogue-table" id="product-grid">
+      <div class="catalogue-table__head" aria-hidden="true">
+        <span>Part Number</span>
+        <span>Product Family</span>
+        <span>Model Family</span>
+        <span>Action</span>
+      </div>
+
+      {publicProducts.map((product) => (
+        <article
+          class="catalogue-row"
+          data-search={`${product.partNumber} ${product.title} ${product.family} ${product.modelFamily}`.toLowerCase()}
+        >
+          <a class="part-number" href={`/products/${product.sku.toLowerCase()}`} translate="no">
+            {product.partNumber}
+          </a>
+          <span>{product.family}</span>
+          <span class="model-family">{product.modelFamily}</span>
+          <a class="row-action" href={`/products/${product.sku.toLowerCase()}`}>View Part <span aria-hidden="true">→</span></a>
+        </article>
+      ))}
+    </div>
+
+    <div id="no-results" class="empty-state" hidden>
+      <strong>No Matching Launch Products</strong>
+      <p>Try the full part number, a shorter model family such as CX110, or a product type such as clutch.</p>
+      <a class="text-link" href="/rfq">Send an RFQ Instead <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+
+  <section class="section section-tight shell">
+    <div class="section-heading">
+      <div>
+        <p class="kicker">Model Guides</p>
+        <h2>Twin Disc model reference pages.</h2>
+      </div>
+      <p class="masthead-copy">
+        Technical specifications, applications, rebuild information and RFQ guidance for priority Twin Disc model families.
+      </p>
+    </div>
+
+    <div class="featured-list">
+      <div class="featured-list__head" aria-hidden="true">
+        <span>Model</span>
+        <span>Category</span>
+        <span>Purpose</span>
+        <span></span>
+      </div>
+
+      {twinDiscProducts.map((product) => (
+        <a class="featured-row" href={`/products/${product.id}/`}>
+          <strong translate="no">{product.modelName}</strong>
+          <span>{categoryLabels[product.category]}</span>
+          <span>Technical reference & RFQ</span>
+          <span class="row-arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <script>
+    const input = document.querySelector<HTMLInputElement>("#product-search");
+    const rows = [...document.querySelectorAll<HTMLElement>(".catalogue-row")];
+    const empty = document.querySelector<HTMLElement>("#no-results");
+    const count = document.querySelector<HTMLElement>("#result-count");
+    const status = document.querySelector<HTMLElement>("#search-status");
+
+    const applySearch = (query: string, updateUrl = true) => {
+      const normalized = query.trim().toLowerCase();
+      let visible = 0;
+
+      rows.forEach((row) => {
+        const show = !normalized || (row.dataset.search ?? "").includes(normalized);
+        row.hidden = !show;
+        if (show) visible += 1;
+      });
+
+      if (count) count.textContent = String(visible);
+      if (empty) empty.hidden = visible !== 0;
+      if (status) status.textContent = `${visible} catalogue result${visible === 1 ? "" : "s"} shown.`;
+
+      if (updateUrl) {
+        const url = new URL(window.location.href);
+        if (query.trim()) url.searchParams.set("q", query.trim());
+        else url.searchParams.delete("q");
+        history.replaceState({}, "", url);
+      }
+    };
+
+    const initialQuery = new URL(window.location.href).searchParams.get("q") ?? "";
+    if (input) {
+      input.value = initialQuery;
+      applySearch(initialQuery, false);
+      input.addEventListener("input", () => applySearch(input.value));
+    }
+  </script>
+</BaseLayout>
