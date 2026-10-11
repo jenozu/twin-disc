@@ -16,6 +16,10 @@ const {
   canonicalUrl,
   structuredData = [],
 } = Astro.props;
+
+const pathname = Astro.url.pathname;
+const catalogueActive = pathname.startsWith("/products");
+const rfqActive = pathname.startsWith("/rfq");
 ---
 <!doctype html>
 <html lang="en">
@@ -23,7 +27,7 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0f171d" />
+    <meta name="theme-color" content="#0b0f12" />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -35,30 +39,39 @@ const {
     ))}
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Skip to Content</a>
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <div class="utility-bar" aria-hidden="true">
+    <div class="utility-bar">
       <div class="shell utility-bar__inner">
-        <span>Independent Industrial Parts Sourcing</span>
-        <span>RFQ-Based · Compatibility Verified Before Order</span>
+        <span>Independent industrial parts sourcing</span>
+        <span>Part-number search · Fitment verification · RFQ</span>
       </div>
     </div>
 
     <header class="site-header">
       <div class="shell site-header__inner">
         <a class="brand" href="/" aria-label="Powertrain Parts home">
-          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-mark" aria-hidden="true"><span>PT</span></span>
           <span class="brand-copy">
             <strong>POWERTRAIN</strong>
-            <span>PARTS</span>
+            <span>PARTS / TECHNICAL SOURCING</span>
           </span>
         </a>
 
         <nav class="site-nav" aria-label="Main navigation">
-          <a href="/products">Catalogue</a>
-          <a href="/rfq">Part Identification</a>
+          <a href="/products" aria-current={catalogueActive ? "page" : undefined}>Catalogue</a>
+          <a href="/rfq" aria-current={rfqActive ? "page" : undefined}>Part Identification</a>
           <a class="button button-compact" href="/rfq">Request Quote</a>
         </nav>
+
+        <details class="mobile-nav">
+          <summary>Menu</summary>
+          <nav class="mobile-nav__panel" aria-label="Mobile navigation">
+            <a href="/products" aria-current={catalogueActive ? "page" : undefined}>Catalogue</a>
+            <a href="/rfq" aria-current={rfqActive ? "page" : undefined}>Part Identification</a>
+            <a class="button button-block" href="/rfq">Request Quote</a>
+          </nav>
+        </details>
       </div>
     </header>
 
@@ -68,31 +81,38 @@ const {
 
     <footer class="site-footer">
       <div class="shell footer-grid">
-        <div>
-          <a class="brand brand-footer" href="/">
-            <span class="brand-mark" aria-hidden="true"></span>
+        <div class="footer-brand">
+          <a class="brand brand-footer" href="/" aria-label="Powertrain Parts home">
+            <span class="brand-mark" aria-hidden="true"><span>PT</span></span>
             <span class="brand-copy">
               <strong>POWERTRAIN</strong>
-              <span>PARTS</span>
+              <span>PARTS / TECHNICAL SOURCING</span>
             </span>
           </a>
-          <p class="footer-copy">Independent sourcing for industrial PTO, clutch, friction and pump-drive components.</p>
+          <p class="footer-copy">
+            Independent sourcing for industrial PTO, clutch, friction and pump-drive components.
+          </p>
         </div>
 
         <div class="footer-meta">
-          <strong>Ordering Standard</strong>
-          <p>Compatibility and availability are verified before a quote becomes an order.</p>
+          <span class="footer-label">BUYING WORKFLOW</span>
+          <strong>Identify → verify → quote</strong>
+          <p>Known part data is carried into the RFQ so you do not have to start over.</p>
         </div>
 
         <div class="footer-meta">
-          <strong>Manufacturer Reference</strong>
-          <p><span translate="no">Twin Disc</span> names and part numbers are used for product identification.</p>
+          <span class="footer-label">REFERENCE STANDARD</span>
+          <strong>Evidence before fitment claims</strong>
+          <p>Model, serial, BOM and equipment details are used to reduce ordering risk.</p>
         </div>
       </div>
 
       <div class="shell footer-bottom">
         <span>Independent supplier · Not an official <span translate="no">Twin Disc</span> website</span>
-        <a href="/rfq">Request Quote</a>
+        <div class="footer-links">
+          <a href="/products">Catalogue</a>
+          <a href="/rfq">Request Quote</a>
+        </div>
       </div>
     </footer>
 

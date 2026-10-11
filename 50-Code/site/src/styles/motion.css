@@ -3,10 +3,10 @@
 }
 
 :root {
-  --motion-fast: 160ms;
-  --motion-base: 280ms;
-  --motion-slow: 560ms;
-  --motion-distance: 18px;
+  --motion-fast: 150ms;
+  --motion-base: 260ms;
+  --motion-slow: 520ms;
+  --motion-distance: 14px;
   --ease-standard: cubic-bezier(.2, .8, .2, 1);
   --ease-emphasized: cubic-bezier(.16, 1, .3, 1);
 }
@@ -22,14 +22,14 @@
 @keyframes twd-page-out {
   to {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(-3px);
   }
 }
 
 @keyframes twd-page-in {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(5px);
   }
 }
 

@@ -3,10 +3,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 <BaseLayout title="Request a Quote | Powertrain Parts">
   <section class="page-masthead">
-    <div class="shell masthead-grid">
+    <div class="shell masthead-grid" data-reveal>
       <div>
-        <p class="kicker">RFQ / Part Identification</p>
-        <h1>Send the details you have.</h1>
+        <p class="kicker">RFQ / Part identification</p>
+        <h1>Send the identifiers you already have.</h1>
       </div>
       <p class="masthead-copy">
         A tag, serial number or OEM number is usually more useful than a long description. Complete only the fields you know.
@@ -15,7 +15,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   </section>
 
   <section class="section shell rfq-layout">
-    <aside class="rfq-guide">
+    <aside class="rfq-guide" data-reveal>
       <div class="guide-block">
         <span class="guide-label">BEST IDENTIFIER</span>
         <strong>PTO / clutch tag or serial</strong>
@@ -33,7 +33,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       </div>
     </aside>
 
-    <div class="rfq-panel">
+    <div class="rfq-panel" data-reveal data-reveal-delay="0.08">
       <div class="rfq-panel__header">
         <span>TECHNICAL INTAKE</span>
         <span>Fields marked * are required</span>
@@ -41,7 +41,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       <form id="rfq-form" novalidate>
         <fieldset>
-          <legend>Part Information</legend>
+          <legend>Part information</legend>
           <div class="form-grid">
             <label>
               Part Number
@@ -55,7 +55,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </fieldset>
 
         <fieldset>
-          <legend>Equipment Information</legend>
+          <legend>Equipment information</legend>
           <div class="form-grid">
             <label>
               Equipment Make & Model
@@ -74,7 +74,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </fieldset>
 
         <fieldset>
-          <legend>Request Details</legend>
+          <legend>Request details</legend>
           <label>
             What Do You Need?
             <textarea name="message" placeholder="Part needed, quantity, failure symptoms or application details…"></textarea>
@@ -88,8 +88,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
               name="photos"
               accept="image/*,.heic,.heif"
               multiple
+              aria-describedby="photos-help"
             />
-            <span class="field-help">Add up to 5 nameplate, serial-tag, equipment or damage photos.</span>
+            <span id="photos-help" class="field-help">Add up to 5 nameplate, serial-tag, equipment or damage photos.</span>
           </label>
 
           <label>
@@ -112,7 +113,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       </form>
 
       <div id="rfq-result" class="result-panel" role="status" aria-live="polite" hidden>
-        <strong>RFQ Captured for Testing</strong>
+        <strong>RFQ captured for testing</strong>
         <p id="rfq-summary"></p>
       </div>
     </div>
@@ -158,7 +159,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           return String(value).trim();
         })
         .map(([key, value]) =>
-          value instanceof File ? `${key}: ${value.name}` : `${key}: ${value}`
+          value instanceof File ? key + ": " + value.name : key + ": " + value
         )
         .join(" | ");
 
