@@ -2,46 +2,39 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 <BaseLayout title="Request a Quote | Powertrain Parts">
-  <section class="page-masthead">
-    <div class="shell masthead-grid" data-reveal>
+  <section class="rfq-hero">
+    <div class="shell rfq-hero__grid" data-reveal>
       <div>
-        <p class="kicker">RFQ / Part identification</p>
-        <h1>Send the identifiers you already have.</h1>
+        <p class="registry-code registry-code--dark">INTAKE / 02</p>
+        <h1>RFQ</h1>
       </div>
-      <p class="masthead-copy">
-        A tag, serial number or OEM number is usually more useful than a long description. Complete only the fields you know.
-      </p>
+      <div class="rfq-hero__copy">
+        <strong>Identify first. Quote second.</strong>
+        <p>A tag, serial or OEM number is usually more useful than a long description. Complete only the fields you know.</p>
+      </div>
     </div>
   </section>
 
-  <section class="section shell rfq-layout">
+  <section class="rfq-stage shell">
     <aside class="rfq-guide" data-reveal>
-      <div class="guide-block">
-        <span class="guide-label">BEST IDENTIFIER</span>
-        <strong>PTO / clutch tag or serial</strong>
-        <p>A clear model or serial number usually provides the fastest path to verification.</p>
-      </div>
-      <div class="guide-block">
-        <span class="guide-label">ALSO USEFUL</span>
-        <strong>Machine & engine details</strong>
-        <p>Equipment make/model and engine make/model help narrow the application.</p>
-      </div>
-      <div class="guide-block">
-        <span class="guide-label">IF AVAILABLE</span>
-        <strong>OEM part number</strong>
-        <p>Cross-reference numbers can help identify a service or replacement path.</p>
-      </div>
+      <p class="kicker">Evidence priority</p>
+      <ol>
+        <li><span>01</span><div><strong>Tag / serial</strong><p>PTO, clutch or transmission identifiers.</p></div></li>
+        <li><span>02</span><div><strong>OEM number</strong><p>Useful for cross-reference work.</p></div></li>
+        <li><span>03</span><div><strong>Machine context</strong><p>Equipment and engine make/model.</p></div></li>
+      </ol>
+      <p class="rfq-guide__note">You do not need every field. Send the strongest identifiers you have.</p>
     </aside>
 
-    <div class="rfq-panel" data-reveal data-reveal-delay="0.08">
-      <div class="rfq-panel__header">
+    <div class="rfq-sheet" data-reveal data-reveal-delay="0.08">
+      <div class="rfq-sheet__header">
         <span>TECHNICAL INTAKE</span>
-        <span>Fields marked * are required</span>
+        <span>* REQUIRED</span>
       </div>
 
       <form id="rfq-form" novalidate>
         <fieldset>
-          <legend>Part information</legend>
+          <legend><span>01</span> Part record</legend>
           <div class="form-grid">
             <label>
               Part Number
@@ -55,7 +48,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </fieldset>
 
         <fieldset>
-          <legend>Equipment information</legend>
+          <legend><span>02</span> Machine context</legend>
           <div class="form-grid">
             <label>
               Equipment Make & Model
@@ -74,7 +67,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </fieldset>
 
         <fieldset>
-          <legend>Request details</legend>
+          <legend><span>03</span> Request</legend>
           <label>
             What Do You Need?
             <textarea name="message" placeholder="Part needed, quantity, failure symptoms or application details…"></textarea>
@@ -107,7 +100,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </fieldset>
 
         <div class="form-submit">
-          <button class="button button-large" type="submit">Prepare RFQ</button>
+          <button class="button button-large" type="submit">Prepare RFQ <span aria-hidden="true">↗</span></button>
           <p>Prototype mode: email delivery will be connected before public launch.</p>
         </div>
       </form>

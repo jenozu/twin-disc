@@ -71,7 +71,7 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
 >
   {modelProduct ? (
     <>
-      <section class="product-masthead">
+      <section class="record-hero">
         <div class="shell">
           <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/products">Catalogue</a>
@@ -81,19 +81,21 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
             <span translate="no">{modelProduct.modelName}</span>
           </nav>
 
-          <div class="product-title-grid">
-            <div>
-              <p class="kicker">{categoryLabels[modelProduct.category]}</p>
+          <div class="record-hero__grid">
+            <div data-reveal>
+              <p class="record-id">MODEL RECORD / TECHNICAL GUIDE</p>
               <h1 class="model-hero" translate="no">{modelProduct.h1}</h1>
               <p class="product-subtitle">{modelProduct.heroSubtitle}</p>
             </div>
 
-            <div class="product-status">
-              <span>PRICING</span>
-              <strong>Request for Quote</strong>
-              <span>FITMENT</span>
-              <strong>Serial / BOM Verification</strong>
-            </div>
+            <aside class="record-stamp" data-reveal data-reveal-delay="0.08">
+              <span>RECORD STATUS</span>
+              <strong>REFERENCE</strong>
+              <dl>
+                <div><dt>PRICING</dt><dd>RFQ</dd></div>
+                <div><dt>FITMENT</dt><dd>SERIAL / BOM</dd></div>
+              </dl>
+            </aside>
           </div>
         </div>
       </section>
@@ -102,7 +104,7 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
         <div class="product-main">
           <div class="section-rule">
             <span>01</span>
-            <h2>Product Overview</h2>
+            <h2>Product overview</h2>
           </div>
 
           <div class="model-intro">
@@ -117,7 +119,7 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
 
           <div class="section-rule model-section-gap">
             <span>02</span>
-            <h2>Technical Specifications</h2>
+            <h2>Technical specifications</h2>
           </div>
 
           <div class="spec-table">
@@ -133,7 +135,7 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
 
           <div class="section-rule model-section-gap">
             <span>03</span>
-            <h2>Common Applications</h2>
+            <h2>Common applications</h2>
           </div>
 
           <div class="application-grid">
@@ -160,7 +162,7 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
             <>
               <div class="section-rule model-section-gap">
                 <span>05</span>
-                <h2>Related Twin Disc Products</h2>
+                <h2>Related Twin Disc products</h2>
               </div>
 
               <div class="related-product-list">
@@ -168,7 +170,7 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
                   <a href={"/products/" + related.id + "/"}>
                     <span>{categoryLabels[related.category]}</span>
                     <strong>{related.modelName}</strong>
-                    <b aria-hidden="true">→</b>
+                    <b aria-hidden="true">↗</b>
                   </a>
                 ))}
               </div>
@@ -179,13 +181,12 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
         <aside class="quote-panel">
           <div class="quote-panel__header">
             <span>RFQ / MODEL ID</span>
-            <span class="status-dot">OPEN</span>
+            <span class="status-mark">OPEN</span>
           </div>
           <div class="quote-panel__body">
-            <h2>Verify Your Unit</h2>
-            <p>
-              Send the identifiers you have. We use them to reduce fitment risk before a quote becomes an order.
-            </p>
+            <p class="quote-number">02 / VERIFY</p>
+            <h2>Verify your unit.</h2>
+            <p>Send the identifiers you have. They reduce fitment risk before a quote becomes an order.</p>
 
             <ul class="check-list">
               {(modelProduct.quoteRequiredFields ?? [
@@ -198,20 +199,17 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
               ))}
             </ul>
 
-            <a
-              class="button button-block"
-              href={"/rfq?part=" + encodeURIComponent(modelProduct.modelName)}
-            >
-              Request Quote
+            <a class="button button-block" href={"/rfq?part=" + encodeURIComponent(modelProduct.modelName)}>
+              Start RFQ <span aria-hidden="true">↗</span>
             </a>
-            <a class="text-link text-link-center" href="/products">Return to Catalogue</a>
+            <a class="quote-return" href="/products">Return to catalogue</a>
           </div>
         </aside>
       </section>
     </>
   ) : skuProduct ? (
     <>
-      <section class="product-masthead">
+      <section class="record-hero">
         <div class="shell">
           <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/products">Catalogue</a>
@@ -219,19 +217,21 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
             <span translate="no">{skuProduct.partNumber}</span>
           </nav>
 
-          <div class="product-title-grid">
-            <div>
-              <p class="kicker">{skuProduct.family}</p>
+          <div class="record-hero__grid">
+            <div data-reveal>
+              <p class="record-id">{skuProduct.family} / PART RECORD</p>
               <h1 class="part-hero" translate="no">{skuProduct.partNumber}</h1>
               <p class="product-subtitle">{skuProduct.title}</p>
             </div>
 
-            <div class="product-status">
-              <span>PRICING</span>
-              <strong>Request for Quote</strong>
-              <span>FITMENT</span>
-              <strong>Verification Required</strong>
-            </div>
+            <aside class="record-stamp" data-reveal data-reveal-delay="0.08">
+              <span>RECORD STATUS</span>
+              <strong>REFERENCE</strong>
+              <dl>
+                <div><dt>PRICING</dt><dd>RFQ</dd></div>
+                <div><dt>FITMENT</dt><dd>VERIFY</dd></div>
+              </dl>
+            </aside>
           </div>
         </div>
       </section>
@@ -240,39 +240,21 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
         <div class="product-main">
           <div class="section-rule">
             <span>01</span>
-            <h2>Product Identification</h2>
+            <h2>Product identification</h2>
           </div>
 
           <div class="spec-table">
-            <div>
-              <span>Manufacturer</span>
-              <strong translate="no">Twin Disc</strong>
-            </div>
-            <div>
-              <span>Part Number</span>
-              <strong class="mono" translate="no">{skuProduct.partNumber}</strong>
-            </div>
-            <div>
-              <span>Product Family</span>
-              <strong>{skuProduct.family}</strong>
-            </div>
-            <div>
-              <span>Model Family</span>
-              <strong>{skuProduct.modelFamily}</strong>
-            </div>
-            <div>
-              <span>Page Type</span>
-              <strong>{skuProduct.pageType}</strong>
-            </div>
-            <div>
-              <span>Price</span>
-              <strong>RFQ</strong>
-            </div>
+            <div><span>Manufacturer</span><strong translate="no">Twin Disc</strong></div>
+            <div><span>Part Number</span><strong class="mono" translate="no">{skuProduct.partNumber}</strong></div>
+            <div><span>Product Family</span><strong>{skuProduct.family}</strong></div>
+            <div><span>Model Family</span><strong>{skuProduct.modelFamily}</strong></div>
+            <div><span>Page Type</span><strong>{skuProduct.pageType}</strong></div>
+            <div><span>Price</span><strong>RFQ</strong></div>
           </div>
 
           <details class="product-notes">
             <summary>
-              <span>Notes</span>
+              <span>Technical notes</span>
               <span class="product-notes__toggle" aria-hidden="true">+</span>
             </summary>
 
@@ -289,9 +271,7 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
                 <div class="product-note-group">
                   <h3>{note.heading}</h3>
                   <ul>
-                    {note.items.map((item) => (
-                      <li translate="no">{item}</li>
-                    ))}
+                    {note.items.map((item) => <li translate="no">{item}</li>)}
                   </ul>
                 </div>
               ))}
@@ -307,27 +287,24 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
 
           <div class="section-rule notes-following-section">
             <span>02</span>
-            <h2>Compatibility Standard</h2>
+            <h2>Compatibility standard</h2>
           </div>
 
           <div class="verification-copy">
-            <p>
-              Do not order from a part number alone when the application is uncertain. Exact compatibility and current availability should be verified before the quote becomes an order.
-            </p>
-            <p>
-              The strongest identifiers are the PTO or clutch tag, serial number, OEM number, equipment model and engine model.
-            </p>
+            <p>Do not order from a part number alone when the application is uncertain. Exact compatibility and current availability should be verified before the quote becomes an order.</p>
+            <p>The strongest identifiers are the PTO or clutch tag, serial number, OEM number, equipment model and engine model.</p>
           </div>
         </div>
 
         <aside class="quote-panel">
           <div class="quote-panel__header">
             <span>RFQ / PART ID</span>
-            <span class="status-dot">OPEN</span>
+            <span class="status-mark">OPEN</span>
           </div>
           <div class="quote-panel__body">
-            <h2>Verify This Part</h2>
-            <p>Send the equipment information you have. Not every field is required.</p>
+            <p class="quote-number">02 / VERIFY</p>
+            <h2>Verify this part.</h2>
+            <p>Send the machine evidence you have. Not every field is required.</p>
 
             <ul class="check-list">
               <li>Equipment make & model</li>
@@ -336,13 +313,10 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
               <li>OEM part number</li>
             </ul>
 
-            <a
-              class="button button-block"
-              href={"/rfq?part=" + encodeURIComponent(skuProduct.partNumber)}
-            >
-              Request Quote
+            <a class="button button-block" href={"/rfq?part=" + encodeURIComponent(skuProduct.partNumber)}>
+              Start RFQ <span aria-hidden="true">↗</span>
             </a>
-            <a class="text-link text-link-center" href="/products">Return to Catalogue</a>
+            <a class="quote-return" href="/products">Return to catalogue</a>
           </div>
         </aside>
       </section>

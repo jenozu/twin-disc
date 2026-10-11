@@ -27,7 +27,7 @@ const rfqActive = pathname.startsWith("/rfq");
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0b0f12" />
+    <meta name="theme-color" content="#0a0d0f" />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -41,35 +41,32 @@ const rfqActive = pathname.startsWith("/rfq");
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <div class="utility-bar">
-      <div class="shell utility-bar__inner">
-        <span>Independent industrial parts sourcing</span>
-        <span>Part-number search · Fitment verification · RFQ</span>
-      </div>
-    </div>
-
     <header class="site-header">
       <div class="shell site-header__inner">
         <a class="brand" href="/" aria-label="Powertrain Parts home">
-          <span class="brand-mark" aria-hidden="true"><span>PT</span></span>
+          <span class="brand-code" aria-hidden="true">PT/01</span>
           <span class="brand-copy">
-            <strong>POWERTRAIN</strong>
-            <span>PARTS / TECHNICAL SOURCING</span>
+            <strong>POWERTRAIN PARTS</strong>
+            <span>INDEPENDENT SOURCING DESK</span>
           </span>
         </a>
 
         <nav class="site-nav" aria-label="Main navigation">
-          <a href="/products" aria-current={catalogueActive ? "page" : undefined}>Catalogue</a>
-          <a href="/rfq" aria-current={rfqActive ? "page" : undefined}>Part Identification</a>
-          <a class="button button-compact" href="/rfq">Request Quote</a>
+          <a href="/products" aria-current={catalogueActive ? "page" : undefined}>
+            <span>01</span> Catalogue
+          </a>
+          <a href="/rfq" aria-current={rfqActive ? "page" : undefined}>
+            <span>02</span> Identify
+          </a>
+          <a class="header-rfq" href="/rfq">Start RFQ <b aria-hidden="true">↗</b></a>
         </nav>
 
         <details class="mobile-nav">
-          <summary>Menu</summary>
+          <summary aria-label="Open navigation">Menu</summary>
           <nav class="mobile-nav__panel" aria-label="Mobile navigation">
-            <a href="/products" aria-current={catalogueActive ? "page" : undefined}>Catalogue</a>
-            <a href="/rfq" aria-current={rfqActive ? "page" : undefined}>Part Identification</a>
-            <a class="button button-block" href="/rfq">Request Quote</a>
+            <a href="/products" aria-current={catalogueActive ? "page" : undefined}>01 / Catalogue</a>
+            <a href="/rfq" aria-current={rfqActive ? "page" : undefined}>02 / Part identification</a>
+            <a class="button button-block" href="/rfq">Start RFQ</a>
           </nav>
         </details>
       </div>
@@ -80,39 +77,46 @@ const rfqActive = pathname.startsWith("/rfq");
     </main>
 
     <footer class="site-footer">
+      <div class="shell footer-action">
+        <div>
+          <p class="kicker kicker-on-dark">Procurement desk</p>
+          <h2>Have a tag, serial or part number?</h2>
+        </div>
+        <a class="footer-action__link" href="/rfq">
+          Start an RFQ
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
       <div class="shell footer-grid">
         <div class="footer-brand">
           <a class="brand brand-footer" href="/" aria-label="Powertrain Parts home">
-            <span class="brand-mark" aria-hidden="true"><span>PT</span></span>
+            <span class="brand-code" aria-hidden="true">PT/01</span>
             <span class="brand-copy">
-              <strong>POWERTRAIN</strong>
-              <span>PARTS / TECHNICAL SOURCING</span>
+              <strong>POWERTRAIN PARTS</strong>
+              <span>INDEPENDENT SOURCING DESK</span>
             </span>
           </a>
-          <p class="footer-copy">
+          <p>
             Independent sourcing for industrial PTO, clutch, friction and pump-drive components.
           </p>
         </div>
 
-        <div class="footer-meta">
-          <span class="footer-label">BUYING WORKFLOW</span>
-          <strong>Identify → verify → quote</strong>
-          <p>Known part data is carried into the RFQ so you do not have to start over.</p>
+        <div class="footer-column">
+          <span>WORKFLOW</span>
+          <a href="/products">Search catalogue</a>
+          <a href="/rfq">Identify a part</a>
         </div>
 
-        <div class="footer-meta">
-          <span class="footer-label">REFERENCE STANDARD</span>
-          <strong>Evidence before fitment claims</strong>
-          <p>Model, serial, BOM and equipment details are used to reduce ordering risk.</p>
+        <div class="footer-column">
+          <span>ORDERING STANDARD</span>
+          <p>Part number + machine evidence before fitment is treated as confirmed.</p>
         </div>
       </div>
 
       <div class="shell footer-bottom">
         <span>Independent supplier · Not an official <span translate="no">Twin Disc</span> website</span>
-        <div class="footer-links">
-          <a href="/products">Catalogue</a>
-          <a href="/rfq">Request Quote</a>
-        </div>
+        <span>Catalogue / RFQ / Verification</span>
       </div>
     </footer>
 

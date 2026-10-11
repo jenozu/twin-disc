@@ -3,147 +3,141 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { publicProducts } from "../data/products";
 
 const families = [...new Set(publicProducts.map((product) => product.family))];
-const featured = publicProducts.slice(0, 6);
+const featured = publicProducts.slice(0, 8);
+const familyCounts = families.map((family) => ({
+  family,
+  count: publicProducts.filter((product) => product.family === family).length,
+}));
 ---
 <BaseLayout title="Industrial PTO, Clutch & Pump-Drive Parts">
-  <section class="hero">
-    <div class="shell hero-grid">
-      <div class="hero-copy" data-reveal>
-        <p class="kicker">Industrial powertrain catalogue</p>
-        <h1>Part-number first. Fitment verified before order.</h1>
-        <p class="hero-lead">
-          Search <span translate="no">Twin Disc</span> part numbers and product families, then send the machine identifiers needed to confirm the application before ordering.
-        </p>
-
-        <form class="hero-search" action="/products" method="get">
-          <label for="hero-part-search">Search part number or model family</label>
-          <div class="search-control">
-            <input
-              id="hero-part-search"
-              name="q"
-              type="search"
-              placeholder="SP318C003, CX110, clutch…"
-              autocomplete="off"
-              spellcheck="false"
-            />
-            <button type="submit">Search catalogue</button>
-          </div>
-          <p class="search-hint">Known item? Start with the full part number for the fastest match.</p>
-        </form>
-
-        <div class="hero-meta" aria-label="Catalogue summary">
-          <div>
-            <strong>{publicProducts.length}</strong>
-            <span>Launch products</span>
-          </div>
-          <div>
-            <strong>{families.length}</strong>
-            <span>Product families</span>
-          </div>
-          <div>
-            <strong>RFQ</strong>
-            <span>Pricing mode</span>
-          </div>
-        </div>
+  <section class="registry-hero">
+    <div class="shell registry-hero__inner">
+      <div class="registry-line" data-reveal>
+        <span>INDEPENDENT INDUSTRIAL SOURCING</span>
+        <span>CATALOGUE / {publicProducts.length} LIVE REFERENCES</span>
       </div>
 
-      <aside class="hero-technical" aria-label="Part identification requirements" data-reveal data-reveal-delay="0.08">
-        <div class="technical-header">
-          <span>IDENTIFICATION CHECK</span>
-          <span class="status-dot">EVIDENCE</span>
+      <div class="registry-grid">
+        <div class="registry-copy" data-reveal>
+          <p class="registry-code">PT / PARTS DESK / 01</p>
+          <h1>The part number is only half the answer.</h1>
+          <p class="registry-lead">
+            Search <span translate="no">Twin Disc</span> references, then verify the machine, engine, tag or serial before an order becomes a fitment claim.
+          </p>
         </div>
-        <div class="technical-body">
-          <p class="technical-intro">The best match starts with what is already stamped, tagged or documented on the machine.</p>
-          <dl class="identity-list">
-            <div>
-              <dt>TAG</dt>
-              <dd>PTO / clutch tag or serial</dd>
-            </div>
-            <div>
-              <dt>OEM</dt>
-              <dd>OEM part number</dd>
-            </div>
-            <div>
-              <dt>EQUIP</dt>
-              <dd>Equipment make & model</dd>
-            </div>
-            <div>
-              <dt>ENGINE</dt>
-              <dd>Engine make & model</dd>
-            </div>
+
+        <aside class="registry-index" data-reveal data-reveal-delay="0.08" aria-label="Catalogue registry">
+          <div class="registry-index__title">
+            <span>LIVE INDEX</span>
+            <span class="status-mark">ACTIVE</span>
+          </div>
+          <dl>
+            <div><dt>REFERENCES</dt><dd>{String(publicProducts.length).padStart(2, "0")}</dd></div>
+            <div><dt>FAMILIES</dt><dd>{String(families.length).padStart(2, "0")}</dd></div>
+            <div><dt>PRICING</dt><dd>RFQ</dd></div>
+            <div><dt>FITMENT</dt><dd>VERIFY</dd></div>
           </dl>
-          <a class="text-link text-link-on-dark" href="/rfq">Send equipment details <span aria-hidden="true">↗</span></a>
+          <p>No guessed compatibility. No generic checkout flow. Start with the evidence already on the machine.</p>
+        </aside>
+      </div>
+
+      <form class="registry-search" action="/products" method="get" data-reveal>
+        <div class="registry-search__label">
+          <span>SEARCH / 01</span>
+          <label for="hero-part-search">Part number, product family or model</label>
         </div>
-      </aside>
+        <div class="registry-search__control">
+          <input
+            id="hero-part-search"
+            name="q"
+            type="search"
+            placeholder="SP318C003  /  CX110  /  clutch"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button type="submit">
+            Search index
+            <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </form>
+
+      <div class="family-ledger" data-reveal>
+        {familyCounts.map(({ family, count }, index) => (
+          <div>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <strong>{family}</strong>
+            <b>{String(count).padStart(2, "0")}</b>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
-  <section class="section section-tight shell" data-reveal>
-    <div class="section-heading">
-      <div>
-        <p class="kicker">Launch catalogue</p>
-        <h2>Search the identifier you already have.</h2>
+  <section class="editorial-intro shell" data-reveal>
+    <p class="kicker">A different kind of parts catalogue</p>
+    <div class="editorial-intro__grid">
+      <h2>Built for the moment when “looks right” is not good enough.</h2>
+      <div class="editorial-copy">
+        <p>
+          Industrial components often share families, housings and naming patterns. The catalogue gets you to the reference quickly; the RFQ captures the evidence needed to verify the application.
+        </p>
+        <a class="text-link" href="/rfq">Identify an uncertain part <span aria-hidden="true">↗</span></a>
       </div>
-      <a class="text-link" href="/products">View all {publicProducts.length} products <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+
+  <section class="index-section shell" data-reveal>
+    <div class="index-heading">
+      <span>SELECTED INDEX / 08</span>
+      <h2>Launch references</h2>
+      <a href="/products">Full catalogue ↗</a>
     </div>
 
-    <div class="featured-list">
-      <div class="featured-list__head" aria-hidden="true">
+    <div class="part-index">
+      <div class="part-index__head" aria-hidden="true">
+        <span>ID</span>
         <span>Part number</span>
         <span>Family</span>
         <span>Model family</span>
         <span></span>
       </div>
-      {featured.map((product) => (
-        <a class="featured-row" href={"/products/" + product.sku.toLowerCase()}>
+      {featured.map((product, index) => (
+        <a class="part-index__row" href={"/products/" + product.sku.toLowerCase()}>
+          <span>{String(index + 1).padStart(2, "0")}</span>
           <strong translate="no">{product.partNumber}</strong>
           <span>{product.family}</span>
           <span>{product.modelFamily}</span>
-          <span class="row-arrow" aria-hidden="true">↗</span>
+          <b aria-hidden="true">↗</b>
         </a>
       ))}
     </div>
   </section>
 
-  <section class="process">
-    <div class="shell process-grid">
-      <div class="process-intro" data-reveal>
-        <p class="kicker kicker-light">Technical sourcing workflow</p>
-        <h2>Three steps, one clean trail of evidence.</h2>
-        <p>Search narrows the part. Machine identifiers narrow the fit. The RFQ keeps both together.</p>
+  <section class="evidence-band">
+    <div class="shell evidence-band__grid">
+      <div class="evidence-band__lead" data-reveal>
+        <p class="kicker kicker-on-accent">When the catalogue stops</p>
+        <h2>Use the machine as the source document.</h2>
       </div>
 
-      <div class="process-steps" data-reveal data-reveal-delay="0.08">
+      <div class="evidence-steps" data-reveal data-reveal-delay="0.08">
         <article>
-          <span class="step-index">SEARCH</span>
-          <div>
-            <h3>Start with the known identifier</h3>
-            <p>Use a part number, clutch family, PTO model or known OEM reference.</p>
-          </div>
+          <span>01 / READ</span>
+          <h3>Find the tag</h3>
+          <p>Capture the PTO, clutch or transmission tag, model and serial information.</p>
         </article>
         <article>
-          <span class="step-index">VERIFY</span>
-          <div>
-            <h3>Add machine evidence</h3>
-            <p>Share tag, serial, equipment and engine information when the application is uncertain.</p>
-          </div>
+          <span>02 / CONTEXT</span>
+          <h3>Add the machine</h3>
+          <p>Equipment make/model and engine details help narrow the application.</p>
         </article>
         <article>
-          <span class="step-index">RFQ</span>
-          <div>
-            <h3>Carry the match into the quote request</h3>
-            <p>Availability, exact fit and freight can be checked before an order is placed.</p>
-          </div>
+          <span>03 / RFQ</span>
+          <h3>Verify before order</h3>
+          <p>Carry the known identifiers into one quote request instead of restarting the search.</p>
         </article>
       </div>
     </div>
-  </section>
-
-  <section class="section shell cta-band" data-reveal>
-    <div>
-      <p class="kicker">No exact catalogue match?</p>
-      <h2>Send the tag, serial or OEM number instead.</h2>
-    </div>
-    <a class="button button-large" href="/rfq">Start part identification</a>
   </section>
 </BaseLayout>
