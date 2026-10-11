@@ -54,35 +54,45 @@ const families = [...new Set(publicProducts.map((product) => product.family))];
 
     <p id="search-status" class="sr-only" aria-live="polite"></p>
 
-    <div class="catalogue-surface">
-      <div class="catalogue-table__head" aria-hidden="true">
-        <span>Part number</span>
-        <span>Product</span>
-        <span>Model family</span>
-        <span></span>
-      </div>
-
-      <div id="product-grid">
-        {publicProducts.map((product) => (
-          <article
-            class="catalogue-row"
-            data-family={product.family.toLowerCase()}
-            data-search={`${product.partNumber} ${product.title} ${product.family} ${product.modelFamily}`.toLowerCase()}
-          >
-            <a class="part-number" href={`/products/${product.sku.toLowerCase()}`} translate="no">
-              {product.partNumber}
-            </a>
-            <div class="catalogue-product">
+    <div class="catalogue-grid" id="product-grid">
+      {publicProducts.map((product) => (
+        <article
+          class="catalogue-card"
+          data-family={product.family.toLowerCase()}
+          data-search={`${product.partNumber} ${product.title} ${product.family} ${product.modelFamily}`.toLowerCase()}
+        >
+          <a class="catalogue-card__link" href={`/products/${product.sku.toLowerCase()}`} aria-label={`View ${product.partNumber}`}>
+            <div class="catalogue-card__top">
               <span class="family-badge">{product.family}</span>
-              <strong>{product.title}</strong>
+              <span class="catalogue-card__index" aria-hidden="true">
+                {String(product.priority).padStart(2, "0")}
+              </span>
             </div>
-            <span class="model-family">{product.modelFamily}</span>
-            <a class="row-action" href={`/products/${product.sku.toLowerCase()}`}>
-              View part <span aria-hidden="true">→</span>
-            </a>
-          </article>
-        ))}
-      </div>
+
+            <div class="catalogue-card__body">
+              <p class="catalogue-card__eyebrow">Twin Disc part</p>
+              <h2 translate="no">{product.partNumber}</h2>
+              <p class="catalogue-card__title">{product.title}</p>
+            </div>
+
+            <dl class="catalogue-card__specs">
+              <div>
+                <dt>Model family</dt>
+                <dd>{product.modelFamily}</dd>
+              </div>
+              <div>
+                <dt>Page type</dt>
+                <dd>{product.pageType}</dd>
+              </div>
+            </dl>
+
+            <div class="catalogue-card__footer">
+              <span>View part details</span>
+              <b aria-hidden="true">→</b>
+            </div>
+          </a>
+        </article>
+      ))}
     </div>
 
     <div id="no-results" class="empty-state" hidden>
@@ -123,7 +133,7 @@ const families = [...new Set(publicProducts.map((product) => product.family))];
 
   <script>
     const input = document.querySelector<HTMLInputElement>("#product-search");
-    const rows = [...document.querySelectorAll<HTMLElement>(".catalogue-row")];
+    const cards = [...document.querySelectorAll<HTMLElement>(".catalogue-card")];
     const chips = [...document.querySelectorAll<HTMLButtonElement>(".filter-chip")];
     const empty = document.querySelector<HTMLElement>("#no-results");
     const count = document.querySelector<HTMLElement>("#result-count");
@@ -136,11 +146,11 @@ const families = [...new Set(publicProducts.map((product) => product.family))];
       const normalizedFamily = family.trim().toLowerCase();
       let visible = 0;
 
-      rows.forEach((row) => {
-        const matchesQuery = !normalized || (row.dataset.search ?? "").includes(normalized);
-        const matchesFamily = !normalizedFamily || row.dataset.family === normalizedFamily;
+      cards.forEach((card) => {
+        const matchesQuery = !normalized || (card.dataset.search ?? "").includes(normalized);
+        const matchesFamily = !normalizedFamily || card.dataset.family === normalizedFamily;
         const show = matchesQuery && matchesFamily;
-        row.hidden = !show;
+        card.hidden = !show;
         if (show) visible += 1;
       });
 
