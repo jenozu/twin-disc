@@ -2,98 +2,147 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 <BaseLayout title="Request a Quote | Powertrain Parts">
-  <section class="page-masthead">
+  <section class="page-masthead rfq-masthead">
     <div class="shell masthead-grid">
       <div>
-        <p class="kicker">RFQ / Part Identification</p>
-        <h1>Send the details you have.</h1>
+        <p class="section-label">RFQ / part identification</p>
+        <h1>Send the evidence you already have.</h1>
       </div>
-      <p class="masthead-copy">
-        A tag, serial number or OEM number is usually more useful than a long description. Complete only the fields you know.
-      </p>
+      <div class="masthead-copy">
+        <p>
+          A model tag, serial number or OEM reference is usually more useful than a long description. Complete only the fields you know.
+        </p>
+        <span class="masthead-note">No phone call required.</span>
+      </div>
     </div>
   </section>
 
   <section class="section shell rfq-layout">
-    <aside class="rfq-guide">
-      <div class="guide-block">
-        <span class="guide-label">BEST IDENTIFIER</span>
-        <strong>PTO / clutch tag or serial</strong>
-        <p>A clear model or serial number usually provides the fastest path to verification.</p>
+    <aside class="rfq-context">
+      <div class="rfq-context__head">
+        <span>Identification priority</span>
+        <strong>Best evidence first.</strong>
       </div>
-      <div class="guide-block">
-        <span class="guide-label">ALSO USEFUL</span>
-        <strong>Machine & engine details</strong>
-        <p>Equipment make/model and engine make/model help narrow the application.</p>
-      </div>
-      <div class="guide-block">
-        <span class="guide-label">IF AVAILABLE</span>
-        <strong>OEM part number</strong>
-        <p>Cross-reference numbers can help identify a service or replacement path.</p>
+
+      <ol class="rfq-priority">
+        <li>
+          <span>01</span>
+          <div>
+            <strong>PTO / clutch tag</strong>
+            <p>Model, serial or BOM / assembly number.</p>
+          </div>
+        </li>
+        <li>
+          <span>02</span>
+          <div>
+            <strong>Machine details</strong>
+            <p>Equipment make/model and engine make/model.</p>
+          </div>
+        </li>
+        <li>
+          <span>03</span>
+          <div>
+            <strong>OEM reference</strong>
+            <p>Part or cross-reference numbers from existing documentation.</p>
+          </div>
+        </li>
+        <li>
+          <span>04</span>
+          <div>
+            <strong>Photos</strong>
+            <p>Nameplates, tags, surrounding assembly or damaged components.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="rfq-context__note">
+        <span aria-hidden="true">i</span>
+        <p>You do not need every identifier. Send the strongest information you have and we can start there.</p>
       </div>
     </aside>
 
-    <div class="rfq-panel">
-      <div class="rfq-panel__header">
-        <span>TECHNICAL INTAKE</span>
+    <div class="rfq-card">
+      <div class="rfq-card__header">
+        <div>
+          <span>Technical intake</span>
+          <strong>Request a quote</strong>
+        </div>
         <span>Fields marked * are required</span>
       </div>
 
       <form id="rfq-form" novalidate>
-        <fieldset>
-          <legend>Part Information</legend>
+        <fieldset class="form-section">
+          <legend>
+            <span>01</span>
+            <strong>Part information</strong>
+          </legend>
           <div class="form-grid">
             <label>
-              Part Number
+              Part number
               <input id="part" name="part" placeholder="SP318C003…" autocomplete="off" spellcheck="false" />
             </label>
             <label>
-              OEM Part Number
+              OEM part number
               <input name="oem" placeholder="If available…" autocomplete="off" spellcheck="false" />
             </label>
           </div>
         </fieldset>
 
-        <fieldset>
-          <legend>Equipment Information</legend>
+        <fieldset class="form-section">
+          <legend>
+            <span>02</span>
+            <strong>Equipment information</strong>
+          </legend>
           <div class="form-grid">
             <label>
-              Equipment Make & Model
+              Equipment make & model
               <input name="equipment" placeholder="Bandit Beast 3680…" autocomplete="off" />
             </label>
             <label>
-              Engine Make & Model
+              Engine make & model
               <input name="engine" placeholder="If known…" autocomplete="off" />
             </label>
           </div>
 
           <label>
-            PTO / Clutch / Transmission Model or Serial
+            PTO / clutch / transmission model or serial
             <input name="drive" placeholder="Tag, serial number or model…" autocomplete="off" spellcheck="false" />
           </label>
         </fieldset>
 
-        <fieldset>
-          <legend>Request Details</legend>
+        <fieldset class="form-section">
+          <legend>
+            <span>03</span>
+            <strong>Request details</strong>
+          </legend>
+
           <label>
-            What Do You Need?
+            What do you need?
             <textarea name="message" placeholder="Part needed, quantity, failure symptoms or application details…"></textarea>
           </label>
 
-          <label>
-            Photos (Optional)
+          <label class="file-field">
+            Identification photos <span>(optional)</span>
             <input
               id="photos"
               type="file"
               name="photos"
               accept="image/*,.heic,.heif"
               multiple
+              aria-describedby="photo-help"
             />
-            <span class="field-help">Add up to 5 nameplate, serial-tag, equipment or damage photos.</span>
+            <span id="photo-help" class="field-help">Up to 5 nameplate, serial-tag, equipment or damage photos.</span>
           </label>
+        </fieldset>
+
+        <fieldset class="form-section">
+          <legend>
+            <span>04</span>
+            <strong>Contact</strong>
+          </legend>
 
           <label>
-            Email Address *
+            Email address *
             <input
               type="email"
               name="email"
@@ -106,14 +155,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </fieldset>
 
         <div class="form-submit">
-          <button class="button button-large" type="submit">Prepare RFQ</button>
-          <p>Prototype mode: email delivery will be connected before public launch.</p>
+          <div>
+            <strong>Ready to review?</strong>
+            <p>Prototype mode: email delivery will be connected before public launch.</p>
+          </div>
+          <button class="button button-large" type="submit">Prepare RFQ <span aria-hidden="true">→</span></button>
         </div>
       </form>
 
       <div id="rfq-result" class="result-panel" role="status" aria-live="polite" hidden>
-        <strong>RFQ Captured for Testing</strong>
-        <p id="rfq-summary"></p>
+        <span class="result-panel__mark" aria-hidden="true">✓</span>
+        <div>
+          <strong>RFQ captured for testing.</strong>
+          <p id="rfq-summary"></p>
+        </div>
       </div>
     </div>
   </section>
@@ -125,13 +180,23 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
     const form = document.querySelector<HTMLFormElement>("#rfq-form");
     const photos = document.querySelector<HTMLInputElement>("#photos");
+    const photoHelp = document.querySelector<HTMLElement>("#photo-help");
     const result = document.querySelector<HTMLElement>("#rfq-result");
     const summary = document.querySelector<HTMLElement>("#rfq-summary");
 
     photos?.addEventListener("change", () => {
       const count = photos.files?.length ?? 0;
-      photos.setCustomValidity(count > 5 ? "Please select no more than 5 images." : "");
-      photos.setAttribute("aria-invalid", count > 5 ? "true" : "false");
+      const invalid = count > 5;
+      photos.setCustomValidity(invalid ? "Please select no more than 5 images." : "");
+      photos.setAttribute("aria-invalid", invalid ? "true" : "false");
+
+      if (photoHelp) {
+        photoHelp.textContent = invalid
+          ? `${count} selected — please choose no more than 5 images.`
+          : count > 0
+            ? `${count} image${count === 1 ? "" : "s"} selected.`
+            : "Up to 5 nameplate, serial-tag, equipment or damage photos.";
+      }
     });
 
     form?.addEventListener("submit", (event) => {
