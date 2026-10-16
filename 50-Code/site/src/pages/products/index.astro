@@ -37,6 +37,10 @@ const families = [...new Set(publicProducts.map((product) => product.family))];
       </div>
     </div>
 
+    <div class="xp-filter-row" role="group" aria-label="Filter products by family">
+      <button class="xp-filter is-active" type="button" data-filter-family="All" aria-pressed="true">All references</button>
+      {families.map((family) => <button class="xp-filter" type="button" data-filter-family={family} aria-pressed="false">{family}</button>)}
+    </div>
     <p id="search-status" class="sr-only" aria-live="polite"></p>
 
     <div class="catalogue-table" id="product-grid">
@@ -50,6 +54,7 @@ const families = [...new Set(publicProducts.map((product) => product.family))];
       {publicProducts.map((product) => (
         <article
           class="catalogue-row"
+          data-family={product.family}
           data-search={`${product.partNumber} ${product.title} ${product.family} ${product.modelFamily}`.toLowerCase()}
         >
           <a class="part-number" href={`/products/${product.sku.toLowerCase()}`} translate="no">
@@ -107,12 +112,16 @@ const families = [...new Set(publicProducts.map((product) => product.family))];
     const count = document.querySelector<HTMLElement>("#result-count");
     const status = document.querySelector<HTMLElement>("#search-status");
 
+    const filters = [...document.querySelectorAll<HTMLButtonElement>("[data-filter-family]")];
+    let selectedFamily = "All";
     const applySearch = (query: string, updateUrl = true) => {
       const normalized = query.trim().toLowerCase();
       let visible = 0;
 
       rows.forEach((row) => {
-        const show = !normalized || (row.dataset.search ?? "").includes(normalized);
+        const matchesQuery = !normalized || (row.dataset.search ?? "").includes(normalized);
+        const matchesFamily = selectedFamily === "All" || row.dataset.family === selectedFamily;
+        const show = matchesQuery && matchesFamily;
         row.hidden = !show;
         if (show) visible += 1;
       });
@@ -135,5 +144,14 @@ const families = [...new Set(publicProducts.map((product) => product.family))];
       applySearch(initialQuery, false);
       input.addEventListener("input", () => applySearch(input.value));
     }
+    filters.forEach((button) => button.addEventListener("click", () => {
+      selectedFamily = button.dataset.filterFamily || "All";
+      filters.forEach((item) => {
+        const active = item === button;
+        item.classList.toggle("is-active", active);
+        item.setAttribute("aria-pressed", String(active));
+      });
+      applySearch(input?.value || "", false);
+    }));
   </script>
 </BaseLayout>
