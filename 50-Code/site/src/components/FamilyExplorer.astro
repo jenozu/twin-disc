@@ -1,0 +1,51 @@
+---
+const options = [
+  { name: "Power Take-Off", short: "PTO", number: "01", copy: "The connection between engine power and the work that follows." },
+  { name: "Clutch Systems", short: "Clutch", number: "02", copy: "Components at the heart of controlled power engagement." },
+  { name: "Pump Drives", short: "Pump Drive", number: "03", copy: "Discover components used in hydraulic power transmission." },
+  { name: "Service Components", short: "Drive Ring", number: "04", copy: "Explore drive rings, friction components and service references." },
+];
+---
+<section class="xp-families" id="explore" aria-labelledby="xp-family-title">
+  <div class="shell">
+    <div class="xp-heading" data-reveal>
+      <div><p class="xp-eyebrow">01 / THE COMPONENTS</p><h2 id="xp-family-title">Built for the<br/><em>work behind it.</em></h2></div>
+      <p>Explore the systems that connect and control industrial power. Select a product family to discover its references.</p>
+    </div>
+    <div class="xp-family__grid" data-reveal>
+      <div class="xp-family__tabs" role="group" aria-label="Choose a product family">
+        {options.map((option, index) => (
+          <button type="button" class:list={["xp-family__tab", index === 0 && "is-active"]} data-family-tab data-name={option.name} data-code={option.short} data-description={option.copy} aria-pressed={index === 0 ? "true" : "false"}>
+            <span>{option.number}</span><strong>{option.name}</strong><b aria-hidden="true">↗</b>
+          </button>
+        ))}
+        <p class="xp-family__note">MODEL / SERIAL / ASSEMBLY INFORMATION IS USED TO VERIFY EXACT FITMENT.</p>
+      </div>
+      <div id="xp-family-feature" class="xp-family__feature" data-variant="0">
+        <div class="xp-family__feature-top"><span>COMPONENT EXPLORER</span><span>SELECT / DISCOVER</span></div>
+        <div class="xp-family__art" aria-hidden="true"><div class="xp-family__disc xp-family__disc--back"></div><div class="xp-family__disc xp-family__disc--front"></div><div class="xp-family__disc xp-family__disc--core"></div><span class="xp-family__reticle">+</span></div>
+        <div class="xp-family__feature-foot">
+          <div><p class="xp-eyebrow">INDUSTRIAL POWERTRAIN</p><h3 id="xp-family-name">{options[0].name}</h3><p id="xp-family-copy">{options[0].copy}</p></div>
+          <a id="xp-family-link" class="xp-family__open" href="/products?q=PTO" aria-label="Explore Power Take-Off parts">↗</a>
+        </div>
+        <small>Conceptual system graphic · Not a verified product drawing</small>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>("[data-family-tab]")];
+  const feature = document.querySelector<HTMLElement>("#xp-family-feature");
+  const title = document.querySelector<HTMLElement>("#xp-family-name");
+  const copy = document.querySelector<HTMLElement>("#xp-family-copy");
+  const link = document.querySelector<HTMLAnchorElement>("#xp-family-link");
+  buttons.forEach((button, index) => button.addEventListener("click", () => {
+    buttons.forEach((item) => { item.classList.remove("is-active"); item.setAttribute("aria-pressed", "false"); });
+    button.classList.add("is-active");
+    button.setAttribute("aria-pressed", "true");
+    if (feature) feature.dataset.variant = String(index);
+    if (title) title.textContent = button.dataset.name || "";
+    if (copy) copy.textContent = button.dataset.description || "";
+    if (link) { link.href = "/products?q=" + encodeURIComponent(button.dataset.code || ""); link.setAttribute("aria-label", "Explore " + (button.dataset.name || "product family")); }
+  }));
+</script>
