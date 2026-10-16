@@ -2882,3 +2882,9 @@ textarea[aria-invalid="true"] {
     min-height: 0;
   }
 }
+
+
+/* Ensure semantic hidden state wins over component display rules. */
+[hidden] {
+  display: none !important;
+}
