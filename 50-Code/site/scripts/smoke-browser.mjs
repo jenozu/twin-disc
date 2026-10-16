@@ -18,7 +18,7 @@ try {
   assert.match(await page.locator("#xp-family-link").getAttribute("href"), /q=Clutch/);
   await page.screenshot({ path: "screenshots/home-desktop.png", fullPage: true });
 
-  await page.goto(base + "/products/?q=SP318C003", { waitUntil: "networkidle" });
+  await page.goto(base + "/products?q=SP318C003", { waitUntil: "networkidle" });
   assert.equal((await page.locator("#product-search").inputValue()).toUpperCase(), "SP318C003");
   assert.ok(await page.locator(".catalogue-row:not([hidden])").count() >= 1);
   await page.locator('[data-filter-family="Clutch"]').click();
@@ -27,14 +27,14 @@ try {
   assert.ok(families.every((value) => value === "Clutch"));
   await page.screenshot({ path: "screenshots/catalogue-desktop.png", fullPage: true });
 
-  await page.goto(base + "/rfq/?part=SP318C003", { waitUntil: "networkidle" });
+  await page.goto(base + "/rfq?part=SP318C003", { waitUntil: "networkidle" });
   assert.equal(await page.locator("#part").inputValue(), "SP318C003");
   await page.locator('[name="email"]').fill("qa@example.com");
   await page.locator("#rfq-form button[type=submit]").click();
   assert.equal(await page.locator("#rfq-result").isVisible(), true);
 
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ["/", "/products/", "/rfq/"]) {
+  for (const route of ["/", "/products", "/rfq", "/products/sp318c003-twd"]) {
     await page.goto(base + route, { waitUntil: "networkidle" });
     const width = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     assert.ok(width <= 2, route + " overflows mobile viewport by " + width + "px");
