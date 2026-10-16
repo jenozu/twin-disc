@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { categoryLabels, publicProducts, twinDiscProducts } from "../../data/products";
+import { publicProducts } from "../../data/products";
 
 const families = [...new Set(publicProducts.map((product) => product.family))];
 ---
@@ -100,34 +100,6 @@ const families = [...new Set(publicProducts.map((product) => product.family))];
       <strong>No matching launch products.</strong>
       <p>Try the exact part number, a shorter model family such as CX110, or reset the product-family filter.</p>
       <a class="text-link" href="/rfq">Send an RFQ instead <span aria-hidden="true">→</span></a>
-    </div>
-  </section>
-
-  <section class="model-guide-section">
-    <div class="shell">
-      <div class="section-heading">
-        <div>
-          <p class="section-label">Model guides</p>
-          <h2>Technical reference by family.</h2>
-        </div>
-        <p class="section-copy">
-          Specifications, application context, rebuild information and RFQ requirements for priority Twin Disc model families.
-        </p>
-      </div>
-
-      <div class="guide-grid">
-        {twinDiscProducts.map((product) => (
-          <a class="guide-card" href={`/products/${product.id}/`}>
-            <div class="guide-card__top">
-              <span>{categoryLabels[product.category]}</span>
-              <b aria-hidden="true">↗</b>
-            </div>
-            <strong translate="no">{product.modelName}</strong>
-            <p>{product.heroSubtitle}</p>
-            <span class="guide-card__footer">Technical reference & RFQ</span>
-          </a>
-        ))}
-      </div>
     </div>
   </section>
 
