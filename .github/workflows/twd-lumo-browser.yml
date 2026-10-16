@@ -1,0 +1,48 @@
+name: TWD Lumo browser smoke test
+on:
+  push:
+    branches:
+      - feat/twd-lumo-interactive-redesign
+    paths:
+      - '50-Code/site/scripts/smoke-browser.mjs'
+      - '.github/workflows/twd-lumo-browser.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-check:
+    name: Desktop and mobile interaction test (no deployment)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 50-Code/site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install app and browser tooling
+        run: |
+          npm install --no-audit --no-fund
+          npm install --no-save playwright --no-audit --no-fund
+          npx playwright install chromium
+      - name: Build
+        run: npm run build
+      - name: Launch local preview and test
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/twd-lumo.log 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" || true' EXIT
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4321/ > /dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/smoke-browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: twd-lumo-browser-screenshots
+          path: 50-Code/site/screenshots/*.png
+          if-no-files-found: ignore
