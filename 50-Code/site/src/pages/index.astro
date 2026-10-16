@@ -3,11 +3,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ExperienceHero from "../components/ExperienceHero.astro";
 import FamilyExplorer from "../components/FamilyExplorer.astro";
 import IdentificationStory from "../components/IdentificationStory.astro";
-import LandingCatalogue from "../components/LandingCatalogue.astro";
+import SearchBand from "../components/SearchBand.astro";
+import CataloguePreview from "../components/CataloguePreview.astro";
 ---
 <BaseLayout title="Industrial Powertrain Parts | Precision Sourcing" description="Find Twin Disc PTO, clutch and pump-drive components. Explore part numbers and industrial model references, then request a verified quote.">
   <ExperienceHero />
-  <div class="xp-home"><LandingCatalogue /><FamilyExplorer /><IdentificationStory /></div>
+  <div class="xp-home"><SearchBand /><FamilyExplorer /><IdentificationStory /><CataloguePreview /></div>
   <section class="xp-final" aria-labelledby="xp-final-title">
     <div class="xp-final__halo" aria-hidden="true"></div>
     <div class="shell xp-final__inner" data-reveal>
