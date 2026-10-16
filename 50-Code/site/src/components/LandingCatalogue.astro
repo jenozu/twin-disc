@@ -1,0 +1,44 @@
+---
+import { publicProducts } from "../data/products";
+const families = [...new Set(publicProducts.map(p => p.family))];
+const featured = publicProducts.slice(0, 6);
+---
+<section class="xp-search-band" aria-labelledby="xp-search-title">
+  <div class="shell xp-search-band__inner" data-reveal>
+    <div><p class="xp-eyebrow">THE FASTEST WAY IN</p><h2 id="xp-search-title">Know the number?<br/><em>Start there.</em></h2></div>
+    <form action="/products" method="get" class="xp-search-form">
+      <label for="xp-part-search">SEARCH PART NUMBER / MODEL / COMPONENT</label>
+      <div class="xp-search-form__control">
+        <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg>
+        <input id="xp-part-search" type="search" name="q" placeholder="Try CX110, SP318C003, clutch…" autocomplete="off"/>
+        <button type="submit" aria-label="Search product catalogue">↗</button>
+      </div>
+      <p>{publicProducts.length} published launch references across {families.length} product families. Compatibility verified before ordering.</p>
+    </form>
+  </div>
+</section>
+<section class="xp-picks" aria-labelledby="xp-picks-title">
+  <div class="shell">
+    <div class="xp-heading xp-heading--light" data-reveal>
+      <div><p class="xp-eyebrow">03 / SELECTED REFERENCES</p><h2 id="xp-picks-title">The details<br/><em>make the difference.</em></h2></div>
+      <a class="xp-outline-link" href="/products">Explore all references ↗</a>
+    </div>
+    <div class="xp-picks__grid">
+      {featured.map((product, i) => (
+        <a class="xp-pick" href={"/products/" + product.sku.toLowerCase()} data-reveal>
+          <div class="xp-pick__meta"><span>PART / {String(i + 1).padStart(2, "0")}</span><span aria-hidden="true">↗</span></div>
+          <div class="xp-pick__art" data-variant={i % 3} aria-hidden="true"><div class="xp-pick__disc"></div></div>
+          <div class="xp-pick__footer"><span>{product.family} / {product.modelFamily}</span><strong translate="no">{product.partNumber}</strong><p>View details &amp; request verification</p></div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+<section class="xp-final" aria-labelledby="xp-final-title">
+  <div class="xp-final__halo" aria-hidden="true"></div>
+  <div class="shell xp-final__inner" data-reveal>
+    <p class="xp-eyebrow">04 / WHAT'S NEXT</p><h2 id="xp-final-title">Every machine has<br/><em>a next move.</em></h2>
+    <p>Tell us what you're working with. We'll start with the evidence and work toward the right component.</p>
+    <a href="/rfq" class="xp-button xp-button--cream">Start a request <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
