@@ -1,0 +1,21 @@
+---
+import { publicProducts } from "../data/products";
+const featured = publicProducts.slice(0, 6);
+---
+<section class="xp-picks" aria-labelledby="xp-picks-title">
+  <div class="shell">
+    <div class="xp-heading xp-heading--light" data-reveal>
+      <div><p class="xp-eyebrow">03 / SELECTED REFERENCES</p><h2 id="xp-picks-title">The details<br/><em>make the difference.</em></h2></div>
+      <a class="xp-outline-link" href="/products">Explore all references ↗</a>
+    </div>
+    <div class="xp-picks__grid">
+      {featured.map((product, i) => (
+        <a class="xp-pick" href={"/products/" + product.sku.toLowerCase()} data-reveal>
+          <div class="xp-pick__meta"><span>PART / {String(i + 1).padStart(2, "0")}</span><span aria-hidden="true">↗</span></div>
+          <div class="xp-pick__art" data-variant={i % 3} aria-hidden="true"><div class="xp-pick__disc"></div></div>
+          <div class="xp-pick__footer"><span>{product.family} / {product.modelFamily}</span><strong translate="no">{product.partNumber}</strong><p>View details &amp; request verification</p></div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
