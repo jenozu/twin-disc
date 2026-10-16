@@ -1,0 +1,45 @@
+<section class="xp-story" aria-labelledby="xp-story-title">
+  <div class="shell xp-story__header" data-reveal>
+    <p class="xp-eyebrow">02 / FROM EQUIPMENT TO ANSWER</p>
+    <h2 id="xp-story-title">The right part starts<br/>with the <em>right details.</em></h2>
+    <p>Part numbers are the starting point. Equipment identification helps make the quote useful.</p>
+  </div>
+  <div class="shell xp-story__grid">
+    <div class="xp-story__sticky">
+      <div class="xp-story__visual" id="xp-story-visual" data-current="0">
+        <div class="xp-story__visual-top"><span>PART IDENTIFICATION</span><span>01 / 04</span></div>
+        <div class="xp-story__scheme" aria-hidden="true">
+          <div class="xp-story__track"></div>
+          <div class="xp-story__node xp-story__node--0"><span>01</span><b>Machine</b></div>
+          <div class="xp-story__node xp-story__node--1"><span>02</span><b>Drive</b></div>
+          <div class="xp-story__node xp-story__node--2"><span>03</span><b>Serial</b></div>
+          <div class="xp-story__node xp-story__node--3"><span>04</span><b>RFQ</b></div>
+        </div>
+        <div class="xp-story__visual-bottom"><span id="xp-story-label">01 — EQUIPMENT</span><span>VERIFY BEFORE ORDER</span></div>
+      </div>
+    </div>
+    <div class="xp-story__steps">
+      <article class="xp-story__step is-active" data-ident-step="0"><span>01 / EQUIPMENT</span><h3>Start with the machine.</h3><p>Equipment make and model help establish the application where the component works.</p></article>
+      <article class="xp-story__step" data-ident-step="1"><span>02 / POWERTRAIN</span><h3>Identify the drive.</h3><p>A PTO, clutch, transmission or pump-drive model narrows down the possibilities.</p></article>
+      <article class="xp-story__step" data-ident-step="2"><span>03 / EVIDENCE</span><h3>Find the identifiers.</h3><p>Part numbers, OEM references, serial tags and BOM information help avoid a wrong-part quote.</p></article>
+      <article class="xp-story__step" data-ident-step="3"><span>04 / VERIFICATION</span><h3>Request a considered quote.</h3><p>Send the information you have. Exact fitment and availability are checked before an order.</p><a class="xp-story__cta" href="/rfq">Begin part identification ↗</a></article>
+    </div>
+  </div>
+</section>
+<script>
+  const steps = [...document.querySelectorAll<HTMLElement>("[data-ident-step]")];
+  const visual = document.getElementById("xp-story-visual");
+  const label = document.getElementById("xp-story-label");
+  const captions = ["01 — EQUIPMENT", "02 — DRIVE SYSTEM", "03 — IDENTIFIERS", "04 — QUOTE REQUEST"];
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+      if (!visible.length) return;
+      const index = Number((visible[0].target as HTMLElement).dataset.identStep || 0);
+      steps.forEach((step, i) => step.classList.toggle("is-active", index === i));
+      if (visual) visual.dataset.current = String(index);
+      if (label) label.textContent = captions[index] || captions[0];
+    }, { rootMargin: "-27% 0px -27% 0px", threshold: [0, .25, .5] });
+    steps.forEach(step => observer.observe(step));
+  }
+</script>
