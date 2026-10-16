@@ -1,5 +1,10 @@
 ---
 import "../styles/global.css";
+import "../styles/experience-core.css";
+import "../styles/experience-hero.css";
+import "../styles/experience-sections.css";
+import "../styles/experience-catalogue.css";
+import "../styles/experience-pages.css";
 
 interface Props {
   title?: string;
@@ -21,7 +26,7 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0f171d" />
+    <meta name="theme-color" content="#0b1116" />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -33,6 +38,7 @@ const {
     ))}
   </head>
   <body>
+    <div class="xp-reading-progress" aria-hidden="true"></div>
     <a class="skip-link" href="#main-content">Skip to Content</a>
 
     <div class="utility-bar" aria-hidden="true">
@@ -93,5 +99,6 @@ const {
         <a href="/rfq">Request Quote</a>
       </div>
     </footer>
+    <script>import "../scripts/experience";</script>
   </body>
 </html>
