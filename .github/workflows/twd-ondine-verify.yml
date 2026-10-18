@@ -1,0 +1,59 @@
+name: TWD Ondine editorial verification
+on:
+  push:
+    branches:
+      - feat/twd-ondine-editorial-rfq
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "50-Code/site/**"
+      - ".github/workflows/twd-ondine-verify.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-browser:
+    name: Astro build + desktop/mobile conversion smoke test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 50-Code/site
+    steps:
+      - name: Checkout requested branch
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install project and browser dependencies
+        run: |
+          npm install --no-audit --no-fund
+          npm install --no-save playwright --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Astro production build
+        run: npm run build
+      - name: Validate static route output
+        run: |
+          test -f dist/index.html
+          test -f dist/products/index.html
+          test -f dist/rfq/index.html
+      - name: Local preview and browser checks
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/twd-ondine-preview.log 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" || true' EXIT
+          for i in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:4321/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/smoke-browser.mjs
+      - name: Upload screenshots for visual review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ondine-editorial-browser-screenshots
+          path: 50-Code/site/screenshots/*.png
+          if-no-files-found: ignore
