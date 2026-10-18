@@ -1,104 +1,44 @@
 ---
 import "../styles/global.css";
 import "../styles/experience-core.css";
-import "../styles/experience-hero.css";
-import "../styles/experience-sections.css";
-import "../styles/experience-catalogue.css";
 import "../styles/experience-pages.css";
-
-interface Props {
-  title?: string;
-  description?: string;
-  canonicalUrl?: string;
-  structuredData?: Record<string, unknown>[];
-}
-
-const {
-  title = "Powertrain Parts",
-  description = "Independent sourcing and RFQ support for Twin Disc PTO, clutch, friction and pump-drive parts.",
-  canonicalUrl,
-  structuredData = [],
-} = Astro.props;
+import "../styles/ondine.css";
+interface Props { title?: string; description?: string; canonicalUrl?: string; structuredData?: Record<string, unknown>[]; }
+const { title = "Powertrain Parts | Independent Part Sourcing", description = "Independent sourcing and RFQ support for industrial Twin Disc PTO, clutch, friction and pump-drive parts.", canonicalUrl, structuredData = [] } = Astro.props;
+const onRfq = Astro.url.pathname.replace(/\/$/, "") === "/rfq";
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0b1116" />
+    <meta name="theme-color" content="#0d171b" />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     <title>{title}</title>
-    {structuredData.map((schema) => (
-      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
-    ))}
+    {structuredData.map((schema) => <script type="application/ld+json" set:html={JSON.stringify(schema)} />)}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
-  <body>
+  <body class:list={["ed-body", onRfq && "ed-body--rfq"]}>
     <div class="xp-reading-progress" aria-hidden="true"></div>
-    <a class="skip-link" href="#main-content">Skip to Content</a>
-
-    <div class="utility-bar" aria-hidden="true">
-      <div class="shell utility-bar__inner">
-        <span>Independent Industrial Parts Sourcing</span>
-        <span>RFQ-Based · Compatibility Verified Before Order</span>
-      </div>
-    </div>
-
-    <header class="site-header">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="ed-utility"><div class="shell ed-utility__inner"><span>POWERTRAIN PARTS / INDEPENDENT SOURCING</span><span>INDUSTRIAL + MARINE REFERENCE SUPPORT</span></div></div>
+    <header class="site-header ed-header">
       <div class="shell site-header__inner">
-        <a class="brand" href="/" aria-label="Powertrain Parts home">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <span class="brand-copy">
-            <strong>POWERTRAIN</strong>
-            <span>PARTS</span>
-          </span>
-        </a>
-
-        <nav class="site-nav" aria-label="Main navigation">
-          <a href="/products">Catalogue</a>
-          <a href="/rfq">Part Identification</a>
-          <a class="button button-compact" href="/rfq">Request Quote</a>
-        </nav>
+        <a class="brand ed-brand" href="/" aria-label="Powertrain Parts home"><span class="ed-brand__symbol" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-copy"><strong>POWERTRAIN</strong><span>PARTS / INDEPENDENT</span></span></a>
+        <nav class="site-nav ed-nav" aria-label="Main navigation"><a href="/products">Catalogue</a><a href="/#families">Product families</a><a href="/rfq">Part identification</a><a class="ed-nav__quote" href="/rfq">Request a Quote <span aria-hidden="true">↗</span></a></nav>
+        <details class="ed-mobile-menu"><summary aria-label="Open navigation">Menu <span aria-hidden="true">+</span></summary><nav aria-label="Mobile navigation"><a href="/products">Catalogue</a><a href="/#families">Product families</a><a href="/rfq">Part identification</a></nav></details>
       </div>
     </header>
-
-    <main id="main-content">
-      <slot />
-    </main>
-
-    <footer class="site-footer">
-      <div class="shell footer-grid">
-        <div>
-          <a class="brand brand-footer" href="/">
-            <span class="brand-mark" aria-hidden="true"></span>
-            <span class="brand-copy">
-              <strong>POWERTRAIN</strong>
-              <span>PARTS</span>
-            </span>
-          </a>
-          <p class="footer-copy">Independent sourcing for industrial PTO, clutch, friction and pump-drive components.</p>
-        </div>
-
-        <div class="footer-meta">
-          <strong>Ordering Standard</strong>
-          <p>Compatibility and availability are verified before a quote becomes an order.</p>
-        </div>
-
-        <div class="footer-meta">
-          <strong>Manufacturer Reference</strong>
-          <p><span translate="no">Twin Disc</span> names and part numbers are used for product identification.</p>
-        </div>
-      </div>
-
-      <div class="shell footer-bottom">
-        <span>Independent supplier · Not an official <span translate="no">Twin Disc</span> website</span>
-        <a href="/rfq">Request Quote</a>
-      </div>
-    </footer>
+    <main id="main-content"><slot /></main>
+    <footer class="site-footer ed-footer"><div class="shell ed-footer__top"><div><a class="ed-footer__logo" href="/">POWERTRAIN<span>PARTS.</span></a><p>Independent sourcing for industrial drive, clutch, PTO and pump-drive component references.</p></div><div><span class="ed-footer__label">EXPLORE</span><a href="/products">Product catalogue</a><a href="/#families">Product families</a><a href="/rfq">Request a quote</a></div><div><span class="ed-footer__label">IMPORTANT NOTE</span><p>Part numbers and trademarks are used solely for product identification. This is an independent supplier website, not the official Twin Disc website. Compatibility and availability require confirmation.</p></div></div><div class="shell ed-footer__bottom"><span>© {new Date().getFullYear()} POWERTRAIN PARTS</span><span>MARINE IMAGERY: UNSPLASH CONTRIBUTORS <a href="https://unsplash.com/@ashforma">MARK ASHFORD</a> / <a href="https://unsplash.com/@nikolaikolosov">NIKOLAI KOLOSOV</a></span><a href="/rfq">START A REQUEST ↗</a></div></footer>
+    {!onRfq && <a class="ed-mobile-rfq" href="/rfq">Request a Quote <span aria-hidden="true">↗</span></a>}
     <script>import "../scripts/experience";</script>
   </body>
 </html>
