@@ -103,6 +103,7 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
                 <span>Support</span>
                 <strong>Email-first technical review</strong>
               </div>
+              <a class="product-identity-card__quote" href={"/rfq?part=" + encodeURIComponent(modelProduct.modelName)}>Request a Quote <span aria-hidden="true">↗</span></a>
             </aside>
           </div>
         </div>
@@ -259,6 +260,7 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
                 <span>Model family</span>
                 <strong>{skuProduct.modelFamily}</strong>
               </div>
+              <a class="product-identity-card__quote" href={"/rfq?part=" + encodeURIComponent(skuProduct.partNumber)}>Request a Quote <span aria-hidden="true">↗</span></a>
             </aside>
           </div>
         </div>
