@@ -18,6 +18,17 @@ try {
   assert.equal(await page.locator(".ed-family").count(), 4);
   assert.match(await page.locator(".ed-family").nth(1).getAttribute("href"), /q=Clutch/);
   assert.ok(await page.locator(".ed-product__quote").count() > 0);
+  const heroImage = page.locator(".ed-hero__photo img");
+  await heroImage.evaluate(async (img) => {
+    if (!img.complete) await new Promise((resolve) => { img.addEventListener("load", resolve, {once:true}); img.addEventListener("error", resolve, {once:true}); setTimeout(resolve, 10000); });
+  });
+  assert.ok(await heroImage.evaluate(img=>img.naturalWidth)>0,"Hero image failed to load");
+  async function revealSections(){
+    const height=await page.evaluate(()=>document.documentElement.scrollHeight);
+    for(let y=0;y<height;y+=650){await page.evaluate((scrollY)=>window.scrollTo(0,scrollY),y);await page.waitForTimeout(70);}
+    await page.evaluate(()=>window.scrollTo(0,0));await page.waitForTimeout(850);
+  }
+  await revealSections();
   await page.screenshot({path:"screenshots/ondine-home-desktop.png",fullPage:true});
   await visit("/products?q=SP318C003");
   assert.equal((await page.locator("#product-search").inputValue()).toUpperCase(),"SP318C003");
@@ -49,7 +60,7 @@ try {
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
     assert.ok(overflow<=2,path+" overflows mobile viewport by "+overflow+"px");
     if(path!=="/rfq") assert.equal(await page.locator(".ed-mobile-rfq").isVisible(),true);
-    if(path==="/") await page.screenshot({path:"screenshots/ondine-home-mobile.png",fullPage:true});
+    if(path==="/") { await revealSections(); await page.screenshot({path:"screenshots/ondine-home-mobile.png",fullPage:true}); }
   }
   await page.emulateMedia({reducedMotion:"reduce"});
   await visit("/");
