@@ -1,47 +1,70 @@
 import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
 import { chromium } from "playwright";
-
 const base = "http://127.0.0.1:4321";
-const browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
+const browser = await chromium.launch({ headless:true, args:["--no-sandbox"] });
 const errors = [];
-const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
-page.on("pageerror", (error) => errors.push(error.message));
-await mkdir("screenshots", { recursive: true });
-
-try {
-  await page.goto(base + "/", { waitUntil: "networkidle" });
-  assert.match(await page.locator("h1").first().innerText(), /Power\s+in motion/i);
-  assert.equal(await page.locator("[data-family-tab]").count(), 4);
-  await page.locator("[data-family-tab]").nth(1).click();
-  assert.match(await page.locator("#xp-family-name").innerText(), /Clutch Systems/);
-  assert.match(await page.locator("#xp-family-link").getAttribute("href"), /q=Clutch/);
-  await page.screenshot({ path: "screenshots/home-desktop.png", fullPage: true });
-
-  await page.goto(base + "/products?q=SP318C003", { waitUntil: "networkidle" });
-  assert.equal((await page.locator("#product-search").inputValue()).toUpperCase(), "SP318C003");
-  assert.ok(await page.locator(".catalogue-row:not([hidden])").count() >= 1);
-  await page.locator('[data-filter-family="Clutch"]').click();
-  assert.ok(await page.locator(".catalogue-row:not([hidden])").count() >= 1);
-  const families = await page.locator(".catalogue-row:not([hidden])").evaluateAll((nodes) => nodes.map((node) => node.getAttribute("data-family")));
-  assert.ok(families.every((value) => value === "Clutch"));
-  await page.screenshot({ path: "screenshots/catalogue-desktop.png", fullPage: true });
-
-  await page.goto(base + "/rfq?part=SP318C003", { waitUntil: "networkidle" });
-  assert.equal(await page.locator("#part").inputValue(), "SP318C003");
-  await page.locator('[name="email"]').fill("qa@example.com");
-  await page.locator("#rfq-form button[type=submit]").click();
-  assert.equal(await page.locator("#rfq-result").isVisible(), true);
-
-  await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ["/", "/products", "/rfq", "/products/sp318c003-twd"]) {
-    await page.goto(base + route, { waitUntil: "networkidle" });
-    const width = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-    assert.ok(width <= 2, route + " overflows mobile viewport by " + width + "px");
-    if (route === "/") await page.screenshot({ path: "screenshots/home-mobile.png", fullPage: true });
-  }
-  assert.deepEqual(errors, [], "Browser JavaScript errors: " + errors.join("; "));
-  console.log("Browser smoke tests passed: homepage, family switch, search/filter, RFQ prototype, and mobile widths.");
-} finally {
-  await browser.close();
+const page = await browser.newPage({ viewport:{width:1440,height:900}, deviceScaleFactor:1 });
+page.on("pageerror", e => errors.push(e.message));
+await mkdir("screenshots", { recursive:true });
+async function visit(path) {
+  const response=await page.goto(base+path,{waitUntil:"domcontentloaded"});
+  assert.ok(response?.ok(), "Route must load: "+path);
 }
+try {
+  await visit("/");
+  assert.match(await page.locator("h1").first().innerText(), /work that\s+moves/i);
+  assert.match(await page.locator(".ed-hero__actions .ed-cta").innerText(), /Request a Quote/i);
+  assert.equal(await page.locator(".ed-family").count(), 4);
+  assert.match(await page.locator(".ed-family").nth(1).getAttribute("href"), /q=Clutch/);
+  assert.ok(await page.locator(".ed-product__quote").count() > 0);
+  const heroImage = page.locator(".ed-hero__photo img");
+  await heroImage.evaluate(async (img) => {
+    if (!img.complete) await new Promise((resolve) => { img.addEventListener("load", resolve, {once:true}); img.addEventListener("error", resolve, {once:true}); setTimeout(resolve, 10000); });
+  });
+  assert.ok(await heroImage.evaluate(img=>img.naturalWidth)>0,"Hero image failed to load");
+  async function revealSections(){
+    const height=await page.evaluate(()=>document.documentElement.scrollHeight);
+    for(let y=0;y<height;y+=650){await page.evaluate((scrollY)=>window.scrollTo(0,scrollY),y);await page.waitForTimeout(70);}
+    await page.evaluate(()=>window.scrollTo(0,0));await page.waitForTimeout(850);
+  }
+  await revealSections();
+  await page.screenshot({path:"screenshots/ondine-home-desktop.png",fullPage:true});
+  await visit("/products?q=SP318C003");
+  assert.equal((await page.locator("#product-search").inputValue()).toUpperCase(),"SP318C003");
+  assert.ok(await page.locator(".catalogue-card:not([hidden])").count()>=1);
+  assert.ok(await page.locator(".catalogue-card:not([hidden]) .catalogue-card__quote").count()>=1);
+  await page.locator("#product-search").fill("");
+  const filter=page.locator(".filter-chip").nth(1);
+  const family=await filter.getAttribute("data-family");
+  await filter.click();
+  const found=await page.locator(".catalogue-card:not([hidden])").count();
+  assert.ok(found>0);
+  const families=await page.locator(".catalogue-card:not([hidden])").evaluateAll(nodes=>nodes.map(node=>node.getAttribute("data-family")));
+  assert.ok(families.every(value=>value===family));
+  await page.screenshot({path:"screenshots/ondine-catalogue-desktop.png",fullPage:true});
+  await visit("/products/sp318c003-twd");
+  assert.ok(await page.locator(".product-identity-card__quote").count()===1);
+  assert.match(await page.locator(".product-identity-card__quote").getAttribute("href"),/rfq\?part=/);
+  await visit("/rfq?part=SP318C003");
+  assert.equal(await page.locator("#part").inputValue(),"SP318C003");
+  assert.equal(await page.locator("#rfq-result").isVisible(),false);
+  await page.locator('[name="email"]').fill("qa@example.com");
+  await page.locator('#rfq-form button[type="submit"]').click();
+  assert.equal(await page.locator("#rfq-result").isVisible(),true);
+  assert.match(await page.locator("#rfq-result").innerText(),/not submitted/i);
+  assert.match(await page.locator("#rfq-summary").innerText(),/SP318C003/);
+  await page.setViewportSize({width:390,height:844});
+  for(const path of ["/","/products","/rfq","/products/sp318c003-twd"]) {
+    await visit(path);
+    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+    assert.ok(overflow<=2,path+" overflows mobile viewport by "+overflow+"px");
+    if(path!=="/rfq") assert.equal(await page.locator(".ed-mobile-rfq").isVisible(),true);
+    if(path==="/") { await revealSections(); await page.screenshot({path:"screenshots/ondine-home-mobile.png",fullPage:true}); }
+  }
+  await page.emulateMedia({reducedMotion:"reduce"});
+  await visit("/");
+  assert.equal(await page.locator(".ed-hero__actions .ed-cta").isVisible(),true);
+  assert.deepEqual(errors,[],"JavaScript errors: "+errors.join("; "));
+  console.log("PASS: editorial homepage, CTAs, family links, catalogue filters, product RFQ prefill, truthful form state, responsive routes, reduced motion.");
+} finally {await browser.close();}

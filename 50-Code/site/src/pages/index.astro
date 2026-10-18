@@ -1,20 +1,93 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ExperienceHero from "../components/ExperienceHero.astro";
-import FamilyExplorer from "../components/FamilyExplorer.astro";
-import IdentificationStory from "../components/IdentificationStory.astro";
-import SearchBand from "../components/SearchBand.astro";
-import CataloguePreview from "../components/CataloguePreview.astro";
+import { publicProducts } from "../data/products";
+const featured = publicProducts.slice(0, 4);
+const families = [
+  {n:"01",name:"Power take-offs",code:"PTO",copy:"From engine output to the equipment that puts it to work.",kind:"Mechanical engagement"},
+  {n:"02",name:"Clutch systems",code:"Clutch",copy:"A considered route to the components behind controlled engagement.",kind:"Power management"},
+  {n:"03",name:"Pump drives",code:"Pump",copy:"References for hydraulic drive and power-transfer applications.",kind:"Hydraulic transmission"},
+  {n:"04",name:"Service components",code:"Ring",copy:"Drive rings, friction components and specialist replacement references.",kind:"Repair & maintenance"},
+];
 ---
-<BaseLayout title="Industrial Powertrain Parts | Precision Sourcing" description="Find Twin Disc PTO, clutch and pump-drive components. Explore part numbers and industrial model references, then request a verified quote.">
-  <ExperienceHero />
-  <div class="xp-home"><SearchBand /><FamilyExplorer /><IdentificationStory /><CataloguePreview /></div>
-  <section class="xp-final" aria-labelledby="xp-final-title">
-    <div class="xp-final__halo" aria-hidden="true"></div>
-    <div class="shell xp-final__inner" data-reveal>
-      <p class="xp-eyebrow">04 / WHAT'S NEXT</p><h2 id="xp-final-title">Every machine has<br/><em>a next move.</em></h2>
-      <p>Tell us what you're working with. We'll start with the evidence and work toward the right component.</p>
-      <a href="/rfq" class="xp-button xp-button--cream">Start a request <span aria-hidden="true">↗</span></a>
+<BaseLayout title="Powertrain Parts | Independent Twin Disc Parts Sourcing" description="Explore industrial Twin Disc PTO, clutch and pump-drive part references. Find your model and prepare a part-specific quotation request with technical verification.">
+  <section class="ed-hero" aria-labelledby="hero-title">
+    <div class="ed-hero__frame">
+      <div class="ed-hero__photo">
+        <img src="https://images.unsplash.com/photo-1727782132601-9f0edfecc513?auto=format&fit=crop&w=1800&q=85" alt="Large commercial cargo vessel at sea beneath an overcast sky" fetchpriority="high" />
+      </div>
+      <div class="ed-hero__shade" aria-hidden="true"></div>
+      <div class="shell ed-hero__top"><span class="ed-overline">INDEPENDENT POWERTRAIN SOURCING <i></i> ONTARIO, CANADA</span><span class="ed-hero__edition">ENGINEERING SUPPLY / NO. 01</span></div>
+      <div class="shell ed-hero__body">
+        <p class="ed-hero__eyebrow" data-reveal>THE POWER TO KEEP MOVING</p>
+        <h1 id="hero-title" data-reveal>For the<br/>work that <em>moves.</em></h1>
+        <div class="ed-hero__lower" data-reveal>
+          <p>Hard-working equipment deserves a more considered way to source its parts. Explore industrial powertrain references, then prepare the details needed for a considered quote.</p>
+          <div class="ed-hero__actions"><a href="/rfq" class="ed-cta ed-cta--signal">Request a Quote <span aria-hidden="true">↗</span></a><a href="/products" class="ed-quiet-link">Explore the catalogue <span aria-hidden="true">↗</span></a></div>
+        </div>
+      </div>
+      <div class="ed-hero__bottom shell"><span>MARINE / INDUSTRIAL / MOTION</span><span>SCROLL TO EXPLORE <span aria-hidden="true">↓</span></span><span>01 / 05</span></div>
     </div>
+  </section>
+
+  <div class="ed-ticker" aria-label="Product areas"><div class="shell ed-ticker__inner"><span>POWER TAKE-OFFS</span><span class="ed-ticker__diamond" aria-hidden="true">·</span><span>CLUTCH COMPONENTS</span><span class="ed-ticker__diamond" aria-hidden="true">·</span><span>PUMP DRIVES</span><span class="ed-ticker__diamond" aria-hidden="true">·</span><span>TECHNICAL SOURCING</span></div></div>
+
+  <section class="ed-intro" aria-labelledby="intro-title">
+    <div class="shell ed-intro__grid">
+      <div class="ed-intro__lead" data-reveal><p class="ed-section-number">01 / THE APPROACH</p><h2 id="intro-title">The right part.<br/><em>Not just any part.</em></h2></div>
+      <div class="ed-intro__copy" data-reveal><span class="ed-rule-mark" aria-hidden="true">+</span><p>When a machine matters, a part number is only the beginning. We help connect the reference you have with the model, serial and application details needed for a more informed quotation.</p><a href="/rfq" class="ed-inline-link">Start with your equipment details <span aria-hidden="true">↗</span></a><div class="ed-intro__meta"><span>INDEPENDENT RESELLER</span><span>COMPATIBILITY CHECKED BEFORE ORDERING</span></div></div>
+    </div>
+  </section>
+
+  <section class="ed-image-story" aria-labelledby="story-title">
+    <div class="ed-image-story__photo"><img src="https://images.unsplash.com/photo-1568347877321-f8935c7dc5a3?auto=format&fit=crop&w=1400&q=85" alt="Aerial view of a red commercial cargo vessel underway at sea" loading="lazy" /></div>
+    <div class="ed-image-story__content"><div class="ed-image-story__inner" data-reveal><p class="ed-section-number">02 / BUILT AROUND THE APPLICATION</p><h2 id="story-title">Mechanical precision.<br/><em>Real-world demands.</em></h2><p>From industrial PTO assemblies to clutch and drive components, the search for the right replacement starts with knowing exactly what is installed.</p><a class="ed-outline-link" href="/products">Browse product references <span aria-hidden="true">↗</span></a></div><span class="ed-image-story__tiny">APPLICATION IMAGE / EDITORIAL REFERENCE</span></div>
+  </section>
+
+  <section class="ed-families" id="families" aria-labelledby="family-title">
+    <div class="shell">
+      <div class="ed-section-head" data-reveal><div><p class="ed-section-number">03 / THE EQUIPMENT</p><h2 id="family-title">Explore the <em>range.</em></h2></div><p>Four ways into the catalogue. Every product is identified by its published part or model reference, not an assumed fit.</p></div>
+      <div class="ed-family-list">
+        {families.map((family, i) => (
+          <a class="ed-family" href={"/products?q=" + encodeURIComponent(family.code)} data-reveal>
+            <span class="ed-family__num">{family.n}</span>
+            <div class="ed-family__text"><h3>{family.name}</h3><p>{family.copy}</p></div>
+            <span class="ed-family__kind">{family.kind}</span>
+            <span class="ed-family__arrow" aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+      <div class="ed-families__foot"><p>Not sure of the family? An equipment model, nameplate or OEM reference is a useful starting point.</p><a class="ed-inline-link" href="/rfq">Request help identifying a part <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </section>
+
+  <section class="ed-search" aria-labelledby="search-title">
+    <div class="shell ed-search__grid" data-reveal>
+      <div><p class="ed-section-number">04 / KNOW YOUR PART NUMBER?</p><h2 id="search-title">Go straight<br/>to the <em>details.</em></h2><p>Search by part number, model family or component name. The catalogue stays practical, even when the journey is cinematic.</p></div>
+      <form action="/products" method="get" class="ed-search__form" role="search"><label for="ed-search-input">SEARCH THE PART REFERENCE LIBRARY</label><div class="ed-search__control"><input id="ed-search-input" name="q" type="search" placeholder="e.g. SP318C003 or CX110" autocomplete="off" /><button type="submit" aria-label="Search products">Search <span aria-hidden="true">↗</span></button></div><small>{publicProducts.length} launch part references currently listed. Exact applicability must be verified.</small></form>
+    </div>
+  </section>
+
+  <section class="ed-featured" aria-labelledby="featured-title">
+    <div class="shell">
+      <div class="ed-section-head ed-section-head--featured" data-reveal><div><p class="ed-section-number">05 / SELECTED REFERENCES</p><h2 id="featured-title">A closer <em>look.</em></h2></div><a class="ed-inline-link" href="/products">View the complete catalogue <span aria-hidden="true">↗</span></a></div>
+      <div class="ed-featured__grid">
+        {featured.map((product, i) => (
+          <article class="ed-product" data-reveal>
+            <div class="ed-product__index"><span>REFERENCE / {String(i + 1).padStart(2, "0")}</span><span>{product.family}</span></div>
+            <a class="ed-product__art" href={"/products/" + product.sku.toLowerCase()} aria-label={"View product " + product.partNumber}><span class="ed-product__diagram" aria-hidden="true"><i></i><b></b></span><span class="ed-product__artnote">CONCEPT VISUAL / NOT A PRODUCT IMAGE</span></a>
+            <div class="ed-product__meta"><span>{product.modelFamily}</span><h3 translate="no">{product.partNumber}</h3><p>{product.title}</p><div class="ed-product__links"><a href={"/products/" + product.sku.toLowerCase()}>Part details ↗</a><a class="ed-product__quote" href={"/rfq?part=" + encodeURIComponent(product.partNumber)}>Request a Quote ↗</a></div></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="ed-process" aria-labelledby="process-title">
+    <div class="shell ed-process__grid"><div data-reveal><p class="ed-section-number">HOW IT WORKS / THREE STEPS</p><h2 id="process-title">From a reference<br/>to a <em>request.</em></h2><p>Less guesswork, better context. The technical details help clarify what you need before any order is discussed.</p></div><div class="ed-process__steps"><article data-reveal><span>01</span><div><h3>Find a reference</h3><p>Browse the catalogue or search an exact part number.</p></div></article><article data-reveal><span>02</span><div><h3>Tell us about the equipment</h3><p>Share the machine model, serial tag, OEM number or photos you have.</p></div></article><article data-reveal><span>03</span><div><h3>Prepare your quote request</h3><p>Review your information before contacting the supplier. Availability and fitment are not assumed.</p></div></article></div></div>
+  </section>
+
+  <section class="ed-final" aria-labelledby="final-title">
+    <div class="ed-final__rings" aria-hidden="true"></div>
+    <div class="shell ed-final__content" data-reveal><p class="ed-section-number">YOUR NEXT MOVE / REQUEST A QUOTE</p><h2 id="final-title">Let's get down<br/>to the <em>details.</em></h2><div class="ed-final__bottom"><p>Know the exact number, or only have a photo of the tag? Either way, begin with what you know.</p><a class="ed-cta ed-cta--signal" href="/rfq">Request a Quote <span aria-hidden="true">↗</span></a></div></div>
   </section>
 </BaseLayout>

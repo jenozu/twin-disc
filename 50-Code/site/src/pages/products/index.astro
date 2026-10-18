@@ -93,6 +93,7 @@ const families = [...new Set(publicProducts.map((product) => product.family))];
               <b aria-hidden="true">→</b>
             </div>
           </a>
+          <a class="catalogue-card__quote" href={"/rfq?part=" + encodeURIComponent(product.partNumber)} aria-label={"Request a quote for " + product.partNumber}>Request a Quote <span aria-hidden="true">↗</span></a>
         </article>
       ))}
     </div>
