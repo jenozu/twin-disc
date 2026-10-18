@@ -1,0 +1,63 @@
+:root {
+  /* Brand palette — "Foundry Teal" */
+  --color-ink: #0d1720;
+  --color-ink-soft: #22313b;
+  --color-canvas: #faf9f6;
+  --color-paper: #f4f1ea;
+  --color-surface: #ffffff;
+  --color-surface-tint: #edf3f1;
+  --color-surface-dark: #111e26;
+  --color-surface-dark-2: #172630;
+
+  --color-text: #142129;
+  --color-text-soft: #596761;
+  --color-text-muted: #6f7b77;
+  --color-text-on-dark: #f7f4ed;
+  --color-text-on-dark-soft: #aebbb7;
+
+  --color-border: #d8ddd9;
+  --color-border-strong: #b7c1bd;
+  --color-border-dark: #2c3b44;
+
+  --color-accent: #0f6b63;
+  --color-accent-hover: #0a5751;
+  --color-accent-soft: #dceeea;
+  --color-accent-on-dark: #78d2c8;
+
+  --color-highlight: #c7783e;
+  --color-highlight-hover: #aa6231;
+  --color-highlight-soft: #f7e7d8;
+
+  --color-success: #2d7466;
+  --color-warning: #9a5b2e;
+  --color-danger: #a3423f;
+
+  --font-display: "Aptos Display", "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-body: "Aptos", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", ui-monospace, monospace;
+
+  --text-xs: .72rem;
+  --text-sm: .84rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.35rem;
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  --shadow-soft: 0 1px 2px rgba(13, 23, 32, .04), 0 16px 48px rgba(13, 23, 32, .07);
+  --shadow-panel: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 24px 70px rgba(13, 23, 32, .10);
+  --shadow-focus: 0 0 0 4px rgba(15, 107, 99, .16);
+
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
+  --ease-in-out: cubic-bezier(.77, 0, .175, 1);
+  --duration-press: 140ms;
+  --duration-fast: 160ms;
+  --duration-base: 200ms;
+  --duration-slow: 280ms;
+
+  --max-width: 1240px;
+  --header-height: 76px;
+}
