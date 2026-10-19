@@ -1,6 +1,4 @@
 import { readdir, readFile } from "node:fs/promises";
-import path from "node:path";
-import { pathToFileURL } from "node:url";
 const dist = new URL("../dist/", import.meta.url);
 const errors = [];
 async function walk(dir) {

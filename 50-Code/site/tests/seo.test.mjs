@@ -11,13 +11,13 @@ const records=[
  { sku:"SP111P340-TWD",partNumber:"SP111P340",title:"Held PTO",modelFamily:"SP111",family:"PTO",status:"HOLD" },
 ];
 test("canonical URLs use source-code host, strip trailing slash and reject preview domains",()=>{
- assert.equal(canonicalUrl("/products/sp211c006-twd/"),"https://twd.andel-vps.space/products/sp211c006-twd");
+ assert.equal(canonicalUrl("/products/sp211c006-twd/"),"https://twd.andel-vps.space/products/sp211c006-twd/");
  assert.throws(()=>canonicalUrl("//evil.example"),/site-relative/);
 });
 test("preview is nonindexable and only approved page records enter sitemap",()=>{
  assert.equal(isApprovedProduction(preview),false);
  assert.deepEqual(approvedSitemapPaths([{path:"/products",publicationStatus:"Published"}],preview),[]);
- assert.deepEqual(approvedSitemapPaths([{path:"/products",publicationStatus:"Published",releaseApproved:true},{path:"/draft",publicationStatus:"Draft",releaseApproved:true},{path:"/hold",publicationStatus:"Published",held:true,releaseApproved:true},{path:"/unapproved",publicationStatus:"Published"}],production),["/products"]);
+ assert.deepEqual(approvedSitemapPaths([{path:"/products",publicationStatus:"Published",releaseApproved:true},{path:"/draft",publicationStatus:"Draft",releaseApproved:true},{path:"/hold",publicationStatus:"Published",held:true,releaseApproved:true},{path:"/unapproved",publicationStatus:"Published"}],production),["/products/"]);
  assert.ok(!sitemapXml([]).includes("<loc>"));
 });
 test("SP211C006 exact identifier search tolerates hyphens and spaces without claiming fitment",()=>{
@@ -53,7 +53,7 @@ test("only source-backed exact Yes relationships qualify for verified exact disp
 test("webpage structured data has no fabricated offer, stock or reviews",()=>{
  const d=webpageSchema("Reference","Reference page","/products");
  assert.equal(d["@type"],"WebPage");
- assert.equal(d.url,"https://twd.andel-vps.space/products");
+ assert.equal(d.url,"https://twd.andel-vps.space/products/");
  assert.equal(d.offers,undefined);
 });
 
@@ -132,7 +132,7 @@ test("related pages require published destinations; cards cannot claim unsupport
  const held=page({id:"held",canonicalPath:"/parts/sp211p304/",sku:"SP211P304-TWD"});
  const links=projectPublicLinks(parent,[target,held]);
  assert.equal(links.length,1);
- assert.equal(links[0].href,"/resources/identification");
+ assert.equal(links[0].href,"/resources/identification/");
 });
 test("invalid SKU record fails safely and does not ingest private fields",()=>{
  assert.throws(()=>adaptPhase5Product({SKU:"",TwinDiscPartNumber:"",ProductTitle:""} ,[]),/Incomplete/);

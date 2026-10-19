@@ -63,7 +63,7 @@ export function validateSEOPage(input: unknown): RecordValidation {
  if(!p.review||typeof p.review!=="object"||["technicalApproved","commercialApproved","assetsApproved","identityApproved","privacyApproved"].some(k=>typeof (p.review as unknown as Record<string,unknown>)[k]!=="boolean"))e.push("Invalid approval review fields");
  if(p.sku && HELD_SKUS.has(p.sku.toUpperCase()) && (p.status==="Published"||p.status==="Approved"))e.push("HOLD SKU cannot become Approved or Published");
  if(Array.isArray(p.links))for(const l of p.links)if(!l || typeof l.href!=="string"||!l.href.startsWith("/")||l.href.startsWith("//")||!l.anchor?.trim()||!Array.isArray(l.evidenceClaimIds))e.push("Invalid internal link");
- validateRequiredFields(p,e);
+ if(p.status!=="Research"&&p.status!=="AIDraft")validateRequiredFields(p,e);
  return {valid:e.length===0, errors:e};
 }
 export function validateContentBatch(pages: unknown[]): RecordValidation {

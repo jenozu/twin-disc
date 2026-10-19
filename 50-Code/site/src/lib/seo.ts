@@ -56,7 +56,7 @@ export function canonicalPath(pathname: string): string {
   if (!pathname.startsWith("/") || pathname.startsWith("//") || pathname.includes("\\")) throw new Error("Canonical path must be site-relative");
   const path = pathname.split(/[?#]/)[0].replace(/\/+/g, "/");
   if (path.includes("..")) throw new Error("Invalid canonical path");
-  return path === "/" ? "/" : path.replace(/\/$/, "");
+  return path === "/" ? "/" : path.replace(/\/+$/, "") + "/";
 }
 export function canonicalUrl(path: string, origin: string = CANONICAL_ORIGIN): string {
   const host = new URL(validateCanonicalOrigin(origin));
