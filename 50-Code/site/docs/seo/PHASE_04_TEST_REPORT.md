@@ -1,26 +1,20 @@
-# SEO-04 test report — 2026-10-19
+# SEO-04 test report — self-hosted transition
 
-## Verified on Vercel preview
-- Verified build SHA: \`72c76b891a94d4a51afee64bd5f93622420187c2\`.
-- Deployment ID: \`dpl_3rFL1K1e9oRk3JKeHaQdYGa9zN1m\` — READY.
-- Preview: https://twin-disc-q6hyruovp-jenozus-projects.vercel.app (SSO-protected).
-- Astro site generation passed with server adapter and 43 generated HTML pages.
-- RFQ Node contract tests and existing SEO 15-test suite passed; no failed tests seen.
-- SEO static validator: **passed 43 pages** (canonicals, links, preview robots, sitemap, JSON-LD).
-- Astro check: **0 errors**, three nonblocking hints.
-- npm dependency audit: **6 advisories** (1 critical, 4 high, 1 low). The critical item affects Astro 5. Recommended fixes include a major Astro / @astrojs/vercel upgrade. This is a **production-release blocker** until reviewed and addressed; a successful build is not security clearance.
+## Evidence obtained
+- 2026-10-19 Vercel preview merge SHA 316d4916226d3eb45505f603f7f82ddc091fdc07: READY. Preview https://twin-disc-s2kk5cbaq-jenozus-projects.vercel.app (Vercel SSO protection).
+- Build chained: Astro client/server generation, RFQ contract tests, SEO regression tests, rendered preview sitemap/canonical/link/schema validator, npm dependency audit, Astro strict checking, backend dependency install and strict backend TypeScript checking. All completed to deployment READY.
+- Source-level RFQ tests include unknown identifiers, held products, family-only versus exact evidence, contact and consent, PII-free analytics and backend gateway references.
+- Backend integration test file backend/tests/integration.test.ts exercises a **real PostgreSQL connection when TEST_DATABASE_URL is configured**: idempotency, required fields, held items, private file upload and authentication, session/CSRF, audit/status/review, SMTP-disabled outbox and logout. The GitHub workflow provisions Postgres 16 and includes dump/restore validation.
 
-## Test scope
-RFQ tests exercise optional identifiers, held products, family-only relationships, email-or-phone validation, privacy consent, file signatures/sizes, fake idempotency, simulated failure, JWT auth rejection, status transitions, analytics privacy, upload association and simulated rate limit. **Mocks are not managed Supabase/storage proof**. Static CSS/mobile assertions are not equivalent to browser/device tests.
+## Not yet executed or proven
+- GitHub Actions integration job remained queued during verification. Do not count real PostgreSQL tests or backup/restore tests as passed before the job completes.
+- Docker Compose staging not launched on VPS. No real database, private volume, staff login, or SMTP provider has been exercised there.
+- No real SMTP delivery (not configured).
+- No live mobile-browser/keyboard/screen-reader assessment.
+- No privacy/certificate/DNS infrastructure approval or external vulnerability remediation.
 
-## Outstanding
-- [ ] GitHub Actions run success (runs were queued at report time)
-- [ ] Isolated real Supabase project, migrations and private bucket tested
-- [ ] Submit real synthetic RFQ -> persisted contact/equipment/outbox -> dashboard changes
-- [ ] Authenticated private attachment download tested in staging; unauthenticated rejected
-- [ ] Notification delivery/failed retry verified against a properly configured sender
-- [ ] Mobile/keyboard/screen-reader browser testing
-- [ ] Dependency advisory remediation and security review
-- [ ] Owner business/privacy/retention/technical approval
+## Risk register
+A prior production-dependency npm audit identified 6 advisories: 1 critical, 4 high, 1 low in Astro 5/Vercel transitive tree. Astro/adapter major upgrades need coordinated evaluation with SEO-03; do not mark safe for production merely because a build passes. File magic-byte sniffing is not malware scanning; restrict handling of PDFs until owner approves scanning or disables PDFs.
 
-No live customer data was submitted or created. The preview is not connected to a working RFQ service; an unconfigured submission must fail rather than fabricate a reference.
+## Completion gate
+Complete real synthetic path: Astro form -> protected HTTPS VPS API -> Postgres transaction -> reference -> private attachments -> authenticated admin -> audited status -> notification retry and actual separate-database backup restoration. Verify preview remains noindex and all other applications stay untouched.

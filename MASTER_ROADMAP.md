@@ -304,16 +304,16 @@ Continue the remaining Phase-5 SKU copy in evidence-controlled batches in parall
 - Raw SAP customer, cost, inventory, purchasing, and open-PO data remains local and must not be committed to this public repository.
 
 
-## SEO-04 — Unknown-model RFQ and lead qualification (isolated feature work, 2026-10-19)
-- [x] Create `feat/twd-seo-phase-04` from verified SEO-03 source; do not merge or deploy production.
-- [x] Implement responsive three-step unknown-model RFQ, replacement landing page, server validation and private lead dashboard shell.
-- [x] Add atomic Postgres/Supabase schema, idempotency, rate limiting, authorization, internal audit and notification outbox design.
-- [x] Open draft PR against `feat/twd-seo-phase-03`: https://github.com/jenozu/twin-disc/pull/10.
-- [ ] Verify clean site build and all tests after SEO-03 reconciliation (no result claimed until CI/deploy verified).
-- [ ] Provision isolated Supabase Auth/Postgres/Storage; apply migrations and verify actual synthetic submissions.
-- [ ] Configure approved sender/recipient and test notification delivery/retry.
-- [ ] Approve business identity, Canadian privacy/retention wording and upload-risk policy.
-- [ ] Manually test accessibility/mobile, reject unauthorized records/attachments and verify nonindexable protected staging.
-- [ ] Merge/deploy only after owner approval and SEO-02/03 integration review.
+## SEO-04 — Self-hosted RFQ and lead qualification (isolated feature, 2026-10-19)
+- [x] Preserve three-step Astro unknown-model RFQ, model/serial/BOM optional, SEO evidence and held SKU controls.
+- [x] Remove Supabase and replace with self-hosted Node/Fastify, PostgreSQL, private files, Argon2id staff sessions, CSRF, SMTP outbox and Docker Compose staging package.
+- [x] Add versioned migration, staff bootstrap, backups, owner-gated retention/orphan cleanup, tests and deployment runbook.
+- [x] Reconcile latest SEO-03 changes using a normal merge commit; PR #10 reports mergeable.
+- [x] Verify Astro + backend strict TypeScript build on protected Vercel preview (merge SHA 316d4916).
+- [ ] Complete queued GitHub Actions real-PostgreSQL E2E/backup-restore suite and investigate any failures.
+- [ ] Obtain approval and audit existing VPS before deploying isolated staging; no changes to shared proxy/firewall/DNS without consent.
+- [ ] Configure staging Postgres, private uploads, staff account and approved SMTP; test real full journey using synthetic data.
+- [ ] Approve privacy/retention/technical ownership and address critical/high dependency advisories with SEO-03.
+- [ ] Obtain owner approval before merge, production deployment or indexation.
 
-See `70-Project-State/SEO_04_EXECUTION_STATUS.md` and `50-Code/site/docs/seo/PHASE_04_COMPLETION_REPORT.md`. Status remains **PARTIALLY COMPLETE** until launch gates pass.
+See 70-Project-State/SEO_04_EXECUTION_STATUS.md and 50-Code/site/docs/seo/PHASE_04_COMPLETION_REPORT.md. Classification: PARTIALLY COMPLETE.

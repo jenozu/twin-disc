@@ -1,25 +1,26 @@
-# SEO-04 completion report — 2026-10-19
+# SEO-04 completion report (self-hosted migration)
 
-**Status: PARTIALLY COMPLETE — staged source implementation passes builds, but service launch is blocked.**
+**Classification: PARTIALLY COMPLETE.** No active Supabase packages or services; backend code exists but VPS staging has not been configured or proven against live PostgreSQL on the owner's server.
 
-## Code
-Replacement landing page, three-step no-model-needed RFQ, Astro/Vercel POST handler, strict validation, Postgres schema and idempotent atomic intake RPC, private attachment pipeline, support for notification outbox and operator-triggered Resend delivery, Supabase Auth allowlisted internal dashboard, audited status/review/quote/follow-up actions and PII-safe analytics adapter.
+## Reused
+Original three-step Astro customer wizard, validation/fields, optional model/serial/BOM, replacement page, status machine, evidence/held restrictions, dashboard layout, SEO-02/03 contracts and safe conversion events.
 
-## Evidence
-Vercel build at commit \`72c76b891a94d4a51afee64bd5f93622420187c2\`: deployment \`dpl_3rFL1K1e9oRk3JKeHaQdYGa9zN1m\`, status READY, build tests PASS, Astro check 0 errors, SEO validator PASS on 43 pages. Deployment preview is SSO-protected: https://twin-disc-q6hyruovp-jenozus-projects.vercel.app.
+## Replaced
+Supabase JS/Auth/Storage/RPC and Resend with VPS Fastify/PostgreSQL, local private disk, Argon2id sessions, HTTP-only cookies + CSRF, durable SMTP outbox. Old Supabase migrations deleted from active tree; version history preserved in Git. Astro API endpoints now forward through server-side same-origin HTTPS gateway; customer-facing wizard did not need redesign.
 
-The RFQ tests use local synthetic/mock services; they are not evidence of a configured live Supabase DB, storage, Auth or Resend. No working real submission has been demonstrated. GitHub Actions were queued at last check.
+## Implemented
+backend/src/app.ts, auth.ts, admin.ts, intake.ts, database.ts, storage.ts, mail.ts, guard.ts, config.ts; backend/migrations/001_init.sql; migration and staff bootstrap scripts; Compose/Docker build with internal-only database networking and private persistent volumes; admin list/review/quote/notes/attachments; backup/weekly restore script; owner-gated retention and orphan cleanup.
 
-## Critical blockers
-1. Provision isolated Supabase staging project, apply migrations and private bucket. Supply protected environment variables and create allowlisted staff identity.
-2. Approve business identity and privacy/retention/contact notice; assess PIPEDA/CASL and secure deletion/backups.
-3. Configure approved email sender/recipient if notifications are required. Outbox schema alone is not email delivery.
-4. Complete browser accessibility/mobile and synthetic full staging E2E (real DB persistence, attachments, admin, notifications).
-5. Review and remediate npm audit alerts: **6 production dependency advisories (1 critical, 4 high, 1 low)**. Astro 5 is affected; major dependency upgrade may be required, coordinated with SEO-03.
-6. Resolve SEO-02 canonical map/publishing approvals and reconcile any later SEO-03 changes before merge.
+## Verified
+Vercel protected preview for merge SHA 316d4916226d3eb45505f603f7f82ddc091fdc07 READY: https://twin-disc-s2kk5cbaq-jenozus-projects.vercel.app
+Astro build and SEO/RFQ contract tests passed; Astro and isolated backend strict TS checks passed. Static preview SEO validator remains part of build.
+Later changes require separate verification. GitHub Actions ephemeral Postgres integration job and restore job were QUEUED at last inspection. Real database persistence, authenticated downloads from a running VPS, SMTP sends, and actual restore are NOT yet verified.
 
-## GitHub and rollout safety
-Repository https://github.com/jenozu/twin-disc; branch \`feat/twd-seo-phase-04\` created from SEO-03 base SHA \`8ca8b5f207a05483171c9ca7369c9aac2b9e7e09\`. Draft PR #10 https://github.com/jenozu/twin-disc/pull/10 against SEO-03. No direct changes to SEO-02/03 branches, no merge and no production deployment. Later SEO-03 verified stable changes selectively reconciled into SEO-04 without force-push.
+## GitHub and safety
+Existing branch feat/twd-seo-phase-04, PR #10 https://github.com/jenozu/twin-disc/pull/10. Upstream SEO-03 changes reconciled via two-parent merge without force-push. PR showed mergeable=true. Main, SEO-03 and live production website were not modified. No VPS connection, DNS change, or server deployment was performed.
 
-## SEO-05/SEO-09 readiness
-Product/part pages can use \`/rfq/?part=...\`; replacement landing route is provisional \`/solutions/twin-disc-pto-clutch-replacement/\`. SEO-09 should consume safe \`twd-analytics\` events (event, step, enum category), excluding contact data and serial numbers. Keep preview noindex, avoid implying product compatibility, authorized services or verified inventory.
+## Outstanding owner actions
+Authorize read-only VPS audit and isolated compose staging (including port 4387 availability), pick staging HTTPS subdomain and approve proxy block/DNS, supply credentials via protected secrets, establish private staff login, approve privacy/retention/malware and SMTP destinations. Then run synthetic complete end-to-end with Postgres and offsite upload backup; resolve upstream critical/high dependency advisories before any production merge.
+
+## SEO-05/SEO-09 handoff
+Model/SKU pages can pass /rfq/?part=; all fits require reviewed evidence. Safe twd-analytics events contain only event, step and enum category. SEO-02 canonical map remains approval-controlled. Preview/indexation policies remain in force.

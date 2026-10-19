@@ -1,23 +1,30 @@
-# SEO-04 implementation state — 2026-10-19
+# SEO-04 execution status — 2026-10-19
 
-**Repository** \`jenozu/twin-disc\`  
-**Branch** \`feat/twd-seo-phase-04\` (SEO-03 base \`8ca8b5f207a05483171c9ca7369c9aac2b9e7e09\`)  
-**PR** https://github.com/jenozu/twin-disc/pull/10 (draft; target SEO-03 branch)
+**PARTIALLY COMPLETE — self-hosted code and preview build verified, deployment authorization and live database testing pending.**
 
-## Delivered in code
-Astro secure three-step intake, replacement landing page (provisional /solutions/twin-disc-pto-clutch-replacement/), private Supabase data model + RPC, file constraints, idempotency/rate limit, protected staff dashboard with authorization, follow-up/status/evidence/quote audit actions, notification outbox/manual send, safe local analytics events, tests + docs. No production change.
+Branch: feat/twd-seo-phase-04. PR: https://github.com/jenozu/twin-disc/pull/10 (draft, target SEO-03). Latest upstream SEO-03 SHA integrated by two-parent merge commit 316d4916226d3eb45505f603f7f82ddc091fdc07; GitHub reports PR mergeable=true, although CI checks remain pending.
 
-## Integration decisions
-- SEO-03 is parallel. Initially built solely from stable \`8ca8b5\`; subsequently imported changes from SEO-03 Vercel-verified commit \`1639382\` into SEO-04 only, preserving own code, and updated quote navigation. Later SEO-03 commits are **not automatically merged**.
-- SEO-02 canonical mapping is still provisional, so landing page and RFQ are intentionally noindex on previews. Product aliases and exact fits must remain reviewer-approved.
-- Existing external Vercel project remains SSO-protected in preview. No production target or secrets are changed.
-- \`SEO_IMPLEMENTATION_ROADMAP.md\` is currently owned by SEO-02/doc branches and absent from the SEO-03 source base. Do not recreate/overwrite it; reconcile the status entry when those branches are integrated.
+## Delivered
+- Reused customer three-step Astro RFQ, unknown-model path, Ontario replacement landing, SEO publication controls, qualification state machine and private lead dashboard layout.
+- Supabase removed from active package, server modules, Astro APIs, frontend authentication and SQL migration paths. Historic migration code remains in Git history only.
+- New backend at 50-Code/site/backend: Node.js/Fastify, PostgreSQL 16 versioned schema, atomic idempotent lead transaction, DB rate-limits, self-hosted Argon2id login/sessions/CSRF, staff authorization, audit, private uploads, forced authenticated download, optional SMTP persistent outbox and backups.
+- New same-origin Astro gateway to a configured HTTPS VPS API, with gateway authentication and no public browser database credentials.
+- Isolated Docker Compose staging package with private PostgreSQL network, loopback-published API, separate persistent uploads/backups, runtime least-privilege DB role, and health checks.
+- Owner-gated retention/orphan cleanup (dry-run default), backup scripts and weekly disposable DB restore check.
+- Normal SEO-03 merge commit integrates current upstream tests/schema without changing SEO-03 or main.
 
-## Launch blockers
-Approved independent business details, Supabase project/credentials/migrations, authorized Supabase staff user IDs, appropriate privacy notice and retention/deletion policy, safe PDF handling decision, verified notification provider/recipient, complete staging E2E with synthetic data, owner approval. Public endpoint returns 503 if service not configured.
+## Observed verification
+A Vercel Preview build for merge SHA 316d4916226d3eb45505f603f7f82ddc091fdc07 completed READY:
+https://twin-disc-s2kk5cbaq-jenozus-projects.vercel.app
+Build includes Astro build, RFQ/SEO source-level tests, SEO validation, Astro strict check, and backend strict TypeScript check. Subsequent SHA(s) require their own passing build.
+GitHub Actions real PostgreSQL integration + backup restoration job exists but was queued and had not executed at this checkpoint. **No claim of successful real PostgreSQL RFQ, SMTP delivery or VPS deployment.**
 
-## Evidence levels
-- Source committed does not prove live backend.
-- Fake/in-memory unit tests are not managed Postgres E2E.
-- Vercel preview if READY proves site build and page accessibility, not database/notification integration.
-- Record latest passing SHA/build links only once verified; never infer success from a queued build.
+## Blockers
+1. Existing VPS not accessible through installed tools: no live OS, memory, Docker, proxy, ports or backups inspected; no external services changed.
+2. Owner approval for VPS read-only inventory, isolated Docker deployment, DNS/TLS route, staging secrets and one-time staff setup.
+3. Run real PostgreSQL/HTTP end-to-end tests and offsite upload backup/restore on isolated staging.
+4. Approve legal business identity, privacy and retention/contact wording, upload malware policy and controlled deletion.
+5. Review npm production dependency advisories (prior Vercel audit: 1 critical, 4 high, 1 low) and coordinate Astro dependency upgrades with SEO-03.
+6. Complete mobile/keyboard/browser acceptance and approval for search indexation. Preview remains nonindexable and production untouched.
+
+SEO_IMPLEMENTATION_ROADMAP.md exists on separate SEO-02/doc branches. Do not overwrite upstream roadmap ownership here; reconcile on the integration branch when all SEO phases are approved.
