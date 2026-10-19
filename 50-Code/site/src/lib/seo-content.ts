@@ -80,7 +80,7 @@ export function validateContentBatch(pages: unknown[]): RecordValidation {
 }
 export function mayPublishPage(page: SEOPage): boolean {
  if(!validateSEOPage(page).valid || page.status!=="Published" || !enabledReview(page.review)) return false;
- if(!page.contentHash || !page.sourceIds.length || page.missingEvidence?.length) return false;
+ if(!(page as SEOPage & {contentHash?:string}).contentHash || !page.sourceIds.length || page.missingEvidence?.length) return false;
  if(page.sku && HELD_SKUS.has(page.sku.toUpperCase())) return false;
  if(page.claims.some(claim=>!claimIsPublishable(claim))) return false;
  if(page.type==="location") {
