@@ -1,5 +1,16 @@
 /** SEO-03 policy boundary. SEO-02 owns the eventual canonical route map and publication schema. */
-export const CANONICAL_ORIGIN = "https://twd.andel-vps.space";
+/** Placeholder applies to preview only; live canonical domain requires explicit owner approval. */
+export const PREVIEW_CANONICAL_PLACEHOLDER = "https://twd.andel-vps.space";
+export function validateCanonicalOrigin(input: string): string {
+  const url=new URL(input);
+  if(url.protocol!=="https:"||url.pathname!=="/"||url.search||url.hash||url.username||url.password||url.port||
+    url.hostname==="localhost"||url.hostname.endsWith(".vercel.app")||!url.hostname.includes("."))
+      throw new Error("Invalid canonical production domain");
+  return url.origin;
+}
+export const CANONICAL_ORIGIN=process.env.APPROVED_CANONICAL_ORIGIN
+ ? validateCanonicalOrigin(process.env.APPROVED_CANONICAL_ORIGIN)
+ : PREVIEW_CANONICAL_PLACEHOLDER;
 export type PublicationStatus = "Draft" | "Awaiting technical verification" | "Awaiting business approval" | "Approved" | "Published" | "Held" | "Archived";
 export type PublishRule = "Yes" | "Family-only" | "Review" | "Hold" | "No";
 export type RelationshipScope = "Exact" | "Exact-equipment" | "Family" | string;
@@ -12,6 +23,10 @@ export interface EvidenceRelationship {
   PublishRule: PublishRule;
   SourceURL: string;
   Notes?: string;
+  claimId?: string; sourceId?: string; documentRevision?: string|null;
+  technicalReviewStatus?: "Pending"|"Approved"|"Rejected"|"NeedsRevalidation";
+  approvedForPublication?: boolean; technicalReviewerId?: string|null;
+  reviewedAt?: string|null; nextReviewAt?: string|null;
 }
 export interface SearchableRecord {
   sku: string;
@@ -30,7 +45,9 @@ export function isApprovedStatus(status: string | undefined): boolean {
 }
 /** Only an explicitly approved production build is indexable; neither preview nor local builds are. */
 export function isApprovedProduction(env: Record<string, string | undefined> = process.env): boolean {
-  return env.VERCEL_ENV === "production" && env.SEO_APPROVED_FOR_INDEXING === "true";
+  return env.VERCEL_ENV==="production" && env.SEO_APPROVED_FOR_INDEXING==="true"
+ && !!env.APPROVED_CANONICAL_ORIGIN
+ && (()=>{try{return validateCanonicalOrigin(env.APPROVED_CANONICAL_ORIGIN!)===env.APPROVED_CANONICAL_ORIGIN}catch{return false}})();
 }
 export function mayIndexRecord(record: Pick<SearchableRecord, "sku" | "status">, env: Record<string, string | undefined> = process.env): boolean {
   return isApprovedProduction(env) && !isHeldProduct(record) && isApprovedStatus(record.status);
@@ -42,7 +59,7 @@ export function canonicalPath(pathname: string): string {
   return path === "/" ? "/" : path.replace(/\/$/, "");
 }
 export function canonicalUrl(path: string, origin: string = CANONICAL_ORIGIN): string {
-  const host = new URL(origin);
+  const host = new URL(validateCanonicalOrigin(origin));
   if (host.protocol !== "https:" || host.username || host.password || host.search || host.hash || host.pathname !== "/") {
     throw new Error("Invalid canonical origin");
   }
@@ -67,18 +84,24 @@ export function breadcrumbSchema(items: { label: string; href: string }[]): Reco
 }
 export function relationshipState(rel: EvidenceRelationship, held = false):
   "held" | "verified-exact" | "family-only" | "pending-review" | "unverified" {
-  if (held || rel.PublishRule === "Hold" || HELD_SKUS.has(rel.SourceSKU.toUpperCase())) return "held";
-  if (rel.PublishRule === "Yes" && (rel.Scope === "Exact" || rel.Scope === "Exact-equipment") && rel.SourceURL.startsWith("https://")) return "verified-exact";
-  if (rel.PublishRule === "Family-only" && rel.Scope === "Family") return "family-only";
-  if (rel.PublishRule === "Review") return "pending-review";
+  if(held||rel.PublishRule==="Hold"||HELD_SKUS.has(rel.SourceSKU.toUpperCase()))return "held";
+  if(rel.PublishRule==="Review")return "pending-review";
+  const current=typeof rel.nextReviewAt==="string" && /^\\d{4}-\\d{2}-\\d{2}$/.test(rel.nextReviewAt)
+    && rel.nextReviewAt>=new Date().toISOString().slice(0,10);
+  if(!current||rel.technicalReviewStatus!=="Approved"||rel.approvedForPublication!==true||
+    !rel.claimId||!rel.sourceId||!rel.documentRevision||!rel.technicalReviewerId||!rel.reviewedAt||
+    !rel.SourceURL?.startsWith("https://"))return "unverified";
+  if(["SERVICE_REPLACED_BY","SUPERSEDED_BY","POSSIBLE_COMPATIBILITY"].includes(rel.RelationshipType))return "unverified";
+  if(rel.PublishRule==="Yes"&&(rel.Scope==="Exact"||rel.Scope==="Exact-equipment"))return "verified-exact";
+  if(rel.PublishRule==="Family-only"&&(rel.Scope==="Family"||rel.Scope==="Family/technical"))return "family-only";
   return "unverified";
 }
 export function approvedSitemapPaths(
-  routes: { path: string; publicationStatus?: string; held?: boolean }[],
+  routes: { path: string; publicationStatus?: string; held?: boolean; releaseApproved?: boolean }[],
   env: Record<string, string | undefined> = process.env,
 ): string[] {
   if (!isApprovedProduction(env)) return [];
-  return [...new Set(routes.filter(r => !r.held && isApprovedStatus(r.publicationStatus)).map(r => canonicalPath(r.path)))].sort();
+  return [...new Set(routes.filter(r => !r.held && r.releaseApproved === true && r.publicationStatus === "Published").map(r => canonicalPath(r.path)))].sort();
 }
 export function sitemapXml(paths: string[]): string {
   const entries = [...new Set(paths.map(path => canonicalUrl(path)))];

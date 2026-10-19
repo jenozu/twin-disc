@@ -12,7 +12,7 @@ interface Props {
 const { title, description, canonicalUrl, pathname, robots, ogImage, structuredData = [] } = Astro.props;
 const canonical = absoluteCanonical(canonicalUrl ?? pathname);
 const indexable = isApprovedProduction();
-const effectiveRobots = !indexable ? "noindex, nofollow, noarchive" : (robots ?? "index, follow");
+const effectiveRobots = !indexable ? "noindex, nofollow, noarchive" : (robots ?? "noindex, follow");
 const cleanTitle = title?.trim();
 const cleanDescription = description?.trim();
 if (!cleanTitle || !cleanDescription) throw new Error("SEO title and description required");
