@@ -1,0 +1,13 @@
+---
+interface Props { url: string; title: string; publisher?: string; revision?: string; published?: string; reviewed?: string }
+const { url, title, publisher, revision, published, reviewed } = Astro.props;
+const valid = url.startsWith("https://");
+---
+{valid && <p class="seo-source">
+  <a href={url} rel="noopener noreferrer">{title}</a>
+  {publisher && <span> — {publisher}</span>}
+  {revision && <span> · Revision {revision}</span>}
+  {published && <span> · Published {published}</span>}
+  {reviewed && <span> · Reviewed {reviewed}</span>}
+</p>}
+<style>.seo-source{font-size:.85rem;line-height:1.6;color:#52626a}.seo-source a{text-decoration:underline}</style>

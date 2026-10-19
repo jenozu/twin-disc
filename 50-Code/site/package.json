@@ -4,10 +4,21 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
+    "build": "astro build && npm run test:seo && npm run validate:seo && npm run audit:deps && npm run check",
+    "preview": "astro preview",
+    "test:seo": "node --experimental-strip-types --test tests/seo.test.mjs",
+    "validate:seo": "node scripts/validate-seo.mjs",
+    "check": "astro check",
+    "audit:deps": "node scripts/dependency-audit.mjs"
   },
   "dependencies": {
-    "astro": "^5.0.0"
+    "astro": "^5.0.0",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.9.3",
+    "@types/node": "^24.10.0"
   }
 }

@@ -1,0 +1,12 @@
+---
+import { isApprovedStatus } from "../lib/seo";
+interface LinkItem { label: string; href: string; status?: string; relation?: "related" | "exact-replacement" | "guide" }
+interface Props { title: string; links: LinkItem[] }
+const { title, links } = Astro.props;
+const eligible = links.filter(link => link.href.startsWith("/") && !link.href.startsWith("//") && isApprovedStatus(link.status));
+---
+{eligible.length > 0 && <nav class="seo-related" aria-label={title}>
+  <h2>{title}</h2>
+  <ul>{eligible.map(link => <li><a href={link.href}>{link.label}</a><small>{link.relation === "exact-replacement" ? "Verified replacement record" : link.relation === "guide" ? "Technical guide" : "Related resource, fitment not implied"}</small></li>)}</ul>
+</nav>}
+<style>.seo-related ul{display:grid;gap:.75rem;padding-left:1.1rem}.seo-related small{display:block;color:#68777a}</style>

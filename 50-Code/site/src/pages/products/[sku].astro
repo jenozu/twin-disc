@@ -3,18 +3,17 @@ import "../../styles/tokens.css";
 import "../../styles/emil-catalogue.css";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import {
-  SITE_URL,
   SPEC_DISCLAIMER,
-  buildFaqSchema,
-  buildProductSchema,
   categoryLabels,
-  getProductUrl,
   getRelatedProducts,
   productNotes,
   publicProducts,
   twinDiscProducts,
 } from "../../data/products";
 import type { Product, ProductModel } from "../../data/products";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import TechnicalSpecTable from "../../components/TechnicalSpecTable.astro";
+import { webpageSchema } from "../../lib/seo";
 
 type RouteProps =
   | { kind: "sku"; product: Product }
@@ -51,18 +50,11 @@ const description = modelProduct
       ". Compatibility must be verified before ordering."
     : "Independent sourcing and RFQ support for Twin Disc powertrain products.";
 
-const canonicalUrl = modelProduct
-  ? getProductUrl(modelProduct)
-  : skuProduct
-    ? SITE_URL + "/products/" + skuProduct.sku.toLowerCase() + "/"
-    : SITE_URL + "/products/";
-
-const structuredData = modelProduct
-  ? [buildProductSchema(modelProduct), buildFaqSchema(modelProduct)]
-  : [];
+const canonicalUrl = Astro.url.pathname;
+const structuredData = [webpageSchema(title, description, Astro.url.pathname)];
 
 const relatedProducts = modelProduct ? getRelatedProducts(modelProduct) : [];
-const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
+const skuNotes = skuProduct && !["SP314C002", "6926E"].includes(skuProduct.partNumber) ? productNotes[skuProduct.partNumber] ?? [] : [];
 ---
 
 <BaseLayout
@@ -70,18 +62,13 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
   description={description}
   canonicalUrl={canonicalUrl}
   structuredData={structuredData}
+  robots="noindex, follow"
 >
   {modelProduct ? (
     <>
       <section class="product-masthead">
         <div class="shell">
-          <nav class="breadcrumb" aria-label="Breadcrumb">
-            <a href="/products">Catalogue</a>
-            <span aria-hidden="true">/</span>
-            <span>{categoryLabels[modelProduct.category]}</span>
-            <span aria-hidden="true">/</span>
-            <span translate="no">{modelProduct.modelName}</span>
-          </nav>
+          <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Catalogue", href: "/products" }, { label: modelProduct.modelName, href: Astro.url.pathname }]} />
 
           <div class="product-title-grid">
             <div class="product-title-copy">
@@ -101,7 +88,7 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
               </div>
               <div>
                 <span>Support</span>
-                <strong>Email-first technical review</strong>
+                <strong>Preview identification</strong>
               </div>
             </aside>
           </div>
@@ -134,14 +121,7 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
               <h2>Technical specifications</h2>
             </div>
 
-            <div class="spec-table">
-              {modelProduct.specs.map((spec) => (
-                <div>
-                  <span>{spec.label}</span>
-                  <strong>{spec.value}</strong>
-                </div>
-              ))}
-            </div>
+            <TechnicalSpecTable specs={modelProduct.specs} caption="Model family specifications (configuration-dependent)" />
 
             <p class="spec-disclaimer">{SPEC_DISCLAIMER}</p>
           </section>
@@ -220,11 +200,11 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
 
             <a
               class="button button-block"
-              href={"/rfq?part=" + encodeURIComponent(modelProduct.modelName)}
+              href={"/rfq/?part=" + encodeURIComponent(modelProduct.modelName)}
             >
-              Request quote <span aria-hidden="true">→</span>
+              Prepare request (preview) <span aria-hidden="true">→</span>
             </a>
-            <a class="text-link text-link-center" href="/products">Return to catalogue</a>
+            <a class="text-link text-link-center" href="/products/">Return to catalogue</a>
           </div>
         </aside>
       </section>
@@ -233,11 +213,7 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
     <>
       <section class="product-masthead">
         <div class="shell">
-          <nav class="breadcrumb" aria-label="Breadcrumb">
-            <a href="/products">Catalogue</a>
-            <span aria-hidden="true">/</span>
-            <span translate="no">{skuProduct.partNumber}</span>
-          </nav>
+          <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Catalogue", href: "/products" }, { label: skuProduct.partNumber, href: Astro.url.pathname }]} />
 
           <div class="product-title-grid">
             <div class="product-title-copy">
@@ -374,11 +350,11 @@ const skuNotes = skuProduct ? productNotes[skuProduct.partNumber] ?? [] : [];
 
             <a
               class="button button-block"
-              href={"/rfq?part=" + encodeURIComponent(skuProduct.partNumber)}
+              href={"/rfq/?part=" + encodeURIComponent(skuProduct.partNumber)}
             >
-              Request quote <span aria-hidden="true">→</span>
+              Prepare request (preview) <span aria-hidden="true">→</span>
             </a>
-            <a class="text-link text-link-center" href="/products">Return to catalogue</a>
+            <a class="text-link text-link-center" href="/products/">Return to catalogue</a>
           </div>
         </aside>
       </section>

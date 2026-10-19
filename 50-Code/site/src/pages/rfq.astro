@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
-<BaseLayout title="Request a Quote | Powertrain Parts">
+<BaseLayout title="Prepare a Part Identification Request | Powertrain Parts" description="Gather part numbers, model and serial details for technical identification. Prototype request form; details are not transmitted." robots="noindex, follow">
   <section class="page-masthead">
     <div class="shell masthead-grid">
       <div>
@@ -106,14 +106,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </fieldset>
 
         <div class="form-submit">
-          <button class="button button-large" type="submit">Prepare RFQ</button>
-          <p>Prototype mode: email delivery will be connected before public launch.</p>
+          <button class="button button-large" type="submit">Check preview form (not submit)</button>
+          <p><strong>Prototype only:</strong> No data is sent or stored. Do not enter private information. Real submission and secure uploads belong to SEO-04.</p>
         </div>
       </form>
 
       <div id="rfq-result" class="result-panel" role="status" aria-live="polite" hidden>
-        <strong>RFQ Captured for Testing</strong>
-        <p id="rfq-summary"></p>
+        <strong>RFQ Prepared Locally — Not Submitted</strong>
+        <p id="rfq-summary">Local validation only. Not submitted.</p>
       </div>
     </div>
   </section>
@@ -151,18 +151,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         return;
       }
 
-      const data = new FormData(form);
-      const details = [...data.entries()]
-        .filter(([, value]) => {
-          if (value instanceof File) return value.size > 0;
-          return String(value).trim();
-        })
-        .map(([key, value]) =>
-          value instanceof File ? `${key}: ${value.name}` : `${key}: ${value}`
-        )
-        .join(" | ");
-
-      if (summary) summary.textContent = details;
+      if (summary) summary.textContent = "No details were sent, saved, or copied.";
       if (result) result.hidden = false;
       result?.scrollIntoView({ behavior: "smooth", block: "center" });
     });

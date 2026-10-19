@@ -1,0 +1,19 @@
+---
+interface Props { manufacturer: string; modelFamily?: string; partNumber?: string; serial?: string; configuration?: string[]; documentation?: {title:string; url:string}[]; uncertainty?: string }
+const { manufacturer, modelFamily, partNumber, serial, configuration=[], documentation=[], uncertainty } = Astro.props;
+const fields = [
+  ["Manufacturer", manufacturer], ["Model family", modelFamily], ["Part number", partNumber], ["Serial / drawing reference", serial],
+].filter((entry) => Boolean(entry[1]));
+---
+<section class="seo-identification" aria-label="Product identification">
+  <h2>Identification details</h2>
+  <dl>{fields.map(([label,value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+  {configuration.length > 0 && <ul>{configuration.map(item=><li>{item}</li>)}</ul>}
+  {documentation.length > 0 && <p>Documentation: {documentation.filter(doc=>doc.url.startsWith("https://")).map(doc=><a href={doc.url} rel="noopener noreferrer">{doc.title} </a>)}</p>}
+  {uncertainty && <p class="seo-identification__caution">Verification required: {uncertainty}</p>}
+</section>
+<style>
+.seo-identification dl{display:grid;gap:.7rem}.seo-identification dl>div{display:grid;grid-template-columns:minmax(9rem,1fr) 2fr;gap:1rem;border-bottom:1px solid #d9dfdf;padding:.6rem 0}
+.seo-identification dt{font-weight:600}.seo-identification dd{margin:0}.seo-identification__caution{border-left:3px solid #a4692e;padding:.7rem 1rem;background:#faf6f0}
+@media(max-width:540px){.seo-identification dl>div{grid-template-columns:1fr;gap:.2rem}}
+</style>

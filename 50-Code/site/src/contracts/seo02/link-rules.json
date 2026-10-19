@@ -1,0 +1,64 @@
+{
+  "version": "2026-10-19",
+  "status": "design-only",
+  "deduplicateBy": "canonicalPath",
+  "maxRelatedCards": 6,
+  "onlyApprovedTargets": true,
+  "edges": [
+    [
+      "category",
+      "model-hub",
+      "category membership"
+    ],
+    [
+      "model-hub",
+      "sku",
+      "MEMBER_OF Yes Exact; no machine fit"
+    ],
+    [
+      "sku",
+      "model-hub",
+      "documented parent"
+    ],
+    [
+      "troubleshooting",
+      "identification",
+      "safe fallback"
+    ],
+    [
+      "troubleshooting",
+      "model-hub",
+      "approved guide applicability"
+    ],
+    [
+      "comparison",
+      "model-hub",
+      "models compared"
+    ],
+    [
+      "application",
+      "model-hub",
+      "APPLICATION_CLUSTER Family-only qualified"
+    ],
+    [
+      "application",
+      "sku",
+      "USED_IN_EQUIPMENT Yes Exact-equipment only"
+    ],
+    [
+      "sku",
+      "rfq-solution",
+      "working quote intake"
+    ],
+    [
+      "identification",
+      "rfq-solution",
+      "unknown model accepted"
+    ],
+    [
+      "location",
+      "category",
+      "verified coverage"
+    ]
+  ]
+}
