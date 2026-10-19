@@ -29,8 +29,9 @@ jobs:
         run: npm run build
       - name: Check generated preview policy
         run: |
-          test -f dist/index.html
-          test -f dist/rfq/index.html || test -f dist/rfq.html || test -f dist/rfq/index.htm
-          if grep -RIl "SUPABASE_SERVICE_ROLE_KEY\|RFQ_RATE_SALT\|RESEND_API_KEY" dist --exclude='*.map' | grep -q .; then
+          ROOT=dist/client; test -f "$ROOT/index.html" || ROOT=dist
+          test -f "$ROOT/index.html"
+          test -f "$ROOT/rfq/index.html" || test -f "$ROOT/rfq.html" || test -f "$ROOT/rfq/index.htm"
+          if grep -RIl "SUPABASE_SERVICE_ROLE_KEY\|RFQ_RATE_SALT\|RESEND_API_KEY" "$ROOT/_astro" --exclude='*.map' 2>/dev/null | grep -q .; then
             echo "Server secret name appeared in public assets"; exit 1
           fi
