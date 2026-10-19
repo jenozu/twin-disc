@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && npm run validate:seo",
+    "build": "astro build && npm run test:seo && npm run validate:seo",
     "preview": "astro preview",
     "test:seo": "node --experimental-strip-types --test tests/seo.test.mjs",
     "validate:seo": "node scripts/validate-seo.mjs"

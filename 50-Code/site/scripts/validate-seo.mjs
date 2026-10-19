@@ -15,7 +15,7 @@ async function walk(dir) {
 }
 const htmlFiles=await walk(dist);
 const canonicals=new Map();
-const routeSet=new Set(htmlFiles.map(u=>decodeURIComponent(u.pathname.replace(dist.pathname,"")).replace(/index\.html$/,"").replace(/\.html$/,"").replace(/\/$/,"")||"/"));
+const routeSet = new Set(htmlFiles.map(u => ("/" + decodeURIComponent(u.pathname.replace(dist.pathname,"")).replace(/index\.html$/,"").replace(/\.html$/,"")).replace(/\/+$/,"") || "/"));
 const localHosts=new Set(["twd.andel-vps.space"]);
 for(const file of htmlFiles) {
  const source=await readFile(file,"utf-8");
