@@ -5,8 +5,8 @@
 import SEOPageLayout from "../layouts/SEOPageLayout.astro";
 import examples from "../contracts/seo02/examples.json";
 import type { SEOPage } from "../lib/seo-content";
-const fixtures=examples as SEOPage[];
 export function getStaticPaths(){
+ const fixtures=examples as SEOPage[];
  return fixtures.filter(page=>page.type!=="location").map(page=>({
   params:{seo:page.canonicalPath.slice(1).replace(/\/$/,"")},
   props:{page},
