@@ -25,10 +25,20 @@ export const POST:APIRoute=async({request})=>{
   try{
     const client=db();
     const created=await submit(client,result.value,key,ip,process.env.RFQ_RATE_SALT||import.meta.env.RFQ_RATE_SALT||"");
-    const failed=created.duplicate?[]:await storeFiles(client,created.id,files);
+    let failedCount=0;
+    if(!created.duplicate && files.length){
+      try{ failedCount=(await storeFiles(client,created.id,files)).length; }
+      catch{
+        failedCount=files.length;
+        await client.from("rfq_activities").insert({
+          rfq_id:created.id,event_type:"ATTACHMENT_FAILURE",actor:"system",
+          notes:"Unexpected storage failure; attachment recovery requires customer follow-up."
+        }).then(()=>{},()=>{});
+      }
+    }
     return json({
       accepted:true,reference:created.reference,status:created.status,
-      duplicate:created.duplicate,attachmentFailures:failed.length
+      duplicate:created.duplicate,attachmentFailures:failedCount
     },created.duplicate?200:201);
   }catch(e){
     const code=e instanceof Error?e.message:"PERSISTENCE_FAILURE";

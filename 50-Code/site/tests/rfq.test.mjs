@@ -89,3 +89,10 @@ test("mobile and privacy source contract checks (not browser or E2E)",()=>{
  assert.match(migration,/alter table public\.rfq_contacts enable row level security/i);
  assert.match(migration,/insert into public\.rfq_notifications/i);
 });
+
+import { safePublicAnalytics } from "../src/lib/rfq/analytics.ts";
+test("public analytics strictly excludes PII and customer-provided identifiers",()=>{
+ const detail=safePublicAnalytics("rfq_submit_success",{step:3,category:"pto",email:"secret@example.invalid",phone:"123456789",part_number:"ABC",source:"private"});
+ assert.deepEqual(detail,{event:"rfq_submit_success",step:3,category:"pto"});
+ assert.equal(safePublicAnalytics("unknown_event",{email:"sensitive"}),null);
+});

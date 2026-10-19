@@ -1,4 +1,5 @@
 /** No external tracker. Custom events carry only a safe allowlist. */
+import { safePublicAnalytics } from "../lib/rfq/analytics";
 const form=document.querySelector<HTMLFormElement>("#rfq04-form");
 if(form){
   const steps=[...form.querySelectorAll<HTMLFieldSetElement>("[data-step]")];
@@ -17,7 +18,8 @@ if(form){
   let step=0,loading=false;
   let key=crypto.randomUUID();
   const analytics=(event:string,more:Record<string,string>={})=>{
-    window.dispatchEvent(new CustomEvent("twd-analytics",{detail:{event,step:String(step+1),...more}}));
+    const clean=safePublicAnalytics(event,{step:step+1,category:more.category});
+    if(clean)window.dispatchEvent(new CustomEvent("twd-analytics",{detail:clean}));
   };
   const setError=(message:string)=>{
     error.textContent=message;error.hidden=!message;
@@ -83,10 +85,10 @@ if(form){
       k!=="privacy_acknowledged"&&k!=="marketing_consent"&&typeof v==="string")payload[k]=v;
     payload.privacy_acknowledged=(form.elements.namedItem("privacy_acknowledged") as HTMLInputElement).checked;
     payload.marketing_consent=(form.elements.namedItem("marketing_consent") as HTMLInputElement).checked;
-    payload.landing_page=(document.referrer||"").slice(0,300);
+    payload.landing_page=location.pathname.slice(0,300);
     payload.referrer=(document.referrer||"").slice(0,300);
     for(const k of ["source","medium","campaign"]){
-      const v=params.get("utm_"+k);if(v)payload[k]=v.slice(0,160);
+      const v=params.get("utm_"+k)||(k==="source"?params.get("source"):null);if(v)payload[k]=v.slice(0,160);
     }
     const body=new FormData();
     body.set("payload",JSON.stringify(payload));
@@ -101,7 +103,7 @@ if(form){
         if(result.error==="TOO_MANY_REQUESTS")throw new Error("Too many inquiries have been submitted. Try again later.");
         throw new Error("Your inquiry was not confirmed. No success has been recorded. Please retry.");
       }
-      analytics("rfq_submit_success",{category:String(payload.category||""),source:String(payload.source||"").slice(0,60)});
+      analytics("rfq_submit_success",{category:String(payload.category||"")});
       if(result.status==="NEEDS_IDENTIFICATION")analytics("rfq_needs_identification");
       document.querySelector<HTMLElement>("#rfq04-reference")!.textContent=result.reference;
       if(result.attachmentFailures){
