@@ -73,3 +73,9 @@ Phase 5 foundation is established: all 20 launch products have structured produc
 - **Updated SEO backlog:** all original 16 candidate URLs preserved and expanded using documented Launch-20 SKU data and research; new entries are NOT approved for publication.
 - **Human/site blockers:** supplier and identity approval, true repair field-service scope, source/copyright rights, warranty/returns and real shipping, person or team handling RFQs, verified live domain and crawl, GSC/analytics access, technical reviewer, HOLD part orderability.
 - **SEO-02 readiness:** can start architectural and content-model documentation only. Do not modify/deploy production or merge until explicit approvals and test evidence; see `70-Project-State/SEO_01_PRIORITIZED_RECOMMENDATIONS.md`.
+
+
+## SEO-02 Architecture Checkpoint — 2026-10-19
+- Proposed canonical architecture and machine-readable templates/claims created on feat/twd-seo-phase-02. SEO01 47 candidate pages retained plus 11 new.
+- Three unverified service URLs suppressed; held SP211P304 and SP111P340 remain non-transactional. Human source/seller decisions pending.
+- Documentation-only: no live routes, redirects, deployments, RFQ, crawl or approved product publication.

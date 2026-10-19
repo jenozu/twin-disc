@@ -183,3 +183,8 @@ This is **not a replacement or renumbering** of Phases 0–15. It is a cross-pha
 - **Deliverables:** see `10-Strategy/SEO_00_BUSINESS_SCOPE_AND_CLAIMS.md`, `10-Strategy/SEO_01_CONTENT_GAP_ANALYSIS.md`, `70-Project-State/SEO_01_PRIORITIZED_RECOMMENDATIONS.md` and linked CSV evidence registers. Original SEO backlog entries preserved, additional candidate entries appended.
 - **Next dependency:** confirm independent business identity, written supplier/resale & brand permissions, actual repair/service scope, who receives customer RFQs, legal/fulfillment terms, actual public canonical domain and Search Console/analytics access. **SEO-02 documentation design is permissible; not authorization for website changes or publication.**
 - The earlier SEO workstream status “NOT STARTED/NOT VERIFIED” describes the state at creation of the original strategy; **this checkpoint is the later, authoritative research-progress update**. No existing project phases 0–15 are changed.
+
+
+## SEO-02 — Parallel Architecture Checkpoint (2026-10-19)
+- Drafted site taxonomy, 11 page templates, content schemas, links, evidence/approval lifecycle on feat/twd-seo-phase-02, based on unmerged SEO00/01 branch. No main/production changes.
+- 58 page candidates tracked; Phase4/5 source data unchanged; 2 HOLD products still blocked. Business and technical approvals pending. SEO03 and SEO04 not implemented.
