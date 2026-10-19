@@ -45,3 +45,12 @@ These SEO planning documents supplement the existing project-wide `MASTER_ROADMA
 - [Analytics Baseline](70-Project-State/SEO_01_ANALYTICS_BASELINE.md) / [Ranked Recommendations and Task Status](70-Project-State/SEO_01_PRIORITIZED_RECOMMENDATIONS.md).
 
 **Research is documented, but production crawl/GSC and seller/service approvals are still unverified/pending.** These files contain no authorization to publish products, emergency services, or unsupported compatibility claims.
+
+
+### SEO-02 architecture — feature branch only
+20-Architecture/SEO_02_INFORMATION_ARCHITECTURE.md; SEO_02_COMPATIBILITY_PUBLICATION_RULES.md; SEO_02_CONTENT_MODELS.md; SEO_02_INTERNAL_LINKING_ARCHITECTURE.md; SEO_02_TECHNICAL_SEO_SPECIFICATION.md; Templates/SEO/; 70-Project-State/SEO_02_PAGE_ARCHITECTURE.csv; SEO_02_COMPLETION_REPORT.md; SEO_02_TO_SEO_03_HANDOFF.md.
+
+These are specifications, not currently operational website routes.
+
+
+**SEO-02 latest:** [Completion report](70-Project-State/SEO_02_COMPLETION_REPORT.md) | [Validation results](70-Project-State/SEO_02_VALIDATION_RESULTS.md) | [SEO-03 implementation handoff](70-Project-State/SEO_02_TO_SEO_03_HANDOFF.md) | [Migration queue](70-Project-State/SEO_02_ROUTE_MIGRATION_MAP.csv). Documentation is not deployable Astro code.

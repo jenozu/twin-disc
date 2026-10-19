@@ -1,0 +1,31 @@
+name: SEO-02 schema and architecture validation
+on:
+  push:
+    branches: ["feat/twd-seo-phase-02"]
+    paths:
+      - "Templates/SEO/**"
+      - "scripts/validate_seo02.py"
+      - "40-Data/derived/phase4_product_relationships_public.csv"
+      - "40-Data/derived/phase5_product_catalog_index_public.csv"
+      - "70-Project-State/SEO_02_PAGE_ARCHITECTURE.csv"
+      - "70-Project-State/SEO_PAGE_BACKLOG.csv"
+      - ".github/workflows/seo02-validation.yml"
+  pull_request:
+    paths:
+      - "Templates/SEO/**"
+      - "scripts/validate_seo02.py"
+      - "70-Project-State/SEO_02_PAGE_ARCHITECTURE.csv"
+      - "70-Project-State/SEO_PAGE_BACKLOG.csv"
+permissions:
+  contents: read
+jobs:
+  architecture-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install "jsonschema>=4.20,<5"
+      - name: Validate SEO-02 content contracts and ten cases
+        run: python scripts/validate_seo02.py
