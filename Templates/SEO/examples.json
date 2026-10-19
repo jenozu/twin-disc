@@ -1,0 +1,383 @@
+[
+  {
+    "id": "example-category-1",
+    "type": "category",
+    "canonicalPath": "/products/power-take-offs/",
+    "intent": "broad commercial catalog discovery",
+    "title": "Twin Disc PTO Parts in Ontario",
+    "h1": "Twin Disc PTO Parts in Ontario",
+    "metaDescription": "Illustrative Twin Disc PTO Parts in Ontario inquiry with evidence verification and no assumed supply or exact interchangeability.",
+    "status": "Research",
+    "sourceIds": [],
+    "claims": [],
+    "review": {
+      "technicalApproved": false,
+      "commercialApproved": false,
+      "assetsApproved": false,
+      "identityApproved": false,
+      "privacyApproved": false,
+      "nextReviewAt": null
+    },
+    "sections": [
+      "Category overview",
+      "distinct families",
+      "model listing",
+      "sourced limitations",
+      "identification",
+      "quote"
+    ],
+    "links": [],
+    "missingEvidence": [
+      "Human technical and commercial approval required; no fixture may be published"
+    ],
+    "extra": {
+      "illustrativeOnly": true
+    }
+  },
+  {
+    "id": "example-model-hub-2",
+    "type": "model-hub",
+    "canonicalPath": "/power-take-offs/sp211/",
+    "intent": "specific model/BOM and component navigation",
+    "title": "Twin Disc SP211 Model Parts and Identification",
+    "h1": "Twin Disc SP211 Model Parts and Identification",
+    "metaDescription": "Illustrative Twin Disc SP211 Model Parts and Identification inquiry with evidence verification and no assumed supply or exact interchangeability.",
+    "status": "Research",
+    "sourceIds": [],
+    "claims": [],
+    "review": {
+      "technicalApproved": false,
+      "commercialApproved": false,
+      "assetsApproved": false,
+      "identityApproved": false,
+      "privacyApproved": false,
+      "nextReviewAt": null
+    },
+    "sections": [
+      "Model identity",
+      "variant and BOM",
+      "documented service parts",
+      "qualified application context",
+      "sources",
+      "RFQ"
+    ],
+    "links": [],
+    "familyId": "SP211",
+    "missingEvidence": [
+      "Human technical and commercial approval required; no fixture may be published"
+    ],
+    "extra": {
+      "illustrativeOnly": true
+    }
+  },
+  {
+    "id": "example-sku-3",
+    "type": "sku",
+    "canonicalPath": "/parts/sp211c006/",
+    "intent": "exact part and approved OEM number searches",
+    "title": "Twin Disc SP211C006 Clutch Assembly",
+    "h1": "Twin Disc SP211C006 Clutch Assembly",
+    "metaDescription": "Illustrative Twin Disc SP211C006 Clutch Assembly inquiry with evidence verification and no assumed supply or exact interchangeability.",
+    "status": "Research",
+    "sourceIds": [],
+    "claims": [],
+    "review": {
+      "technicalApproved": false,
+      "commercialApproved": false,
+      "assetsApproved": false,
+      "identityApproved": false,
+      "privacyApproved": false,
+      "nextReviewAt": null
+    },
+    "sections": [
+      "Part identity",
+      "documented config",
+      "approved OEM references",
+      "equipment limits",
+      "source proof",
+      "RFQ"
+    ],
+    "links": [],
+    "sku": "SP211C006-TWD",
+    "partNumber": "SP211C006",
+    "missingEvidence": [
+      "Human technical and commercial approval required; no fixture may be published"
+    ],
+    "extra": {
+      "illustrativeOnly": true
+    }
+  },
+  {
+    "id": "example-identification-4",
+    "type": "identification",
+    "canonicalPath": "/resources/identify-twin-disc-pto/",
+    "intent": "model unknown / nameplate question",
+    "title": "How to Identify Your Twin Disc PTO Model",
+    "h1": "How to Identify Your Twin Disc PTO Model",
+    "metaDescription": "Illustrative How to Identify Your Twin Disc PTO Model inquiry with evidence verification and no assumed supply or exact interchangeability.",
+    "status": "Research",
+    "sourceIds": [],
+    "claims": [],
+    "review": {
+      "technicalApproved": false,
+      "commercialApproved": false,
+      "assetsApproved": false,
+      "identityApproved": false,
+      "privacyApproved": false,
+      "nextReviewAt": null
+    },
+    "sections": [
+      "Safety limits",
+      "model ID questions",
+      "nameplate/BOM data",
+      "unresolved cases",
+      "identification inquiry"
+    ],
+    "links": [],
+    "missingEvidence": [
+      "Human technical and commercial approval required; no fixture may be published"
+    ],
+    "extra": {
+      "illustrativeOnly": true
+    }
+  },
+  {
+    "id": "example-comparison-5",
+    "type": "comparison",
+    "canonicalPath": "/resources/sp111-vs-sp211/",
+    "intent": "compare two specific models without interchange",
+    "title": "Twin Disc SP111 vs SP211 Differences",
+    "h1": "Twin Disc SP111 vs SP211 Differences",
+    "metaDescription": "Illustrative Twin Disc SP111 vs SP211 Differences inquiry with evidence verification and no assumed supply or exact interchangeability.",
+    "status": "Research",
+    "sourceIds": [],
+    "claims": [],
+    "review": {
+      "technicalApproved": false,
+      "commercialApproved": false,
+      "assetsApproved": false,
+      "identityApproved": false,
+      "privacyApproved": false,
+      "nextReviewAt": null
+    },
+    "sections": [
+      "Comparison scope",
+      "source-matched differences",
+      "unknowns",
+      "non-interchange caveat",
+      "RFQ"
+    ],
+    "links": [],
+    "missingEvidence": [
+      "Human technical and commercial approval required; no fixture may be published"
+    ],
+    "extra": {
+      "illustrativeOnly": true
+    }
+  },
+  {
+    "id": "example-troubleshooting-6",
+    "type": "troubleshooting",
+    "canonicalPath": "/resources/pto-clutch-slipping/",
+    "intent": "symptom to model identification",
+    "title": "Twin Disc PTO Clutch Slipping — Safe Next Steps",
+    "h1": "Twin Disc PTO Clutch Slipping — Safe Next Steps",
+    "metaDescription": "Illustrative Twin Disc PTO Clutch Slipping — Safe Next Steps inquiry with evidence verification and no assumed supply or exact interchangeability.",
+    "status": "Research",
+    "sourceIds": [],
+    "claims": [],
+    "review": {
+      "technicalApproved": false,
+      "commercialApproved": false,
+      "assetsApproved": false,
+      "identityApproved": false,
+      "privacyApproved": false,
+      "nextReviewAt": null
+    },
+    "sections": [
+      "Stop-use/safety",
+      "safely observed symptoms",
+      "no assumption of cause",
+      "model ID",
+      "inquiry"
+    ],
+    "links": [],
+    "missingEvidence": [
+      "Human technical and commercial approval required; no fixture may be published"
+    ],
+    "extra": {
+      "illustrativeOnly": true
+    }
+  },
+  {
+    "id": "example-maintenance-7",
+    "type": "maintenance",
+    "canonicalPath": "/resources/pto-inspection-maintenance/",
+    "intent": "maintenance guide",
+    "title": "Twin Disc PTO Inspection and Maintenance Considerations",
+    "h1": "Twin Disc PTO Inspection and Maintenance Considerations",
+    "metaDescription": "Illustrative Twin Disc PTO Inspection and Maintenance Considerations inquiry with evidence verification and no assumed supply or exact interchangeability.",
+    "status": "Research",
+    "sourceIds": [],
+    "claims": [],
+    "review": {
+      "technicalApproved": false,
+      "commercialApproved": false,
+      "assetsApproved": false,
+      "identityApproved": false,
+      "privacyApproved": false,
+      "nextReviewAt": null
+    },
+    "sections": [
+      "Model/revision scope",
+      "inspection context",
+      "only sourced intervals",
+      "logs",
+      "specialist review"
+    ],
+    "links": [],
+    "missingEvidence": [
+      "Human technical and commercial approval required; no fixture may be published"
+    ],
+    "extra": {
+      "illustrativeOnly": true
+    }
+  },
+  {
+    "id": "example-repair-vs-replace-8",
+    "type": "repair-vs-replace",
+    "canonicalPath": "/resources/industrial-pto-repair-vs-replacement/",
+    "intent": "technical decision comparison",
+    "title": "Industrial PTO Repair or Replacement?",
+    "h1": "Industrial PTO Repair or Replacement?",
+    "metaDescription": "Illustrative Industrial PTO Repair or Replacement? inquiry with evidence verification and no assumed supply or exact interchangeability.",
+    "status": "Research",
+    "sourceIds": [],
+    "claims": [],
+    "review": {
+      "technicalApproved": false,
+      "commercialApproved": false,
+      "assetsApproved": false,
+      "identityApproved": false,
+      "privacyApproved": false,
+      "nextReviewAt": null
+    },
+    "sections": [
+      "Decision questions",
+      "safety/fit cautions",
+      "repair parts vs assembly",
+      "downtime",
+      "identification RFQ"
+    ],
+    "links": [],
+    "missingEvidence": [
+      "Human technical and commercial approval required; no fixture may be published"
+    ],
+    "extra": {
+      "illustrativeOnly": true
+    }
+  },
+  {
+    "id": "example-application-9",
+    "type": "application",
+    "canonicalPath": "/industries/wood-chippers/",
+    "intent": "equipment to family context",
+    "title": "Twin Disc PTO Identification for Wood Chippers",
+    "h1": "Twin Disc PTO Identification for Wood Chippers",
+    "metaDescription": "Illustrative Twin Disc PTO Identification for Wood Chippers inquiry with evidence verification and no assumed supply or exact interchangeability.",
+    "status": "Research",
+    "sourceIds": [],
+    "claims": [],
+    "review": {
+      "technicalApproved": false,
+      "commercialApproved": false,
+      "assetsApproved": false,
+      "identityApproved": false,
+      "privacyApproved": false,
+      "nextReviewAt": null
+    },
+    "sections": [
+      "Use case",
+      "qualified families",
+      "named documented machines only",
+      "model ID",
+      "RFQ"
+    ],
+    "links": [],
+    "missingEvidence": [
+      "Human technical and commercial approval required; no fixture may be published"
+    ],
+    "extra": {
+      "illustrativeOnly": true
+    }
+  },
+  {
+    "id": "example-location-10",
+    "type": "location",
+    "canonicalPath": "/locations/hamilton/",
+    "intent": "regional verified parts sourcing",
+    "title": "Twin Disc Parts Inquiries — Hamilton Ontario",
+    "h1": "Twin Disc Parts Inquiries — Hamilton Ontario",
+    "metaDescription": "Illustrative Twin Disc Parts Inquiries — Hamilton Ontario inquiry with evidence verification and no assumed supply or exact interchangeability.",
+    "status": "Research",
+    "sourceIds": [],
+    "claims": [],
+    "review": {
+      "technicalApproved": false,
+      "commercialApproved": false,
+      "assetsApproved": false,
+      "identityApproved": false,
+      "privacyApproved": false,
+      "nextReviewAt": null
+    },
+    "sections": [
+      "Verified offer",
+      "Hamilton context",
+      "sourcing/identification steps",
+      "limitations",
+      "RFQ"
+    ],
+    "links": [],
+    "regionId": "hamilton",
+    "missingEvidence": [
+      "Human technical and commercial approval required; no fixture may be published"
+    ],
+    "extra": {
+      "illustrativeOnly": true
+    }
+  },
+  {
+    "id": "example-rfq-solution-11",
+    "type": "rfq-solution",
+    "canonicalPath": "/solutions/twin-disc-pto-clutch-replacement/",
+    "intent": "unknown-model commercial identification",
+    "title": "Find a Twin Disc PTO Part Without a Model Number",
+    "h1": "Find a Twin Disc PTO Part Without a Model Number",
+    "metaDescription": "Illustrative Find a Twin Disc PTO Part Without a Model Number inquiry with evidence verification and no assumed supply or exact interchangeability.",
+    "status": "Research",
+    "sourceIds": [],
+    "claims": [],
+    "review": {
+      "technicalApproved": false,
+      "commercialApproved": false,
+      "assetsApproved": false,
+      "identityApproved": false,
+      "privacyApproved": false,
+      "nextReviewAt": null
+    },
+    "sections": [
+      "What can be requested",
+      "no serial/BOM needed",
+      "safe data to collect",
+      "human fit review",
+      "RFQ"
+    ],
+    "links": [],
+    "missingEvidence": [
+      "Human technical and commercial approval required; no fixture may be published"
+    ],
+    "extra": {
+      "illustrativeOnly": true
+    }
+  }
+]

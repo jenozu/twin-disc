@@ -1,0 +1,72 @@
+[
+  {
+    "id": "01",
+    "caseName": "exact SKU SP211C006",
+    "expected": "documented part number→approved OEM references→reviewed RFQ; no universal fit",
+    "execution": "architecture scenario only",
+    "status": "DESIGNED_NOT_PRODUCTION_TESTED"
+  },
+  {
+    "id": "02",
+    "caseName": "unknown model/BOM",
+    "expected": "identification path accepts unknown fields and requests manual review",
+    "execution": "architecture scenario only",
+    "status": "DESIGNED_NOT_PRODUCTION_TESTED"
+  },
+  {
+    "id": "03",
+    "caseName": "family-only",
+    "expected": "family context must not become exact chipper fit",
+    "execution": "architecture scenario only",
+    "status": "DESIGNED_NOT_PRODUCTION_TESTED"
+  },
+  {
+    "id": "04",
+    "caseName": "SP211P304 HOLD",
+    "expected": "no indexable product or claimed PX replacement",
+    "execution": "architecture scenario only",
+    "status": "DESIGNED_NOT_PRODUCTION_TESTED"
+  },
+  {
+    "id": "05",
+    "caseName": "duplicate SP211 intent",
+    "expected": "one SKU canonical; old equivalent route only validated 301",
+    "execution": "architecture scenario only",
+    "status": "DESIGNED_NOT_PRODUCTION_TESTED"
+  },
+  {
+    "id": "06",
+    "caseName": "slipping symptom",
+    "expected": "safe symptom→ID or verified SP211 family→documented part→RFQ",
+    "execution": "architecture scenario only",
+    "status": "DESIGNED_NOT_PRODUCTION_TESTED"
+  },
+  {
+    "id": "07",
+    "caseName": "Hamilton region",
+    "expected": "no page until genuine coverage; no implied branch",
+    "execution": "architecture scenario only",
+    "status": "DESIGNED_NOT_PRODUCTION_TESTED"
+  },
+  {
+    "id": "08",
+    "caseName": "Review/unsupported torque",
+    "expected": "block claimed OEM equivalence and revisionless technical number",
+    "execution": "architecture scenario only",
+    "status": "DESIGNED_NOT_PRODUCTION_TESTED"
+  },
+  {
+    "id": "09",
+    "caseName": "new source-backed SKU",
+    "expected": "reuse template from Phase4/5 without guaranteed approval",
+    "execution": "architecture scenario only",
+    "status": "DESIGNED_NOT_PRODUCTION_TESTED"
+  },
+  {
+    "id": "10",
+    "caseName": "revised manual/supersession",
+    "expected": "invalidate approval and all affected public links",
+    "execution": "architecture scenario only",
+    "status": "DESIGNED_NOT_PRODUCTION_TESTED"
+  }
+]
