@@ -1,0 +1,36 @@
+name: TWD SEO-04 RFQ verification
+on:
+  push:
+    branches: [feat/twd-seo-phase-04]
+  pull_request:
+    paths:
+      - "50-Code/site/**"
+      - ".github/workflows/twd-seo04.yml"
+permissions:
+  contents: read
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 50-Code/site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: 50-Code/site/package-lock.json
+      - name: Install dependency graph
+        run: npm install --no-audit --no-fund
+      - name: RFQ unit and contract tests
+        run: npm run test:rfq
+      - name: SEO regression tests and Astro static+server build
+        run: npm run build
+      - name: Check generated preview policy
+        run: |
+          test -f dist/index.html
+          test -f dist/rfq/index.html || test -f dist/rfq.html || test -f dist/rfq/index.htm
+          if grep -RIl "SUPABASE_SERVICE_ROLE_KEY\|RFQ_RATE_SALT\|RESEND_API_KEY" dist --exclude='*.map' | grep -q .; then
+            echo "Server secret name appeared in public assets"; exit 1
+          fi
