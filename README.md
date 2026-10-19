@@ -26,4 +26,13 @@ This repository is public. Do not commit raw SAP exports, customer lists, negoti
 
 ## Current Objective
 
-Identify the first 20–50 Twin Disc products worth selling using SAP demand, recency, customer breadth, pricing/margin, and application/prospectability signals.
+Advance the approved product-data records and evidence-controlled RFQ website MVP. The initial Launch-20 product shortlist and supporting research are documented in the master roadmap.
+
+## SEO Strategy and Workstream
+
+- **[Ontario SEO Audit & Growth Strategy](10-Strategy/SEO_AUDIT_AND_GROWTH_STRATEGY.md)** — keyword/intent analysis, content gaps, marine/PTO/application clusters, local targeting, safe technical publishing, RFQ conversion strategy.
+- **[Phased SEO Implementation Roadmap](70-Project-State/SEO_IMPLEMENTATION_ROADMAP.md)** — SEO-00 through SEO-09 detailed tasks, dependencies, human approval gates, deliverables and test criteria.
+- **[SEO Page Backlog](70-Project-State/SEO_PAGE_BACKLOG.csv)** — prioritized canonical page candidates and publication blockers.
+
+These SEO planning documents supplement the existing project-wide `MASTER_ROADMAP.md` and Phase 5 catalog workflow. The SEO workstream is planned; no production website modifications are part of this documentation change.
+
