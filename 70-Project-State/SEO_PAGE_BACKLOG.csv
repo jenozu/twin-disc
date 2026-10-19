@@ -1,0 +1,17 @@
+Priority,Sequence,ContentCluster,PageType,ProposedURL,ProposedTitle,PrimaryIntent,ExistingEvidence,PublishGate,Status
+P0,1,Industrial PTO,Category hub,/products/power-take-offs/,Twin Disc Power Take-Offs and Clutch Parts,Category discovery,Launch-20 catalog and Phase-5 product records,Approved commercial messaging and links,PLANNED
+P0,2,Industrial PTO,Model hub,/power-take-offs/sp211/,Twin Disc SP211 PTO Parts and Identification,Model identification and parts,Phase-3 and Phase-4 public research,Exact vs family scope technical review,PLANNED
+P0,3,Industrial PTO,Model hub,/power-take-offs/cx110/,Twin Disc CX110 PTO Parts and Models,Model identification and parts,Phase-3 and Phase-4 public research,Exact vs family scope technical review,PLANNED
+P0,4,Industrial PTO,Product SKU,/parts/sp211c006/,Twin Disc SP211C006 Clutch Assembly,Exact part and OEM cross reference,Phase-5 product copy batch01,Source and commercial signoff,PLANNED
+P0,5,Industrial PTO,Product SKU,/parts/sp318c003/,Twin Disc SP318C003 Clutch Assembly,Exact part and OEM cross reference,Phase-5 product copy batch01,Source and commercial signoff,PLANNED
+P0,6,Industrial PTO,Product SKU,/parts/cx110c005/,Twin Disc CX110C005 Clutch Assembly,Exact part and OEM cross reference,Phase-5 product copy batch01,Source and commercial signoff,PLANNED
+P0,7,Industrial PTO,Product SKU,/parts/a6518a/,Twin Disc A6518A Drive Ring,Exact part and verified equipment reference,Phase-5 product copy batch01,Exact equipment and commercial signoff,PLANNED
+P0,8,Industrial PTO,Technical identification,/resources/identify-twin-disc-pto/,How to Identify Your Twin Disc PTO,Unknown model or BOM,Official model documentation plus research,Technician/editor review and image rights,PLANNED
+P0,9,Industrial PTO,Technical identification,/resources/sp211-identification/,How to Identify a Twin Disc SP211 PTO,SP211 exact configuration,Phase-3 public research and applicable manuals,Spec and model variant signoff,PLANNED
+P1,10,Industrial PTO,Troubleshooting,/resources/pto-clutch-slipping/,Why Is My Twin Disc PTO Clutch Slipping?,Problem diagnosis,Applicable official manuals needed,Safety and technical editor signoff,PLANNED
+P1,11,Industrial PTO,Troubleshooting,/resources/pto-overheating/,Twin Disc PTO Overheating Causes and Next Steps,Problem diagnosis,Applicable official manuals needed,Safety and technical editor signoff,PLANNED
+P1,12,Equipment applications,Application,/industries/wood-chippers/,Twin Disc PTO Identification for Wood Chippers,Machine to PTO identification,Source-backed OEM and family research,No unverified specific machine fit,PLANNED
+P0,13,Unknown-model RFQ,Solution,/solutions/twin-disc-pto-clutch-replacement/,Find a Twin Disc PTO or Clutch Replacement in Ontario,Replacement inquiry without model or BOM,RFQ specification and public evidence rules,Operational form privacy and technical hold tests,PLANNED
+P1,14,Marine legacy,Model hub,/marine-transmissions/mg-506/,Twin Disc MG-506 Marine Transmission Parts and Support,Legacy model research,New official marine research required,Marine specialist review and confirmed service claims,PLANNED
+P1,15,Marine legacy,Technical identification,/resources/identify-mg-506/,How to Identify a Twin Disc MG-506 Marine Gear,Legacy model identification,New official marine research required,Document revision and variant review,PLANNED
+P0,16,Industrial PTO,Product SKU,/parts/6926e/,Twin Disc 6926E Drive Ring,Exact part and verified equipment reference,Phase-5 product copy batch01,Exact equipment and commercial signoff,PLANNED
