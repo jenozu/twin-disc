@@ -24,7 +24,7 @@ const expectedFixtures=[
  "/industries/wood-chippers/","/solutions/twin-disc-pto-clutch-replacement/"
 ];
 for(const fixture of expectedFixtures){
- if(!routeSet.has(fixture.replace(/\\/$/,""))) errors.push("Missing SEO-02 preview route "+fixture);
+ if(!routeSet.has(fixture.replace(/\/$/,""))) errors.push("Missing SEO-02 preview route "+fixture);
 }
 if(routeSet.has("/locations/hamilton"))errors.push("Unapproved Hamilton fixture was rendered");
 for(const file of htmlFiles) {
@@ -37,12 +37,12 @@ for(const file of htmlFiles) {
  if(!canonical || !/^https:\/\/twd\.andel-vps\.space\//.test(canonical))errors.push(route+": missing/wrong canonical");
  if(count(/<link rel="canonical"/g)!==1)errors.push(route+": duplicate canonicals");
  if(!/<meta property="og:url" content="[^"]+"/.test(source))errors.push(route+": OG URL missing");
- const title=source.match(/<title>([^<]+)<\\/title>/)?.[1];
+ const title=source.match(/<title>([^<]+)<\/title>/)?.[1];
  if(title){if(titles.has(title))errors.push(route+": duplicate page title "+title);titles.set(title,route);}
  if(canonical){
   try{
    const url=new URL(canonical);
-   const routeCanonical=("/"+route).replace(/index\\.html$/,"").replace(/\\.html$/,"").replace(/\\/+$/,"")+"/";
+   const routeCanonical=("/"+route).replace(/index\.html$/,"").replace(/\.html$/,"").replace(/\/+$/,"")+"/";
    const wantPath=routeCanonical==="//"?"/":routeCanonical;
    if(url.origin!==origin)errors.push(route+": canonical origin mismatch");
    if(url.pathname!==wantPath)errors.push(route+": non-self-canonical route: "+url.pathname+" vs "+wantPath);
