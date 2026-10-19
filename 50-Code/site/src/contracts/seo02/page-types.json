@@ -1,0 +1,306 @@
+{
+  "version": "2026-10-19",
+  "status": "design-only",
+  "templates": [
+    {
+      "type": "category",
+      "example": "/products/power-take-offs/",
+      "title": "Twin Disc PTO Parts in Ontario",
+      "intent": "broad commercial catalog discovery",
+      "audience": "industrial buyer",
+      "required": [
+        "categoryName",
+        "familyIds",
+        "approvedIntro"
+      ],
+      "optional": [
+        "approvedSkuIds",
+        "faq"
+      ],
+      "sections": [
+        "Category overview",
+        "distinct families",
+        "model listing",
+        "sourced limitations",
+        "identification",
+        "quote"
+      ],
+      "schema": "CollectionPage",
+      "sourceRequirement": "Phase5 catalog, Phase4 grouping",
+      "primaryCTA": "Parts identification/quote request — only after backend approved",
+      "secondaryCTA": "Identify model or browse supported category",
+      "cadence": "semiannual"
+    },
+    {
+      "type": "model-hub",
+      "example": "/power-take-offs/sp211/",
+      "title": "Twin Disc SP211 Model Parts and Identification",
+      "intent": "specific model/BOM and component navigation",
+      "audience": "mechanic",
+      "required": [
+        "familyId",
+        "variantScope",
+        "memberOfClaimIds"
+      ],
+      "optional": [
+        "modelSpecs",
+        "familyApplications"
+      ],
+      "sections": [
+        "Model identity",
+        "variant and BOM",
+        "documented service parts",
+        "qualified application context",
+        "sources",
+        "RFQ"
+      ],
+      "schema": "CollectionPage",
+      "sourceRequirement": "Phase4 SP211 MEMBER_OF Yes/Exact",
+      "primaryCTA": "Parts identification/quote request — only after backend approved",
+      "secondaryCTA": "Identify model or browse supported category",
+      "cadence": "quarterly"
+    },
+    {
+      "type": "sku",
+      "example": "/parts/sp211c006/",
+      "title": "Twin Disc SP211C006 Clutch Assembly",
+      "intent": "exact part and approved OEM number searches",
+      "audience": "parts purchaser",
+      "required": [
+        "sku",
+        "partNumber",
+        "partDefinitionClaimIds"
+      ],
+      "optional": [
+        "exactOemClaims",
+        "verifiedEquipmentClaims",
+        "specs"
+      ],
+      "sections": [
+        "Part identity",
+        "documented config",
+        "approved OEM references",
+        "equipment limits",
+        "source proof",
+        "RFQ"
+      ],
+      "schema": "Product",
+      "sourceRequirement": "Phase5 batch01 and Phase4 Yes/Exact",
+      "primaryCTA": "Parts identification/quote request — only after backend approved",
+      "secondaryCTA": "Identify model or browse supported category",
+      "cadence": "quarterly"
+    },
+    {
+      "type": "identification",
+      "example": "/resources/identify-twin-disc-pto/",
+      "title": "How to Identify Your Twin Disc PTO Model",
+      "intent": "model unknown / nameplate question",
+      "audience": "operator/technician",
+      "required": [
+        "identificationChecklist",
+        "safeObservationScope"
+      ],
+      "optional": [
+        "licensedImages"
+      ],
+      "sections": [
+        "Safety limits",
+        "model ID questions",
+        "nameplate/BOM data",
+        "unresolved cases",
+        "identification inquiry"
+      ],
+      "schema": "TechArticle",
+      "sourceRequirement": "official manual and model reviewer required",
+      "primaryCTA": "Parts identification/quote request — only after backend approved",
+      "secondaryCTA": "Identify model or browse supported category",
+      "cadence": "semiannual"
+    },
+    {
+      "type": "comparison",
+      "example": "/resources/sp111-vs-sp211/",
+      "title": "Twin Disc SP111 vs SP211 Differences",
+      "intent": "compare two specific models without interchange",
+      "audience": "technician",
+      "required": [
+        "leftFamilyId",
+        "rightFamilyId",
+        "comparedClaimIds"
+      ],
+      "optional": [
+        "specTable"
+      ],
+      "sections": [
+        "Comparison scope",
+        "source-matched differences",
+        "unknowns",
+        "non-interchange caveat",
+        "RFQ"
+      ],
+      "schema": "TechArticle",
+      "sourceRequirement": "both correct manufacturer manuals needed",
+      "primaryCTA": "Parts identification/quote request — only after backend approved",
+      "secondaryCTA": "Identify model or browse supported category",
+      "cadence": "semiannual"
+    },
+    {
+      "type": "troubleshooting",
+      "example": "/resources/pto-clutch-slipping/",
+      "title": "Twin Disc PTO Clutch Slipping — Safe Next Steps",
+      "intent": "symptom to model identification",
+      "audience": "operator/technician",
+      "required": [
+        "symptom",
+        "safetyNotice",
+        "reviewedGuidance"
+      ],
+      "optional": [
+        "modelLinks"
+      ],
+      "sections": [
+        "Stop-use/safety",
+        "safely observed symptoms",
+        "no assumption of cause",
+        "model ID",
+        "inquiry"
+      ],
+      "schema": "TechArticle",
+      "sourceRequirement": "approved model-specific safety source needed",
+      "primaryCTA": "Parts identification/quote request — only after backend approved",
+      "secondaryCTA": "Identify model or browse supported category",
+      "cadence": "semiannual"
+    },
+    {
+      "type": "maintenance",
+      "example": "/resources/pto-inspection-maintenance/",
+      "title": "Twin Disc PTO Inspection and Maintenance Considerations",
+      "intent": "maintenance guide",
+      "audience": "service manager",
+      "required": [
+        "applicableModel",
+        "relevantManualRevision",
+        "safetyNotice"
+      ],
+      "optional": [
+        "approvedIntervals"
+      ],
+      "sections": [
+        "Model/revision scope",
+        "inspection context",
+        "only sourced intervals",
+        "logs",
+        "specialist review"
+      ],
+      "schema": "TechArticle",
+      "sourceRequirement": "model manual + signed intervals",
+      "primaryCTA": "Parts identification/quote request — only after backend approved",
+      "secondaryCTA": "Identify model or browse supported category",
+      "cadence": "semiannual"
+    },
+    {
+      "type": "repair-vs-replace",
+      "example": "/resources/industrial-pto-repair-vs-replacement/",
+      "title": "Industrial PTO Repair or Replacement?",
+      "intent": "technical decision comparison",
+      "audience": "fleet manager",
+      "required": [
+        "decisionFactors",
+        "limitations"
+      ],
+      "optional": [
+        "costInputs"
+      ],
+      "sections": [
+        "Decision questions",
+        "safety/fit cautions",
+        "repair parts vs assembly",
+        "downtime",
+        "identification RFQ"
+      ],
+      "schema": "TechArticle",
+      "sourceRequirement": "technician-reviewed and no unoffered service",
+      "primaryCTA": "Parts identification/quote request — only after backend approved",
+      "secondaryCTA": "Identify model or browse supported category",
+      "cadence": "semiannual"
+    },
+    {
+      "type": "application",
+      "example": "/industries/wood-chippers/",
+      "title": "Twin Disc PTO Identification for Wood Chippers",
+      "intent": "equipment to family context",
+      "audience": "mechanic",
+      "required": [
+        "applicationId",
+        "qualifiedFamilyContext"
+      ],
+      "optional": [
+        "exactEquipmentClaimIds"
+      ],
+      "sections": [
+        "Use case",
+        "qualified families",
+        "named documented machines only",
+        "model ID",
+        "RFQ"
+      ],
+      "schema": "CollectionPage",
+      "sourceRequirement": "Family-only or Yes/Exact-equipment",
+      "primaryCTA": "Parts identification/quote request — only after backend approved",
+      "secondaryCTA": "Identify model or browse supported category",
+      "cadence": "quarterly"
+    },
+    {
+      "type": "location",
+      "example": "/locations/hamilton/",
+      "title": "Twin Disc Parts Inquiries — Hamilton Ontario",
+      "intent": "regional verified parts sourcing",
+      "audience": "Ontario buyer",
+      "required": [
+        "regionId",
+        "approvedCoverageClaimId",
+        "uniqueLocalValue"
+      ],
+      "optional": [
+        "economicContext"
+      ],
+      "sections": [
+        "Verified offer",
+        "Hamilton context",
+        "sourcing/identification steps",
+        "limitations",
+        "RFQ"
+      ],
+      "schema": "WebPage",
+      "sourceRequirement": "SEO-01 Hamilton context NOT business coverage",
+      "primaryCTA": "Parts identification/quote request — only after backend approved",
+      "secondaryCTA": "Identify model or browse supported category",
+      "cadence": "quarterly"
+    },
+    {
+      "type": "rfq-solution",
+      "example": "/solutions/twin-disc-pto-clutch-replacement/",
+      "title": "Find a Twin Disc PTO Part Without a Model Number",
+      "intent": "unknown-model commercial identification",
+      "audience": "buyer with downtime",
+      "required": [
+        "acceptsUnknownModel",
+        "operationalStatus"
+      ],
+      "optional": [
+        "urgency"
+      ],
+      "sections": [
+        "What can be requested",
+        "no serial/BOM needed",
+        "safe data to collect",
+        "human fit review",
+        "RFQ"
+      ],
+      "schema": "WebPage",
+      "sourceRequirement": "SEO-04 working backend and SEO-00 legal scope",
+      "primaryCTA": "Parts identification/quote request — only after backend approved",
+      "secondaryCTA": "Identify model or browse supported category",
+      "cadence": "quarterly"
+    }
+  ]
+}

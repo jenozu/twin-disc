@@ -1,0 +1,1078 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SEO-02 page record — design only",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "canonicalPath",
+    "intent",
+    "title",
+    "h1",
+    "metaDescription",
+    "status",
+    "sourceIds",
+    "claims",
+    "review",
+    "sections",
+    "links"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]+$"
+    },
+    "type": {
+      "enum": [
+        "category",
+        "model-hub",
+        "sku",
+        "identification",
+        "comparison",
+        "troubleshooting",
+        "maintenance",
+        "repair-vs-replace",
+        "application",
+        "location",
+        "rfq-solution"
+      ]
+    },
+    "canonicalPath": {
+      "type": "string",
+      "pattern": "^/(?:[a-z0-9]+(?:-[a-z0-9]+)*/)*$"
+    },
+    "intent": {
+      "type": "string",
+      "minLength": 8
+    },
+    "title": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 90
+    },
+    "h1": {
+      "type": "string",
+      "minLength": 8
+    },
+    "metaDescription": {
+      "type": "string",
+      "minLength": 30,
+      "maxLength": 200
+    },
+    "status": {
+      "enum": [
+        "Research",
+        "StructuredEvidence",
+        "AIDraft",
+        "AutomatedValidation",
+        "TechnicalReview",
+        "CommercialLegalReview",
+        "Approved",
+        "Published",
+        "NeedsRevalidation",
+        "Hold",
+        "Retired"
+      ]
+    },
+    "sourceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true,
+      "description": "May be empty on research fixtures; Published and Approved require at least one independently evidenced source."
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/claim"
+      }
+    },
+    "review": {
+      "$ref": "#/$defs/review"
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "string"
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/link"
+      }
+    },
+    "sku": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Z0-9]+-TWD$"
+    },
+    "partNumber": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Z0-9]+$"
+    },
+    "familyId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "regionId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "documentRevision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "missingEvidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "contentHash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "extra": {
+      "type": "object",
+      "description": "Template-specific fields, not authorisation of technical claims"
+    }
+  },
+  "$defs": {
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claimId",
+        "sourceSku",
+        "relationshipType",
+        "targetType",
+        "target",
+        "scope",
+        "evidenceLevel",
+        "publishRule",
+        "sourceUrl",
+        "sourceId",
+        "technicalReviewStatus",
+        "approvedForPublication"
+      ],
+      "properties": {
+        "claimId": {
+          "type": "string"
+        },
+        "sourceSku": {
+          "type": "string"
+        },
+        "relationshipType": {
+          "enum": [
+            "MEMBER_OF",
+            "PART_DEFINITION",
+            "COMPONENT_OF",
+            "CONFIGURATION",
+            "OEM_CROSS_REFERENCE",
+            "AFTERMARKET_CROSS_REFERENCE",
+            "USED_IN_EQUIPMENT",
+            "APPLICATION_CLUSTER",
+            "SERVICE_REPLACED_BY",
+            "SUPERSEDED_BY",
+            "POSSIBLE_COMPATIBILITY"
+          ]
+        },
+        "targetType": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "evidenceLevel": {
+          "type": "string"
+        },
+        "publishRule": {
+          "enum": [
+            "Yes",
+            "Family-only",
+            "Review",
+            "Hold",
+            "No"
+          ]
+        },
+        "sourceUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "sourceId": {
+          "type": "string"
+        },
+        "documentRevision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "applicableSerialOrBom": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "technicalReviewStatus": {
+          "enum": [
+            "Pending",
+            "Approved",
+            "Rejected",
+            "NeedsRevalidation"
+          ]
+        },
+        "approvedForPublication": {
+          "type": "boolean"
+        },
+        "technicalReviewerId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reviewedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "nextReviewAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "approvedForPublication": {
+                "const": true
+              }
+            },
+            "required": [
+              "approvedForPublication"
+            ]
+          },
+          "then": {
+            "properties": {
+              "publishRule": {
+                "enum": [
+                  "Yes",
+                  "Family-only"
+                ]
+              },
+              "technicalReviewStatus": {
+                "const": "Approved"
+              },
+              "technicalReviewerId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reviewedAt": {
+                "type": "string",
+                "format": "date"
+              },
+              "sourceId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceUrl": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": [
+              "technicalReviewerId",
+              "reviewedAt"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "publishRule": {
+                "const": "Yes"
+              },
+              "relationshipType": {
+                "enum": [
+                  "OEM_CROSS_REFERENCE",
+                  "USED_IN_EQUIPMENT",
+                  "PART_DEFINITION",
+                  "CONFIGURATION",
+                  "COMPONENT_OF",
+                  "MEMBER_OF"
+                ]
+              }
+            },
+            "required": [
+              "publishRule",
+              "relationshipType"
+            ]
+          },
+          "then": {
+            "description": "Semantic validation still must enforce matching exact or exact-equipment scope and documentary provenance."
+          }
+        }
+      ]
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "technicalApproved",
+        "commercialApproved",
+        "assetsApproved",
+        "identityApproved",
+        "privacyApproved",
+        "nextReviewAt"
+      ],
+      "properties": {
+        "technicalApproved": {
+          "type": "boolean"
+        },
+        "commercialApproved": {
+          "type": "boolean"
+        },
+        "assetsApproved": {
+          "type": "boolean"
+        },
+        "identityApproved": {
+          "type": "boolean"
+        },
+        "privacyApproved": {
+          "type": "boolean"
+        },
+        "technicalReviewerId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "commercialReviewerId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "nextReviewAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "technicalReviewedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "commercialReviewedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        }
+      }
+    },
+    "link": {
+      "type": "object",
+      "required": [
+        "href",
+        "anchor",
+        "relation",
+        "evidenceClaimIds"
+      ],
+      "properties": {
+        "href": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "anchor": {
+          "type": "string"
+        },
+        "relation": {
+          "type": "string"
+        },
+        "evidenceClaimIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "sku"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "sku",
+          "partNumber"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "model-hub"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "familyId"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "location"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "regionId"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "Approved",
+              "Published"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "sourceIds": {
+            "type": "array",
+            "minItems": 1
+          },
+          "review": {
+            "type": "object",
+            "required": [
+              "technicalReviewerId",
+              "commercialReviewerId",
+              "technicalReviewedAt",
+              "commercialReviewedAt",
+              "nextReviewAt"
+            ],
+            "properties": {
+              "technicalApproved": {
+                "const": true
+              },
+              "commercialApproved": {
+                "const": true
+              },
+              "assetsApproved": {
+                "const": true
+              },
+              "identityApproved": {
+                "const": true
+              },
+              "privacyApproved": {
+                "const": true
+              },
+              "technicalReviewerId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "commercialReviewerId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "technicalReviewedAt": {
+                "type": "string",
+                "format": "date"
+              },
+              "commercialReviewedAt": {
+                "type": "string",
+                "format": "date"
+              },
+              "nextReviewAt": {
+                "type": "string",
+                "format": "date"
+              }
+            }
+          },
+          "extra": {
+            "type": "object",
+            "properties": {
+              "illustrativeOnly": {
+                "const": false
+              }
+            }
+          }
+        },
+        "required": [
+          "extra"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "Approved",
+              "Published"
+            ]
+          },
+          "type": {
+            "const": "category"
+          }
+        },
+        "required": [
+          "status",
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "extra": {
+            "type": "object",
+            "required": [
+              "categoryName",
+              "familyIds",
+              "approvedIntro"
+            ],
+            "properties": {
+              "categoryName": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "familyIds": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "approvedIntro": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "Approved",
+              "Published"
+            ]
+          },
+          "type": {
+            "const": "model-hub"
+          }
+        },
+        "required": [
+          "status",
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "extra": {
+            "type": "object",
+            "required": [
+              "familyId",
+              "variantScope",
+              "memberOfClaimIds"
+            ],
+            "properties": {
+              "familyId": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "variantScope": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "memberOfClaimIds": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "Approved",
+              "Published"
+            ]
+          },
+          "type": {
+            "const": "sku"
+          }
+        },
+        "required": [
+          "status",
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "extra": {
+            "type": "object",
+            "required": [
+              "sku",
+              "partNumber",
+              "partDefinitionClaimIds"
+            ],
+            "properties": {
+              "sku": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "partNumber": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "partDefinitionClaimIds": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "Approved",
+              "Published"
+            ]
+          },
+          "type": {
+            "const": "identification"
+          }
+        },
+        "required": [
+          "status",
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "extra": {
+            "type": "object",
+            "required": [
+              "identificationChecklist",
+              "safeObservationScope"
+            ],
+            "properties": {
+              "identificationChecklist": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "safeObservationScope": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "Approved",
+              "Published"
+            ]
+          },
+          "type": {
+            "const": "comparison"
+          }
+        },
+        "required": [
+          "status",
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "extra": {
+            "type": "object",
+            "required": [
+              "leftFamilyId",
+              "rightFamilyId",
+              "comparedClaimIds"
+            ],
+            "properties": {
+              "leftFamilyId": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "rightFamilyId": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "comparedClaimIds": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "Approved",
+              "Published"
+            ]
+          },
+          "type": {
+            "const": "troubleshooting"
+          }
+        },
+        "required": [
+          "status",
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "extra": {
+            "type": "object",
+            "required": [
+              "symptom",
+              "safetyNotice",
+              "reviewedGuidance"
+            ],
+            "properties": {
+              "symptom": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "safetyNotice": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "reviewedGuidance": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "Approved",
+              "Published"
+            ]
+          },
+          "type": {
+            "const": "maintenance"
+          }
+        },
+        "required": [
+          "status",
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "extra": {
+            "type": "object",
+            "required": [
+              "applicableModel",
+              "relevantManualRevision",
+              "safetyNotice"
+            ],
+            "properties": {
+              "applicableModel": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "relevantManualRevision": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "safetyNotice": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "Approved",
+              "Published"
+            ]
+          },
+          "type": {
+            "const": "repair-vs-replace"
+          }
+        },
+        "required": [
+          "status",
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "extra": {
+            "type": "object",
+            "required": [
+              "decisionFactors",
+              "limitations"
+            ],
+            "properties": {
+              "decisionFactors": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "limitations": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "Approved",
+              "Published"
+            ]
+          },
+          "type": {
+            "const": "application"
+          }
+        },
+        "required": [
+          "status",
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "extra": {
+            "type": "object",
+            "required": [
+              "applicationId",
+              "qualifiedFamilyContext"
+            ],
+            "properties": {
+              "applicationId": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "qualifiedFamilyContext": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "Approved",
+              "Published"
+            ]
+          },
+          "type": {
+            "const": "location"
+          }
+        },
+        "required": [
+          "status",
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "extra": {
+            "type": "object",
+            "required": [
+              "regionId",
+              "approvedCoverageClaimId",
+              "uniqueLocalValue"
+            ],
+            "properties": {
+              "regionId": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "approvedCoverageClaimId": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "uniqueLocalValue": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "Approved",
+              "Published"
+            ]
+          },
+          "type": {
+            "const": "rfq-solution"
+          }
+        },
+        "required": [
+          "status",
+          "type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "extra": {
+            "type": "object",
+            "required": [
+              "acceptsUnknownModel",
+              "operationalStatus"
+            ],
+            "properties": {
+              "acceptsUnknownModel": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "operationalStatus": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "description": "Syntactic schema only. Semantic evidence validation and real human approvals still mandatory."
+}
