@@ -62,3 +62,14 @@ Phase 1 SAP Product Intelligence is COMPLETE. The initial 20-SKU launch catalogu
 
 ## Current Milestone
 Phase 5 foundation is established: all 20 launch products have structured product records, the public/private field boundary is defined, five high-confidence product pages have full copy, and 18 products remain draftable while two stay held for service-replacement verification.
+
+
+## Parallel SEO Workstream — 2026-10-19 Research Checkpoint
+
+- **SEO-00 research deliverables:** business scope and independent seller boundaries, claim verification register (23 claims), editorial/evidence policy, prioritized human-approval checklist. Research COMPLETE; reseller/branding/warranty/service/response rights **BLOCKED — HUMAN APPROVAL**.
+- **SEO-01 research deliverables:** code-level/Vercel technical audit with explicit live-crawl limitation; competitor comparison; 137 candidate keyword strings, 43 proposed canonical page targets, 45 page-level content briefs; Ontario economic/industry opportunity report; analytics requirements; ranked top ten recommendations. Research mostly COMPLETE; production crawl, Search Console, rankings, actual traffic, keyword volumes and CWV **UNVERIFIED**.
+- **Website reality:** Astro static source in `50-Code/site` on website feature branches, not `main`; Vercel production deployment returned CANCELED. Configured site canonical domain remains unverified reachable. Inspected preview RFQ only produces an unsent local draft; no live backend conversion claim is justified.
+- **Content and commercial flags:** some preview product notes for SP314C002 and 6926E use secondary `Review` OEM references as if confirmed; these require suppression/correction before any approved code publication. MG-506 rebuild/service promises not permitted absent business proof. The legacy `SP211P304-TWD` and `SP111P340-TWD` remain HOLD, regardless of official drawing replacement references.
+- **Updated SEO backlog:** all original 16 candidate URLs preserved and expanded using documented Launch-20 SKU data and research; new entries are NOT approved for publication.
+- **Human/site blockers:** supplier and identity approval, true repair field-service scope, source/copyright rights, warranty/returns and real shipping, person or team handling RFQs, verified live domain and crawl, GSC/analytics access, technical reviewer, HOLD part orderability.
+- **SEO-02 readiness:** can start architectural and content-model documentation only. Do not modify/deploy production or merge until explicit approvals and test evidence; see `70-Project-State/SEO_01_PRIORITIZED_RECOMMENDATIONS.md`.

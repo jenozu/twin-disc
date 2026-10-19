@@ -36,3 +36,12 @@ Advance the approved product-data records and evidence-controlled RFQ website MV
 
 These SEO planning documents supplement the existing project-wide `MASTER_ROADMAP.md` and Phase 5 catalog workflow. The SEO workstream is planned; no production website modifications are part of this documentation change.
 
+
+### SEO-00 and SEO-01 Research Deliverables (2026-10-19)
+
+- [Business Scope & Claim Boundaries](10-Strategy/SEO_00_BUSINESS_SCOPE_AND_CLAIMS.md) / [Claim Verification Register](10-Strategy/SEO_00_CLAIM_VERIFICATION_REGISTER.csv) / [Editorial & Evidence Policy](10-Strategy/SEO_00_EDITORIAL_AND_EVIDENCE_POLICY.md) / [Owner Approvals](70-Project-State/SEO_00_HUMAN_APPROVAL_CHECKLIST.md).
+- [Technical Source/Deployment Audit](70-Project-State/SEO_01_TECHNICAL_AUDIT.md) / [Competitor Analysis](10-Strategy/SEO_01_COMPETITOR_ANALYSIS.md) / [Ontario Local Opportunities](10-Strategy/SEO_01_ONTARIO_LOCAL_OPPORTUNITIES.md).
+- [Keyword Research](10-Strategy/SEO_01_KEYWORD_RESEARCH.csv) / [Keyword-to-Page Mapping](10-Strategy/SEO_01_KEYWORD_TO_PAGE_MAP.csv) / [Mapping Method](10-Strategy/SEO_01_KEYWORD_MAPPING_METHOD.md) / [Content Gap & Page Briefs](10-Strategy/SEO_01_CONTENT_GAP_ANALYSIS.md).
+- [Analytics Baseline](70-Project-State/SEO_01_ANALYTICS_BASELINE.md) / [Ranked Recommendations and Task Status](70-Project-State/SEO_01_PRIORITIZED_RECOMMENDATIONS.md).
+
+**Research is documented, but production crawl/GSC and seller/service approvals are still unverified/pending.** These files contain no authorization to publish products, emergency services, or unsupported compatibility claims.

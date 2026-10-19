@@ -409,3 +409,35 @@ The full workstream does **not** require every page to be live before the first 
 - Store code and deployment actions in the **actual website repository** when identified. This strategy repository is the planning/evidence record.
 - For any code change, use a feature branch and preview; request explicit approval before merge/deploy to production.
 - Document changes to canonical URLs, service claims, source evidence and supersessions in the relevant technical/decision logs.
+
+
+---
+
+## SEO-00 / SEO-01 — Research execution log (2026-10-19)
+
+**Read this log with the original checkboxes:** no `[HUMAN]` signoff, public code implementation or production go-live has been marked complete. The original phase exit criteria remain operative. The status in the initial header (“planned”) referred to the original strategic planning stage; this log records the subsequent evidence-gathering effort.
+
+| Scope | Verified deliverable | Status |
+|---|---|---|
+| SEO-00 business model/role differentiation | `10-Strategy/SEO_00_BUSINESS_SCOPE_AND_CLAIMS.md` | COMPLETE — DOCUMENT RESEARCH; authorizations **PENDING HUMAN APPROVAL** |
+| SEO-00 claim inventory | `10-Strategy/SEO_00_CLAIM_VERIFICATION_REGISTER.csv` | COMPLETE — REGISTER; individual commercial claims remain BLOCKED or conditional |
+| SEO-00 compatibility/publication rules | `10-Strategy/SEO_00_EDITORIAL_AND_EVIDENCE_POLICY.md` | COMPLETE — PROPOSED POLICY; technical/commercial review pending |
+| SEO-00 human questions | `70-Project-State/SEO_00_HUMAN_APPROVAL_CHECKLIST.md` | COMPLETE — CHECKLIST; actual responses pending |
+| SEO-00 Phase exit | Supplier/seller permissions, permitted service/rights, RFQ response owner | **BLOCKED — HUMAN APPROVAL** |
+| SEO-01 website discovery | `70-Project-State/SEO_01_TECHNICAL_AUDIT.md` | PARTIAL — source/deployment audit; live site crawl **BLOCKED — ACCESS/DEPLOYMENT** |
+| SEO-01 competitor architecture | `10-Strategy/SEO_01_COMPETITOR_ANALYSIS.md` | COMPLETE — QUALITATIVE RESEARCH, not comparative ranking/traffic |
+| SEO-01 keyword research and mapping | `10-Strategy/SEO_01_KEYWORD_RESEARCH.csv`, `SEO_01_KEYWORD_TO_PAGE_MAP.csv`, `SEO_01_KEYWORD_MAPPING_METHOD.md` | COMPLETE — 137 topic phrases and 43 proposed canonical URLs; keyword volume/difficulty unmeasured |
+| SEO-01 Ontario regional context | `10-Strategy/SEO_01_ONTARIO_LOCAL_OPPORTUNITIES.md` | COMPLETE — public industrial/marine signals; actual buyer demand and service/fulfilment unconfirmed |
+| SEO-01 three cluster content gap | `10-Strategy/SEO_01_CONTENT_GAP_ANALYSIS.md` | COMPLETE — 45 distinct page briefs, **publication prerequisites remain** |
+| SEO-01 measurement | `70-Project-State/SEO_01_ANALYTICS_BASELINE.md` | PARTIAL — measurement definitions; GSC, traffic, indexability and CWV **NOT VERIFIED** |
+| SEO-01 recommendations | `70-Project-State/SEO_01_PRIORITIZED_RECOMMENDATIONS.md` | COMPLETE — qualitative 10-action priority |
+| Existing SEO page backlog | `70-Project-State/SEO_PAGE_BACKLOG.csv` | UPDATED — original research preserved; new page candidates marked not approved |
+| SEO-01 Phase exit | Measured live crawl/GSC/analytics, operational customer RFQ, owner-approved scope | **BLOCKED — SITE ACCESS, DATA ACCESS AND HUMAN APPROVAL** |
+
+**Site architecture discovery:** Vercel project `twin-disc` is linked to `jenozu/twin-disc`. Astro site code appears in isolated website feature branches at `50-Code/site` (examined `feat/twd-ondine-editorial-rfq`), **not** in the current `main` or the SEO documentation branch. Configured canonical `https://twd.andel-vps.space` was not verified reachable; Vercel's production-target deployment is canceled, and preview READY states are not proof of public crawlability.
+
+**Preview-code risks (not live-site assertions):** RFQ only prepares client-side text (no send/store); some secondary `Review` OEM numbers appear in product notes; canonical only included when caller supplies it; sitemap-slash alignment needs HTTP checks; MG-506 service/overhaul wording needs business proof. **No website-code fixes have been attempted** in SEO-00/01.
+
+**Compatibility holds:** `SP211P304-TWD` and `SP111P340-TWD` remain HOLD. Source-listed service-reference numbers are not yet proven current commercially orderable/drop-in equivalents; 6926E secondary Bandit and SP314C002 secondary OEM numbers remain REVIEW.
+
+**SEO-02:** documentation-level canonical hierarchy and page schema work can begin using these briefs and metadata. Technical implementation and publication cannot begin until the corresponding business/site/technical gates pass. The current exercise does **not** mean SEO-02 is performed.
