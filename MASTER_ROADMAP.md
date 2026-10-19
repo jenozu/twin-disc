@@ -158,3 +158,18 @@ Continue Phase 5 by drafting the remaining 13 DRAFT product pages in evidence-co
 - MarIndustrial internal transactions are excluded from market-demand scoring.
 - Supplemental Query 09 added document currency and Row Total (SC), allowing a common system-currency sales measure. Confirm the company's system currency before treating SC as CAD in final economics.
 - Raw SAP customer, cost, inventory, purchasing, and open-PO data remains local and must not be committed to this public repository.
+
+
+## Parallel Workstream — Organic Search, Technical Content and RFQ Acquisition (SEO)
+
+This is **not a replacement or renumbering** of Phases 0–15. It is a cross-phase workstream supporting Phase 5 (approved product records), Phase 6 (website MVP), Phases 7–9 (prospecting/outbound), Phase 10 (CRM), and Phases 11–12 (order handling and learning).
+
+- **Strategy/reference:** [SEO Audit & Growth Strategy](10-Strategy/SEO_AUDIT_AND_GROWTH_STRATEGY.md)
+- **Detailed phased checklist:** [SEO Implementation Roadmap](70-Project-State/SEO_IMPLEMENTATION_ROADMAP.md)
+- **Proposed page queue:** [SEO Page Backlog](70-Project-State/SEO_PAGE_BACKLOG.csv)
+- **Workstream status:** strategy and task planning documented; implementation **NOT STARTED/NOT VERIFIED**.
+- **Execution sequence:** SEO-00 commercial truth and permissions; SEO-01 verified site/keyword baseline; SEO-02 canonical architecture and source-safe schemas; SEO-03 crawlable templates; SEO-04 unknown-model RFQ; SEO-05 approved commercial catalog pages; SEO-06 industrial PTO/application guides; SEO-07 legacy marine gear research; SEO-08 honest Ontario region pages; SEO-09 launch QA and recurring measurement.
+- **Existing assets to reuse:** Launch-20 sanitized data, five Phase-5 product copy drafts, Phase-4 relationship/publish rules and Phase 2–3 source hierarchy.
+- **Critical holds:** SP211P304-TWD and SP111P340-TWD remain on HOLD until replacement/orderability verified.
+- **Business gates:** no authorized-dealer claims, guaranteed repair/service availability, public inventory/prices, city offices or exact-fit substitutions without applicable evidence/approval.
+- **Website repo/production boundary:** this planning repository may differ from the deployed website's source repository; identify the website repo and use isolated branches/previews. Do not merge/deploy without approval.
