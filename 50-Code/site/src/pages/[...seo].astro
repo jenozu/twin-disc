@@ -1,0 +1,20 @@
+---
+/** SEO-02 fixture routes are staging previews, NOT published business claims.
+ * Location fixture deliberately not routed until genuine coverage is approved.
+ */
+import SEOPageLayout from "../layouts/SEOPageLayout.astro";
+import examples from "../contracts/seo02/examples.json";
+import type { SEOPage } from "../lib/seo-content";
+export function getStaticPaths(){
+ const fixtures=examples as SEOPage[];
+ return fixtures.filter(page=>page.type!=="location").map(page=>({
+  params:{seo:page.canonicalPath.slice(1).replace(/\/$/,"")},
+  props:{page},
+ }));
+}
+const page=Astro.props.page as SEOPage;
+const parentLinks=page.type==="category"?[{label:"Catalogue",href:"/products/"}]:
+ page.type==="model-hub"?[{label:"Catalogue",href:"/products/"},{label:"Power Take-Offs",href:"/products/power-take-offs/"}]:
+ page.type==="sku"?[{label:"Catalogue",href:"/products/"},{label:"SP211 family",href:"/power-take-offs/sp211/"}]:[];
+---
+<SEOPageLayout page={page} parentLinks={parentLinks} pages={[]} />

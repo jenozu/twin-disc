@@ -1,0 +1,57 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import PublicationStatus from "../components/PublicationStatus.astro";
+import RFQCTA from "../components/RFQCTA.astro";
+import { validateSEOPage, mayPublishPage, projectPublicLinks } from "../lib/seo-content";
+import type { SEOPage } from "../lib/seo-content";
+import { webpageSchema } from "../lib/seo";
+interface Props {
+  page: SEOPage;
+  parentLinks: {label:string;href:string}[];
+  pages?: SEOPage[];
+}
+const {page,parentLinks,pages=[]}=Astro.props;
+const result=validateSEOPage(page);
+if(!result.valid)throw new Error("SEO-02 content validation failed: "+result.errors.join("; "));
+const published=mayPublishPage(page);
+const related=published?projectPublicLinks(page,pages):[];
+const publicationStatus=published?"Published":"Draft";
+const seoKind=page.type==="category"||page.type==="model-hub"||page.type==="application"?"CollectionPage":
+ page.type==="sku"?"WebPage":
+ page.type==="rfq-solution"?"WebPage":"TechArticle";
+const metadata=page.status==="Published"&&published?[{...webpageSchema(page.title,page.metaDescription,page.canonicalPath),"@type":seoKind}]:[];
+---
+<BaseLayout title={page.title} description={page.metaDescription}
+  robots={published?"index, follow":"noindex, follow"} structuredData={metadata}>
+  <article class="shell seo-structured-page" data-template-type={page.type}>
+    <Breadcrumbs items={[{label:"Home",href:"/"},...parentLinks,{label:page.h1,href:page.canonicalPath}]} />
+    <div class="seo-structured-header">
+      <p class="section-label">Technical reference / {page.type.replaceAll("-"," ")}</p>
+      <PublicationStatus status={publicationStatus} />
+      <h1>{page.h1}</h1>
+      <p>{page.metaDescription}</p>
+    </div>
+    {!published && <p role="note">Preview material only. Sources, technical claims and commercial publication are not yet approved.</p>}
+    {page.sections.map((heading,i)=><section class="seo-section" aria-labelledby={page.id+"-section-"+i}>
+      <h2 id={page.id+"-section-"+i}>{heading}</h2>
+      <p>This section requires technical source review and human editorial approval before publication.</p>
+    </section>)}
+    {page.type==="comparison" && <div class="seo-no-comparison" role="note">No model interchangeability is implied by this comparison outline.</div>}
+    {page.type==="location" && <p>Territory and service availability are not confirmed in preview.</p>}
+    {page.type==="model-hub" && <p>Model-family membership is not verified equipment fit.</p>}
+    {page.type==="sku" && <p>Confirm part, serial and BOM before requesting availability.</p>}
+    {related.length>0 && <nav aria-label="Related verified content"><h2>Related references</h2><ul>
+      {related.map(link=><li><a href={link.href}>{link.anchor}</a></li>)}
+    </ul></nav>}
+    <RFQCTA partNumber={page.partNumber??undefined} label="Prepare identification request (preview)" />
+  </article>
+</BaseLayout>
+<style>
+.seo-structured-page{max-width:76rem;padding-block:2rem 5rem}
+.seo-structured-header{padding-block:3rem;border-bottom:1px solid #d1dada}
+.seo-structured-header h1{font-size:clamp(2rem,5vw,4rem);line-height:1.15}
+.seo-section{padding-block:2rem;border-bottom:1px solid #d1dada;max-width:76ch}
+.seo-section h2{margin:0 0 1rem}
+.seo-no-comparison{padding:1rem;border:1px solid #bdac99}
+</style>
