@@ -73,3 +73,17 @@ Phase 5 foundation is established: all 20 launch products have structured produc
 - **Updated SEO backlog:** all original 16 candidate URLs preserved and expanded using documented Launch-20 SKU data and research; new entries are NOT approved for publication.
 - **Human/site blockers:** supplier and identity approval, true repair field-service scope, source/copyright rights, warranty/returns and real shipping, person or team handling RFQs, verified live domain and crawl, GSC/analytics access, technical reviewer, HOLD part orderability.
 - **SEO-02 readiness:** can start architectural and content-model documentation only. Do not modify/deploy production or merge until explicit approvals and test evidence; see `70-Project-State/SEO_01_PRIORITIZED_RECOMMENDATIONS.md`.
+
+
+## SEO-03 implementation checkpoint — 2026-10-19
+
+**Status: PARTIALLY IMPLEMENTED — verified preview; SEO-02 and human approvals pending.** The live Astro source is under `50-Code/site` on the Lumo feature branch, not on `main`. The SEO-03 website work uses separate `feat/twd-seo-phase-03` (source PR #7 against Lumo), and does not modify any production deployment or SEO-02 branch.
+
+- Reusable Astro SEO head/canonical metadata, breadcrumbs/JSON-LD, specifications, identification, source references, evidence states, editorial status, related links, RFQ interface and typed search adapter added.
+- Existing draft product/model paths remain preview-only: noindex and blocked preview robots. SEO sitemap is an approval-driven allowlist (currently zero unapproved URLs). No unsupported Product offers/availability/ratings or service organization claims added.
+- HOLD `SP211P304-TWD` and `SP111P340-TWD` omitted from search and public routes; secondary `Review` research notes for SP314C002 and 6926E withheld pending stronger evidence.
+- Vercel preview READY: https://twin-disc-git-feat-twd-seo-phase-03-jenozus-projects.vercel.app — deployed commit `1b4c2e9ddebc68eb08b821104676219204ae22c1`. Astro build: **32 HTML pages**. Node policy tests: **7 passed / 0 failed**. Build SEO validator: **passed 32 pages**, title/description/canonical/H1, JSON-LD, internal links, noindex, held routes and sitemap.
+- No separately executed TypeScript/ESLint check, Lighthouse/CWV measurement, browser manual QA, approved production domain, SEO-02 architecture integration, or live RFQ backend yet. Vercel npm install reports 3 pre-existing dependency audit findings (low/high/critical); audit before public release.
+- Awaiting SEO-02 route/schema/publication output, real reseller/service rights, verified technical sources, allowed branding/images, business identity and commercial permissions; RFQ backend is SEO-04, approved publication/content migration SEO-05.
+
+Details: `50-Code/site/docs/seo/PHASE_03_INTEGRATION_CONTRACT.md` in SEO-03 feature branch. Full SEO-03 is **not complete**.
