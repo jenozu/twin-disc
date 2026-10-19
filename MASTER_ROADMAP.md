@@ -302,3 +302,18 @@ Continue the remaining Phase-5 SKU copy in evidence-controlled batches in parall
 - MarIndustrial internal transactions are excluded from market-demand scoring.
 - Supplemental Query 09 added document currency and Row Total (SC), allowing a common system-currency sales measure. Confirm the company's system currency before treating SC as CAD in final economics.
 - Raw SAP customer, cost, inventory, purchasing, and open-PO data remains local and must not be committed to this public repository.
+
+
+## SEO-04 — Unknown-model RFQ and lead qualification (isolated feature work, 2026-10-19)
+- [x] Create `feat/twd-seo-phase-04` from verified SEO-03 source; do not merge or deploy production.
+- [x] Implement responsive three-step unknown-model RFQ, replacement landing page, server validation and private lead dashboard shell.
+- [x] Add atomic Postgres/Supabase schema, idempotency, rate limiting, authorization, internal audit and notification outbox design.
+- [x] Open draft PR against `feat/twd-seo-phase-03`: https://github.com/jenozu/twin-disc/pull/10.
+- [ ] Verify clean site build and all tests after SEO-03 reconciliation (no result claimed until CI/deploy verified).
+- [ ] Provision isolated Supabase Auth/Postgres/Storage; apply migrations and verify actual synthetic submissions.
+- [ ] Configure approved sender/recipient and test notification delivery/retry.
+- [ ] Approve business identity, Canadian privacy/retention wording and upload-risk policy.
+- [ ] Manually test accessibility/mobile, reject unauthorized records/attachments and verify nonindexable protected staging.
+- [ ] Merge/deploy only after owner approval and SEO-02/03 integration review.
+
+See `70-Project-State/SEO_04_EXECUTION_STATUS.md` and `50-Code/site/docs/seo/PHASE_04_COMPLETION_REPORT.md`. Status remains **PARTIALLY COMPLETE** until launch gates pass.
