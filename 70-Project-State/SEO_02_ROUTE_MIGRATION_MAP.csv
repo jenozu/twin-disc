@@ -1,0 +1,11 @@
+OldPreviewPath,ProposedNewCanonical,Class,Action,Prerequisite,OwnerPhase
+/products/sp211c006,/parts/sp211c006/,sku,Conditional-301,Same exact part and approved target 200,SEO-03
+/products/sp318c003,/parts/sp318c003/,sku,Conditional-301,Same exact part and approved target 200,SEO-03
+/products/cx110c005,/parts/cx110c005/,sku,Conditional-301,Same exact part and approved target 200,SEO-03
+/products/a6518a,/parts/a6518a/,sku,Conditional-301,Same exact part and approved target 200,SEO-03
+/products/6926e,/parts/6926e/,sku,Conditional-301,Same exact part and Review OEM suppressed,SEO-03
+/products/sp211p304,NONE,hold,No-redirect,Unverified PX service successor and HOLD status,Human
+/products/sp111p340,NONE,hold,No-redirect,Unverified PX service successor and HOLD status,Human
+/products/{verified-model-id},/power-take-offs/{verified-family}/,model,Manual-review,Old identifier and exact topic confirmed,SEO-03
+/products/{verified-marine-id},/marine-transmissions/{verified-model}/,marine,Manual-review,Exact revision and content equivalence,SEO-03
+/rfq,/request-quote/,rfq,Defer,SEO-04 working intake/privacy and staff signoff,SEO-04
