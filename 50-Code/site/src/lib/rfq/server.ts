@@ -4,12 +4,21 @@ import { createHash, randomUUID } from "node:crypto";
 import type { RFQInput } from "./schema.ts";
 import { initialStatus } from "./workflow.ts";
 
-export type DB=ReturnType<typeof createClient>;
+/** Minimal server-side Supabase interface while generated project SQL types are unavailable.
+ * Table and query result shapes are checked at the HTTP boundary/SQL policies.
+ * Replace with generated Supabase Database types once the staging project exists.
+ */
+export interface DB {
+  rpc: (name:string,args:Record<string,unknown>)=>Promise<{data:any;error:{message:string}|null}>;
+  from: (name:string)=>any;
+  storage: {from:(bucket:string)=>any};
+  auth: {getUser:(token:string)=>Promise<{data:{user:{id:string}|null};error:unknown}>};
+}
 export function db():DB {
   const url=process.env.SUPABASE_URL;
   const key=process.env.SUPABASE_SERVICE_ROLE_KEY;
   if(!url||!key) throw new Error("BACKEND_NOT_CONFIGURED");
-  return createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}});
+  return createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}}) as unknown as DB;
 }
 export function digest(s:string):string{return createHash("sha256").update(s).digest("hex");}
 export async function submit(dbClient:DB,input:RFQInput,key:string,ip:string,salt:string){
