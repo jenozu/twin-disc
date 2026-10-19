@@ -20,11 +20,11 @@ const enabledReview = (r:PublicationApproval|undefined) => !!r && [
 
 export function claimIsPublishable(c: CompatibilityEvidence): boolean {
  if (!c || c.approvedForPublication !== true || c.technicalReviewStatus !== "Approved") return false;
- if (c.publishRule !== "Yes" && c.publishRule !== "Family-only") return false;
- if (!c.claimId || !c.sourceId || !c.sourceRowId || !c.sourceUrl?.startsWith("https://")) return false;
+ if (c.PublishRule !== "Yes" && c.PublishRule !== "Family-only") return false;
+ if (!c.claimId || !c.sourceId || !c.sourceRowId || !c.SourceURL?.startsWith("https://")) return false;
  if (!c.documentRevision || !c.technicalReviewerId || !validISODate(c.reviewedAt) || !validISODate(c.nextReviewAt) || (c.nextReviewAt as string)<today()) return false;
  if (HELD_SKUS.has(c.SourceSKU?.toUpperCase())) return false;
- if (c.publishRule === "Family-only") return c.Scope === "Family" || c.Scope === "Family/technical";
+ if (c.PublishRule === "Family-only") return c.Scope === "Family" || c.Scope === "Family/technical";
  if (!exactScopes.has(c.Scope)) return false;
  if (c.RelationshipType === "USED_IN_EQUIPMENT" && c.Scope !== "Exact-equipment") return false;
  if (c.RelationshipType === "OEM_CROSS_REFERENCE" && c.Scope !== "Exact") return false;
