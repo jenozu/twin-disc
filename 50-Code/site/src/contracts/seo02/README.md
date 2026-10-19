@@ -1,13 +1,10 @@
-# SEO-02 design-contract snapshot for SEO-03
+# SEO-02 architecture contract snapshot — SEO-03
+Imported from `feat/twd-seo-phase-02` at commit `1532639bbe06fba99fbd270351d1229d982c7574` on 2026-10-19.
 
-Copied unchanged from `feat/twd-seo-phase-02` at commit `f12d9111394499d1f9e4166e7e3effd95ef42cea` on 2026-10-19.
+SEO-02 architecture **design and data validation are complete**, with GitHub Actions run 39276110322. The owner has not approved individual product claims, business terms, content rights, geographic coverage, the final canonical domain or production publication.
 
-The upstream files explicitly say **design-only** and no final handoff/review has been verified. These snapshots allow early type checking, validation, and safe adapter development only. Changes to the SEO-02 branch must not be overwritten or automatically published. On formal approval, compare the canonical mapping, claims, link rules, required fields and schema revision before swapping this snapshot into a production route registry.
-
-Original source:
-- `Templates/SEO/content-model.types.ts`
-- `Templates/SEO/content-model.schema.json`
-- `Templates/SEO/page-types.json`
-- `Templates/SEO/link-rules.json`
-
-No private SAP data or real user data is incorporated.
+- `content-model.types.ts`, `content-model.schema.json`, `page-types.json`, and `link-rules.json` are selective, unchanged snapshots.
+- `examples.json` contains eleven **Research** fixtures. Ten non-location examples are rendered only in an isolated non-indexable staging branch. No fixtures enter the XML sitemap.
+- The Hamilton location example is excluded from rendered routes until source-backed local value and real coverage are confirmed.
+- The interface adapter provides a fail-closed review and claims view model, without importing confidential Phase4/5 sources.
+- Future changes to the SEO-02 architecture require a reviewed reconciliation. Source code branches are not merged blindly.

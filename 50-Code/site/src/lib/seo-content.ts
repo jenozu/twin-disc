@@ -4,8 +4,8 @@
  * a reviewed snapshot update, not a silent schema replacement.
  */
 import type { SEOPage, CompatibilityEvidence, InternalLink, PublicationApproval, Phase4Relationship, Phase5PublicProduct } from "../contracts/seo02/content-model.types";
-import pageTypes from "../contracts/seo02/page-types.json";
-import { canonicalPath, HELD_SKUS } from "./seo";
+import pageTypes from "../contracts/seo02/page-types.json" with { type: "json" };
+import { canonicalPath, HELD_SKUS } from "./seo.ts";
 export type { SEOPage, CompatibilityEvidence, InternalLink };
 export type RecordValidation = { valid: boolean; errors: string[] };
 const schemaTypes = new Map(pageTypes.templates.map(x => [x.type, x]));
@@ -20,11 +20,11 @@ const enabledReview = (r:PublicationApproval|undefined) => !!r && [
 
 export function claimIsPublishable(c: CompatibilityEvidence): boolean {
  if (!c || c.approvedForPublication !== true || c.technicalReviewStatus !== "Approved") return false;
- if (c.publishRule !== "Yes" && c.publishRule !== "Family-only") return false;
- if (!c.claimId || !c.sourceId || !c.sourceRowId || !c.sourceUrl?.startsWith("https://")) return false;
+ if (c.PublishRule !== "Yes" && c.PublishRule !== "Family-only") return false;
+ if (!c.claimId || !c.sourceId || !c.sourceRowId || !c.SourceURL?.startsWith("https://")) return false;
  if (!c.documentRevision || !c.technicalReviewerId || !validISODate(c.reviewedAt) || !validISODate(c.nextReviewAt) || (c.nextReviewAt as string)<today()) return false;
  if (HELD_SKUS.has(c.SourceSKU?.toUpperCase())) return false;
- if (c.publishRule === "Family-only") return c.Scope === "Family" || c.Scope === "Family/technical";
+ if (c.PublishRule === "Family-only") return c.Scope === "Family" || c.Scope === "Family/technical";
  if (!exactScopes.has(c.Scope)) return false;
  if (c.RelationshipType === "USED_IN_EQUIPMENT" && c.Scope !== "Exact-equipment") return false;
  if (c.RelationshipType === "OEM_CROSS_REFERENCE" && c.Scope !== "Exact") return false;
@@ -63,7 +63,7 @@ export function validateSEOPage(input: unknown): RecordValidation {
  if(!p.review||typeof p.review!=="object"||["technicalApproved","commercialApproved","assetsApproved","identityApproved","privacyApproved"].some(k=>typeof (p.review as unknown as Record<string,unknown>)[k]!=="boolean"))e.push("Invalid approval review fields");
  if(p.sku && HELD_SKUS.has(p.sku.toUpperCase()) && (p.status==="Published"||p.status==="Approved"))e.push("HOLD SKU cannot become Approved or Published");
  if(Array.isArray(p.links))for(const l of p.links)if(!l || typeof l.href!=="string"||!l.href.startsWith("/")||l.href.startsWith("//")||!l.anchor?.trim()||!Array.isArray(l.evidenceClaimIds))e.push("Invalid internal link");
- validateRequiredFields(p,e);
+ if(p.status!=="Research"&&p.status!=="AIDraft")validateRequiredFields(p,e);
  return {valid:e.length===0, errors:e};
 }
 export function validateContentBatch(pages: unknown[]): RecordValidation {
@@ -80,7 +80,7 @@ export function validateContentBatch(pages: unknown[]): RecordValidation {
 }
 export function mayPublishPage(page: SEOPage): boolean {
  if(!validateSEOPage(page).valid || page.status!=="Published" || !enabledReview(page.review)) return false;
- if(!page.contentHash || !page.sourceIds.length || page.missingEvidence?.length) return false;
+ if(!(page as SEOPage & {contentHash?:string}).contentHash || !page.sourceIds.length || page.missingEvidence?.length) return false;
  if(page.sku && HELD_SKUS.has(page.sku.toUpperCase())) return false;
  if(page.claims.some(claim=>!claimIsPublishable(claim))) return false;
  if(page.type==="location") {
@@ -96,10 +96,11 @@ export function projectPublicLinks(page:SEOPage, allPages:SEOPage[]): InternalLi
   let key:string;
   try{key=canonicalPath(link.href)}catch{continue}
   if(!eligible.has(key)||key===canonicalPath(page.canonicalPath)||seen.has(key))continue;
-  if((link.relation==="exact-equipment-fit"||link.relation==="replacement")&&
-       !link.evidenceClaimIds.every(id=>page.claims.some(c=>c.claimId===id&&claimIsPublishable(c)&&
-          (link.relation==="exact-equipment-fit"?c.Scope==="Exact-equipment":c.RelationshipType!=="SUPERSEDED_BY"&&c.RelationshipType!=="SERVICE_REPLACED_BY")))continue;
-  if(link.relation==="replacement"&&link.evidenceClaimIds.length===0)continue;
+  // Replacement/supersession links cannot be signed off as drop-in fit from this evidence model.
+  if(link.relation==="replacement")continue;
+  if(link.relation==="exact-equipment-fit" && (link.evidenceClaimIds.length===0 ||
+      !link.evidenceClaimIds.every(id=>page.claims.some(c=>c.claimId===id &&
+        claimIsPublishable(c) && c.Scope==="Exact-equipment" && c.RelationshipType==="USED_IN_EQUIPMENT"))))continue;
   seen.add(key);out.push({...link,href:key});
   if(out.length>=6)break;
  }

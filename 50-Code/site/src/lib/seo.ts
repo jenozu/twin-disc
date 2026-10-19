@@ -56,7 +56,7 @@ export function canonicalPath(pathname: string): string {
   if (!pathname.startsWith("/") || pathname.startsWith("//") || pathname.includes("\\")) throw new Error("Canonical path must be site-relative");
   const path = pathname.split(/[?#]/)[0].replace(/\/+/g, "/");
   if (path.includes("..")) throw new Error("Invalid canonical path");
-  return path === "/" ? "/" : path.replace(/\/$/, "");
+  return path === "/" ? "/" : path.replace(/\/+$/, "") + "/";
 }
 export function canonicalUrl(path: string, origin: string = CANONICAL_ORIGIN): string {
   const host = new URL(validateCanonicalOrigin(origin));
@@ -86,7 +86,7 @@ export function relationshipState(rel: EvidenceRelationship, held = false):
   "held" | "verified-exact" | "family-only" | "pending-review" | "unverified" {
   if(held||rel.PublishRule==="Hold"||HELD_SKUS.has(rel.SourceSKU.toUpperCase()))return "held";
   if(rel.PublishRule==="Review")return "pending-review";
-  const current=typeof rel.nextReviewAt==="string" && /^\\d{4}-\\d{2}-\\d{2}$/.test(rel.nextReviewAt)
+  const current=typeof rel.nextReviewAt==="string" && /^\d{4}-\d{2}-\d{2}$/.test(rel.nextReviewAt)
     && rel.nextReviewAt>=new Date().toISOString().slice(0,10);
   if(!current||rel.technicalReviewStatus!=="Approved"||rel.approvedForPublication!==true||
     !rel.claimId||!rel.sourceId||!rel.documentRevision||!rel.technicalReviewerId||!rel.reviewedAt||
