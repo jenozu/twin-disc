@@ -26,7 +26,7 @@ const options = [
         <div class="xp-family__art" aria-hidden="true"><div class="xp-family__disc xp-family__disc--back"></div><div class="xp-family__disc xp-family__disc--front"></div><div class="xp-family__disc xp-family__disc--core"></div><span class="xp-family__reticle">+</span></div>
         <div class="xp-family__feature-foot">
           <div><p class="xp-eyebrow">INDUSTRIAL POWERTRAIN</p><h3 id="xp-family-name">{options[0].name}</h3><p id="xp-family-copy">{options[0].copy}</p></div>
-          <a id="xp-family-link" class="xp-family__open" href="/products?q=PTO" aria-label="Explore Power Take-Off parts">↗</a>
+          <a id="xp-family-link" class="xp-family__open" href="/products/?q=PTO" aria-label="Explore Power Take-Off parts">↗</a>
         </div>
         <small>Conceptual system graphic · Not a verified product drawing</small>
       </div>
@@ -46,6 +46,6 @@ const options = [
     if (feature) feature.dataset.variant = String(index);
     if (title) title.textContent = button.dataset.name || "";
     if (copy) copy.textContent = button.dataset.description || "";
-    if (link) { link.href = "/products?q=" + encodeURIComponent(button.dataset.code || ""); link.setAttribute("aria-label", "Explore " + (button.dataset.name || "product family")); }
+    if (link) { link.href = "/products/?q=" + encodeURIComponent(button.dataset.code || ""); link.setAttribute("aria-label", "Explore " + (button.dataset.name || "product family")); }
   }));
 </script>

@@ -200,11 +200,11 @@ const skuNotes = skuProduct && !["SP314C002", "6926E"].includes(skuProduct.partN
 
             <a
               class="button button-block"
-              href={"/rfq?part=" + encodeURIComponent(modelProduct.modelName)}
+              href={"/rfq/?part=" + encodeURIComponent(modelProduct.modelName)}
             >
               Prepare request (preview) <span aria-hidden="true">→</span>
             </a>
-            <a class="text-link text-link-center" href="/products">Return to catalogue</a>
+            <a class="text-link text-link-center" href="/products/">Return to catalogue</a>
           </div>
         </aside>
       </section>
@@ -350,11 +350,11 @@ const skuNotes = skuProduct && !["SP314C002", "6926E"].includes(skuProduct.partN
 
             <a
               class="button button-block"
-              href={"/rfq?part=" + encodeURIComponent(skuProduct.partNumber)}
+              href={"/rfq/?part=" + encodeURIComponent(skuProduct.partNumber)}
             >
               Prepare request (preview) <span aria-hidden="true">→</span>
             </a>
-            <a class="text-link text-link-center" href="/products">Return to catalogue</a>
+            <a class="text-link text-link-center" href="/products/">Return to catalogue</a>
           </div>
         </aside>
       </section>
