@@ -24,5 +24,12 @@ try{
   }catch(e){await c.query("ROLLBACK");throw e;}
   finally{c.release();}
  }
+ // Privileges are granted AFTER table creation; app role has DML only.
+ const role=await pool.query("SELECT 1 FROM pg_roles WHERE rolname='rfq_app'");
+ if(role.rowCount){
+  await pool.query("GRANT USAGE ON SCHEMA public TO rfq_app");
+  await pool.query("GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA public TO rfq_app");
+  await pool.query("GRANT USAGE,SELECT ON ALL SEQUENCES IN SCHEMA public TO rfq_app");
+ }
  console.info("Migrations complete");
 }finally{await pool.end();}

@@ -1,8 +1,8 @@
 import {createHash,randomUUID} from "node:crypto";
 import type {DB} from "./database.ts";
 import {transaction,one} from "./database.ts";
-import type {RFQInput} from "../../../src/lib/rfq/schema.ts";
-import {initialStatus,isHeldPart} from "../../../src/lib/rfq/workflow.ts";
+import type {RFQInput} from "../../src/lib/rfq/schema.ts";
+import {initialStatus,isHeldPart} from "../../src/lib/rfq/workflow.ts";
 const digest=(s:string)=>createHash("sha256").update(s).digest("hex");
 const idempotency=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 type Saved={id:string;reference:string;status:string;duplicate:boolean};

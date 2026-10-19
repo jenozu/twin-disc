@@ -1,6 +1,6 @@
 import type {FastifyInstance} from "fastify";
-import {isHeldPart,canTransition,canVerifyCandidate,STATUSES} from "../../../src/lib/rfq/workflow.ts";
-import type {Status,ReviewEvidence,PublishRule} from "../../../src/lib/rfq/workflow.ts";
+import {isHeldPart,canTransition,canVerifyCandidate,STATUSES} from "../../src/lib/rfq/workflow.ts";
+import type {Status,ReviewEvidence,PublishRule} from "../../src/lib/rfq/workflow.ts";
 import type {DB} from "./database.ts";
 import {transaction} from "./database.ts";
 import {needStaff} from "./auth.ts";
