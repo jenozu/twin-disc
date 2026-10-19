@@ -66,14 +66,16 @@ test("production indexation fails closed without an approved canonical domain",(
  assert.throws(()=>validateCanonicalOrigin("http://example.com"),/Invalid/);
 });
 const review={technicalApproved:true,commercialApproved:true,assetsApproved:true,identityApproved:true,privacyApproved:true,
- technicalReviewerId:"technical-tester",commercialReviewerId:"commercial-tester",nextReviewAt:"2099-12-31"};
+ technicalReviewerId:"technical-tester",commercialReviewerId:"commercial-tester",technicalReviewedAt:"2026-10-01",commercialReviewedAt:"2026-10-01",nextReviewAt:"2099-12-31"};
 const page=(over={})=>({
  id:"test-sp211c006",type:"sku",canonicalPath:"/parts/sp211c006/",intent:"part number lookup",
  title:"Twin Disc SP211C006 Reference Part",h1:"Twin Disc SP211C006",
  metaDescription:"Reference test fixture for a specific part number with required model verification.",
  status:"Published",sourceIds:["fake-source"],claims:[],review,sections:["Identification","Compatibility limits"],
  links:[],sku:"SP211C006-TWD",partNumber:"SP211C006",contentHash:"fixture-hash",
- extra:{partDefinitionClaimIds:["fixture-claim"]},...over
+ authorId:"fixture-author",sourceRevision:"fixture-2026",lastVerifiedAt:"2026-10-01",nextReviewAt:"2099-12-31",
+ primaryCta:"Prepare identification",relatedIds:[],
+ extra:{partDefinitionClaimIds:["fixture-claim"],illustrativeOnly:false},...over
 });
 const claim=(over={})=>({SourceSKU:"SP211C006-TWD",RelationshipType:"OEM_CROSS_REFERENCE",
  TargetType:"OEM-part",Target:"900-6943-78",Scope:"Exact",EvidenceLevel:"Official",
@@ -148,4 +150,12 @@ test("all eleven SEO-02 architectural examples stay draft and validate syntactic
 test("trailing slash policy prevents duplicate canonical variants",()=>{
  assert.equal(canonicalUrl("/parts/sp211c006"),canonicalUrl("/parts/sp211c006/"));
  assert.equal(canonicalUrl("/parts/sp211c006/"),"https://twd.andel-vps.space/parts/sp211c006/");
+});
+
+test("SEO-02 final published requirements cannot be bypassed by setting status alone",()=>{
+ assert.equal(validateSEOPage(page({authorId:undefined})).valid,false);
+ assert.equal(validateSEOPage(page({sourceRevision:""})).valid,false);
+ assert.equal(validateSEOPage(page({nextReviewAt:"2000-01-01"})).valid,false);
+ assert.equal(validateSEOPage(page({extra:{partDefinitionClaimIds:["fixture-claim"],illustrativeOnly:true}})).valid,false);
+ assert.equal(validateSEOPage(page({review:{...review,commercialReviewedAt:null}})).valid,false);
 });
