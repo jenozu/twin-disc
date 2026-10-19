@@ -38,7 +38,7 @@ test("held products are never searchable",()=>{
 });
 test("only source-backed exact Yes relationships qualify for verified exact display",()=>{
  const r={SourceSKU:"SP211C006-TWD",RelationshipType:"OEM_CROSS_REFERENCE",Target:"900-6943-78",Scope:"Family",EvidenceLevel:"Source",PublishRule:"Family-only",SourceURL:"https://example.com"};
- assert.equal(relationshipState(r),"family-only");
+ assert.equal(relationshipState(r),"unverified"); // family evidence also requires signoff
  assert.equal(relationshipState({...r,Scope:"Exact",PublishRule:"Review"}),"pending-review");
  assert.equal(relationshipState({...r,Scope:"Exact",PublishRule:"Yes"}),"unverified"); // URL alone is NOT technical approval
  const signoff={...r,Scope:"Exact",PublishRule:"Yes",claimId:"claim-test",sourceId:"source-test",documentRevision:"2024",

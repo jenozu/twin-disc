@@ -96,10 +96,11 @@ export function projectPublicLinks(page:SEOPage, allPages:SEOPage[]): InternalLi
   let key:string;
   try{key=canonicalPath(link.href)}catch{continue}
   if(!eligible.has(key)||key===canonicalPath(page.canonicalPath)||seen.has(key))continue;
-  if((link.relation==="exact-equipment-fit"||link.relation==="replacement")&&
-       !link.evidenceClaimIds.every(id=>page.claims.some(c=>c.claimId===id&&claimIsPublishable(c)&&
-          (link.relation==="exact-equipment-fit"?c.Scope==="Exact-equipment":c.RelationshipType!=="SUPERSEDED_BY"&&c.RelationshipType!=="SERVICE_REPLACED_BY")))continue;
-  if(link.relation==="replacement")continue; // Replacement requires separate verified orderability and fit approval
+  // Replacement/supersession links cannot be signed off as drop-in fit from this evidence model.
+  if(link.relation==="replacement")continue;
+  if(link.relation==="exact-equipment-fit" && (link.evidenceClaimIds.length===0 ||
+      !link.evidenceClaimIds.every(id=>page.claims.some(c=>c.claimId===id &&
+        claimIsPublishable(c) && c.Scope==="Exact-equipment" && c.RelationshipType==="USED_IN_EQUIPMENT"))))continue;
   seen.add(key);out.push({...link,href:key});
   if(out.length>=6)break;
  }
