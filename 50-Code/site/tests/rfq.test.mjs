@@ -96,3 +96,34 @@ test("public analytics strictly excludes PII and customer-provided identifiers",
  assert.deepEqual(detail,{event:"rfq_submit_success",step:3,category:"pto"});
  assert.equal(safePublicAnalytics("unknown_event",{email:"sensitive"}),null);
 });
+
+test("private file association uses originating RFQ and avoids public URL (mock storage)",async()=>{
+ const { storeFiles }=await import("../src/lib/rfq/server.ts");
+ const id="11111111-1111-4111-8111-111111111111";
+ const saved=[];
+ const fake={
+   storage:{from:(bucket)=>{
+     assert.equal(bucket,"rfq-private");
+     return {upload:async(key,bytes,options)=>{
+       assert.ok(key.startsWith("rfq/"+id+"/"));
+       assert.equal(options.upsert,false);
+       assert.equal(options.contentType,"image/jpeg");
+       return {error:null};
+     }};
+   }},
+   from:(table)=>{assert.equal(table,"rfq_attachments");
+     return {insert:async(row)=>{saved.push(row);return {error:null};}};
+   }
+ };
+ const failed=await storeFiles(fake,id,[{bytes:Uint8Array.from([255,216,255,216]),name:"plate.jpg",type:"image/jpeg",ext:"jpg"}]);
+ assert.deepEqual(failed,[]);assert.equal(saved.length,1);assert.equal(saved[0].rfq_id,id);
+ assert.equal(Object.keys(saved[0]).includes("public_url"),false);
+});
+test("rate-limited and idempotency-conflict RPCs return distinct errors (mock service)",async()=>{
+ const v=valid(sample);
+ const key="11111111-1111-4111-8111-111111111111";
+ for(const [msg,expected] of [["RFQ_RATE_LIMIT","RATE_LIMIT"],["RFQ_KEY_CONFLICT","IDEMPOTENCY_CONFLICT"]]){
+   const fail={rpc:async()=>({data:null,error:{message:msg}})};
+   await assert.rejects(submit(fail,v,key,"127.0.0.1","test-salt"),new RegExp(expected));
+ }
+});
