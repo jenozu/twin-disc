@@ -75,7 +75,7 @@ const page=(over={})=>({
  links:[],sku:"SP211C006-TWD",partNumber:"SP211C006",contentHash:"fixture-hash",
  authorId:"fixture-author",sourceRevision:"fixture-2026",lastVerifiedAt:"2026-10-01",nextReviewAt:"2099-12-31",
  primaryCta:"Prepare identification",relatedIds:[],
- extra:{partDefinitionClaimIds:["fixture-claim"],illustrativeOnly:false},...over
+ extra:{sku:"SP211C006-TWD",partNumber:"SP211C006",partDefinitionClaimIds:["fixture-claim"],illustrativeOnly:false},...over
 });
 const claim=(over={})=>({SourceSKU:"SP211C006-TWD",RelationshipType:"OEM_CROSS_REFERENCE",
  TargetType:"OEM-part",Target:"900-6943-78",Scope:"Exact",EvidenceLevel:"Official",
@@ -131,7 +131,7 @@ test("related pages require published destinations; cards cannot claim unsupport
   {href:"/parts/sp211p304/",anchor:"Held",relation:"related",evidenceClaimIds:[]},
  ]});
  const target=page({id:"guide",type:"identification",canonicalPath:"/resources/identification/",
-  extra:{identificationChecklist:["serial"],safeObservationScope:"nameplate only"}});
+  extra:{identificationChecklist:["serial"],safeObservationScope:"nameplate only",illustrativeOnly:false}});
  const held=page({id:"held",canonicalPath:"/parts/sp211p304/",sku:"SP211P304-TWD"});
  const links=projectPublicLinks(parent,[target,held]);
  assert.equal(links.length,1);
@@ -156,6 +156,12 @@ test("SEO-02 final published requirements cannot be bypassed by setting status a
  assert.equal(validateSEOPage(page({authorId:undefined})).valid,false);
  assert.equal(validateSEOPage(page({sourceRevision:""})).valid,false);
  assert.equal(validateSEOPage(page({nextReviewAt:"2000-01-01"})).valid,false);
- assert.equal(validateSEOPage(page({extra:{partDefinitionClaimIds:["fixture-claim"],illustrativeOnly:true}})).valid,false);
+ assert.equal(validateSEOPage(page({extra:{sku:"SP211C006-TWD",partNumber:"SP211C006",partDefinitionClaimIds:["fixture-claim"],illustrativeOnly:true}})).valid,false);
  assert.equal(validateSEOPage(page({review:{...review,commercialReviewedAt:null}})).valid,false);
+});
+
+test("final JSONSchema 2020-12 enforces typed extra SKU identity and signed review fields",()=>{
+ assert.equal(validateSEOPage(page({extra:{partDefinitionClaimIds:["fixture-claim"],illustrativeOnly:false}})).valid,false);
+ assert.equal(validateSEOPage(page({review:{...review,commercialReviewerId:""}})).valid,false);
+ assert.equal(validateSEOPage(page({relatedIds:undefined})).valid,false);
 });

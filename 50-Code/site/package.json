@@ -12,7 +12,9 @@
     "audit:deps": "node scripts/dependency-audit.mjs"
   },
   "dependencies": {
-    "astro": "^5.0.0"
+    "astro": "^5.0.0",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
