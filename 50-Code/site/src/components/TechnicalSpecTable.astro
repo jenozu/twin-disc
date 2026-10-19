@@ -1,0 +1,30 @@
+---
+export interface SpecRow { label: string; value: string; unit?: string; applicability?: string; sourceUrl?: string; qualification?: string }
+interface Props { specs: SpecRow[]; caption?: string }
+const { specs, caption = "Technical specifications" } = Astro.props;
+---
+<div class="seo-spec-scroll" role="region" aria-label={caption} tabindex="0">
+  <table class="seo-spec-table">
+    <caption>{caption}</caption>
+    <thead><tr><th scope="col">Property</th><th scope="col">Value</th><th scope="col">Applicability / evidence</th></tr></thead>
+    <tbody>
+      {specs.map((spec) => <tr>
+        <th scope="row">{spec.label}</th>
+        <td>{spec.value}{spec.unit && <span> {spec.unit}</span>}</td>
+        <td>{spec.applicability && <p>{spec.applicability}</p>}{spec.qualification && <small>{spec.qualification}</small>}{spec.sourceUrl && <p><a href={spec.sourceUrl} rel="noopener noreferrer">Technical source</a></p>}</td>
+      </tr>)}
+    </tbody>
+  </table>
+</div>
+<style>
+.seo-spec-scroll {max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain}
+.seo-spec-table {width:100%;min-width:30rem;border-collapse:collapse;text-align:left;font-size:.92rem}
+.seo-spec-table caption {text-align:left;font-weight:600;padding:.8rem 0}
+.seo-spec-table th,.seo-spec-table td {padding:.85rem;border-bottom:1px solid #d4dadc;vertical-align:top}
+.seo-spec-table thead th {color:#435861;background:#f4f6f6}
+.seo-spec-table th[scope=row] {width:35%;font-weight:600}
+.seo-spec-table td:last-child {color:#52626a;font-size:.85rem}
+.seo-spec-table p {margin:0 0 .3rem}
+.seo-spec-table a {text-decoration:underline}
+.seo-spec-scroll:focus-visible {outline:2px solid #256c77;outline-offset:3px}
+</style>

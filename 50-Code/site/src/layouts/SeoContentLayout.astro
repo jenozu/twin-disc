@@ -1,0 +1,27 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import RFQCTA from "../components/RFQCTA.astro";
+import SourceReference from "../components/SourceReference.astro";
+interface Section { heading: string; body: string }
+interface Props {
+  title: string; description: string; h1: string; intro: string;
+  sections: Section[]; breadcrumbs: {label:string;href:string}[];
+  sources?: {title:string;url:string;publisher?:string;revision?:string}[];
+  publicationStatus?: "Draft"|"Awaiting technical verification"|"Awaiting business approval"|"Approved"|"Published"|"Held"|"Archived";
+  requestPart?: string;
+}
+const {title,description,h1,intro,sections,breadcrumbs,sources=[],publicationStatus="Draft",requestPart} = Astro.props;
+---
+<BaseLayout title={title} description={description} robots={publicationStatus === "Published" || publicationStatus === "Approved" ? "index, follow" : "noindex, follow"}>
+  <article class="shell seo-content">
+    <Breadcrumbs items={breadcrumbs}/>
+    <header><h1>{h1}</h1><p>{intro}</p></header>
+    {sections.map((section,index) => <section aria-labelledby={"seo-section-"+index}>
+      <h2 id={"seo-section-"+index}>{section.heading}</h2><p>{section.body}</p>
+    </section>)}
+    {sources.length > 0 && <section aria-label="Technical sources"><h2>Technical sources</h2>{sources.map(source=><SourceReference {...source}/>)}</section>}
+    <RFQCTA partNumber={requestPart}/>
+  </article>
+</BaseLayout>
+<style>.seo-content{max-width:74rem;padding-block:2rem 5rem}.seo-content header{margin:3rem 0}.seo-content section{margin:2.5rem 0;max-width:75ch}.seo-content h1{font-size:clamp(2rem,4vw,4rem)}</style>

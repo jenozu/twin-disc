@@ -1,0 +1,10 @@
+---
+interface Props { partNumber?: string; label?: string }
+const { partNumber, label = "Prepare an identification request" } = Astro.props;
+const target = partNumber ? "/rfq?part=" + encodeURIComponent(partNumber) : "/rfq";
+---
+<div class="seo-rfq-cta">
+  <p>Not sure of the exact part? Capture the model, serial number and equipment details. The current request form is a preview prototype and does not submit data.</p>
+  <a class="button" href={target}>{label}</a>
+</div>
+<style>.seo-rfq-cta{padding:1.2rem;background:#eef2f2;border-radius:.4rem}.seo-rfq-cta p{margin-top:0}.seo-rfq-cta a{display:inline-flex;min-height:44px;align-items:center}</style>

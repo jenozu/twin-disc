@@ -1,0 +1,21 @@
+---
+import { relationshipState } from "../lib/seo";
+import type { EvidenceRelationship } from "../lib/seo";
+interface Props { relationship: EvidenceRelationship; held?: boolean }
+const { relationship, held = false } = Astro.props;
+const state = relationshipState(relationship, held);
+const labels: Record<typeof state,string> = {
+ "verified-exact": "Source-backed exact part relationship",
+ "family-only": "Family-level reference only",
+ "pending-review": "Pending technical review",
+ "unverified": "Unverified: not a compatibility claim",
+ "held": "Held: not currently orderable",
+};
+---
+<aside class="seo-compatibility" data-evidence-state={state}>
+  <strong>{labels[state]}</strong>
+  {state === "verified-exact" ? <p>{relationship.SourceSKU} — {relationship.RelationshipType} — {relationship.Target}. Verify the actual assembly configuration before ordering.</p>
+   : <p>Relationship evidence is insufficient for an exact equipment-fit or replacement guarantee. Confirm the model, serial and BOM before proceeding.</p>}
+  {state === "verified-exact" && <a href={relationship.SourceURL} rel="noopener noreferrer">View technical evidence</a>}
+</aside>
+<style>.seo-compatibility{padding:1rem;border:1px solid #cbd4d6;border-left:4px solid #4e7480;border-radius:.35rem}.seo-compatibility[data-evidence-state="held"],.seo-compatibility[data-evidence-state="unverified"]{border-left-color:#a4692e}.seo-compatibility p{margin:.5rem 0}</style>

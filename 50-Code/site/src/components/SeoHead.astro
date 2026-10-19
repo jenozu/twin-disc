@@ -1,0 +1,37 @@
+---
+import { absoluteCanonical, isApprovedProduction, safeJsonLd } from "../lib/seo";
+interface Props {
+ title: string;
+ description: string;
+ canonicalUrl?: string;
+ pathname: string;
+ robots?: string;
+ ogImage?: string;
+ structuredData?: Record<string, unknown>[];
+}
+const { title, description, canonicalUrl, pathname, robots, ogImage, structuredData = [] } = Astro.props;
+const canonical = absoluteCanonical(canonicalUrl ?? pathname);
+const indexable = isApprovedProduction();
+const effectiveRobots = !indexable ? "noindex, nofollow, noarchive" : (robots ?? "index, follow");
+const cleanTitle = title?.trim();
+const cleanDescription = description?.trim();
+if (!cleanTitle || !cleanDescription) throw new Error("SEO title and description required");
+const image = ogImage?.startsWith("https://") ? ogImage : undefined;
+---
+<title>{cleanTitle}</title>
+<meta name="description" content={cleanDescription} />
+<meta name="robots" content={effectiveRobots} />
+<meta name="googlebot" content={effectiveRobots} />
+<link rel="canonical" href={canonical} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Powertrain Parts" />
+<meta property="og:locale" content="en_CA" />
+<meta property="og:title" content={cleanTitle} />
+<meta property="og:description" content={cleanDescription} />
+<meta property="og:url" content={canonical} />
+<meta name="twitter:card" content={image ? "summary_large_image" : "summary"} />
+<meta name="twitter:title" content={cleanTitle} />
+<meta name="twitter:description" content={cleanDescription} />
+{image && <meta property="og:image" content={image} />}
+{image && <meta name="twitter:image" content={image} />}
+{structuredData.map((schema) => <script type="application/ld+json" set:html={safeJsonLd(schema)} />)}
