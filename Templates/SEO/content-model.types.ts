@@ -16,3 +16,15 @@ export interface ModelComparison {leftFamilyId:string;rightFamilyId:string;compa
 export interface EquipmentApplication {applicationId:string;familyClaimIds:string[];exactEquipmentClaimIds:string[];}
 export interface LocationLandingPage {regionId:string;approvedCoverageClaimId:string|null;uniqueLocalEvidenceIds:string[];}
 export interface RFQLandingPage {acceptsUnknownModel:true;operationalRFQStatus:'not-implemented'|'verified-working'|'paused';}
+
+// Editor/revision/CTA and related-page fields are required for approved releases;
+// Research-only fixtures intentionally may omit them.
+export interface PublicationReadyFields {
+  authorId: string;
+  sourceRevision: string;
+  lastVerifiedAt: string;
+  nextReviewAt: string;
+  primaryCta: string;
+  relatedIds: string[];
+}
+export type ApprovedSEOPage = SEOPage & PublicationReadyFields & { status: 'Approved' | 'Published' };

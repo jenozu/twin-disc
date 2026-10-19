@@ -110,35 +110,38 @@
 **Priority:** P0 | **Owners:** AI/DEV + [REVIEW] technical editor  
 **Dependencies:** Phase SEO-01 keyword map; existing Phase 2–5 product records
 
-- [ ] **SEO-02.1 [AI/DEV] Confirm canonical URL and navigation policy.**
-  - [ ] Products: /products/ categories; distinct /parts/{part-number}/ SKU pages.
-  - [ ] Family hubs: one canonical path (e.g. /power-take-offs/sp211/), not mirrored under /products/ without redirects/canonical management.
-  - [ ] Technical library: /resources/; solution RFQ: /solutions/; real applications: /industries/; supported regions: /locations/.
-  - [ ] Avoid generating indexable zero-content pages, faceted combinations and duplicate alternate slugs.
-- [ ] **SEO-02.2 [AI/DEV] Design reusable content models.**
-  - [ ] Category, model hub, comparison, identification, troubleshooting, maintenance, repair-vs-replace, product/SKU, application, Ontario location and RFQ solution.
-  - [ ] Common fields: slug, title, description, H1, target intent, author, reviewer, review date, source revision, status, CTA and related IDs.
-  - [ ] Technical-specific fields: spec+units, applicability, part relationship scope, evidence URL, PublishRule, unverified/hold warnings.
-  - [ ] Distinguish editorial text from machine-readable fitment assertions.
-- [ ] **SEO-02.3 [AI/DEV] Implement compatibility evidence pipeline.**
-  - [ ] Reuse `Scope`, `EvidenceLevel`, `PublishRule`, and `SourceURL` from the existing Product Relationship Schema.
-  - [ ] Gate exact compatibility claims behind PublishRule=Yes AND matching scope.
-  - [ ] Display Family-only context without converting to exact fit; hide Review/No from assertive marketing language.
-  - [ ] Prevent Hold products from order/quote recommendations until business review.
-  - [ ] Add source/revision/expiry fields for safety-critical content and scheduled technical re-review.
-- [ ] **SEO-02.4 [AI/DEV] Define internal-link graph.**
-  - [ ] Every hub links to verified components, guides, related pages and RFQ.
-  - [ ] Every product page links to parent family hub and relevant technical resource.
-  - [ ] Every troubleshooting guide links to model identification and RFQ as an escape hatch.
-  - [ ] Every application/location page links only to supported services/products.
-  - [ ] Add breadcrumbs and related-content logic with anti-loop/dedup checks.
+- [x] **SEO-02.1 [AI/DEV] Confirm canonical URL and navigation policy.**
+  - [x] Products: /products/ categories; distinct /parts/{part-number}/ SKU pages.
+  - [x] Family hubs: one canonical path (e.g. /power-take-offs/sp211/), not mirrored under /products/ without redirects/canonical management.
+  - [x] Technical library: /resources/; solution RFQ: /solutions/; real applications: /industries/; supported regions: /locations/.
+  - [x] Avoid generating indexable zero-content pages, faceted combinations and duplicate alternate slugs.
+- [x] **SEO-02.2 [AI/DEV] Design reusable content models.**
+  - [x] Category, model hub, comparison, identification, troubleshooting, maintenance, repair-vs-replace, product/SKU, application, Ontario location and RFQ solution.
+  - [x] Common fields: slug, title, description, H1, target intent, author, reviewer, review date, source revision, status, CTA and related IDs.
+  - [x] Technical-specific fields: spec+units, applicability, part relationship scope, evidence URL, PublishRule, unverified/hold warnings.
+  - [x] Distinguish editorial text from machine-readable fitment assertions.
+- [x] **SEO-02.3 [AI/DEV] Specify compatibility evidence pipeline and publication rules (runtime integration belongs to SEO-03).**
+  - [x] Reuse `Scope`, `EvidenceLevel`, `PublishRule`, and `SourceURL` from the existing Product Relationship Schema.
+  - [x] Gate exact compatibility claims behind PublishRule=Yes AND matching scope.
+  - [x] Display Family-only context without converting to exact fit; hide Review/No from assertive marketing language.
+  - [x] Prevent Hold products from order/quote recommendations until business review.
+  - [x] Add source/revision/expiry fields for safety-critical content and scheduled technical re-review.
+- [x] **SEO-02.4 [AI/DEV] Define internal-link graph.**
+  - [x] Every hub links to verified components, guides, related pages and RFQ.
+  - [x] Every product page links to parent family hub and relevant technical resource.
+  - [x] Every troubleshooting guide links to model identification and RFQ as an escape hatch.
+  - [x] Every application/location page links only to supported services/products.
+  - [x] Add breadcrumbs and related-content logic with anti-loop/dedup checks.
 - [ ] **SEO-02.5 [REVIEW] Validate page-level content quality.**
   - [ ] Unique purpose and substance; no auto-generated city doorway or near-identical OEM variant pages.
   - [ ] Good technical citations, safe language, human-reviewed diagnostic detail, no model/spec guessing.
   - [ ] Permission check before reusing manuals, illustrations or screenshots.
 
-**Deliverables:** canonical sitemap specification, 10 page schemas/templates, evidence-to-publication rules, link map.  
-**Exit / DoD:** each target URL and template has a unique intent, source policy and conversion path.
+**Deliverables:** canonical sitemap specification, 11 page schemas/templates, Phase4/5-preserving evidence-to-publication rules, link map, validated fixtures and SEO-03 handoff.  
+**Architecture/design DoD:** complete and independently validated. **Human SEO-02.5 technical/editorial/copyright approval and actual site/SEO-04 operation are pending**; proposed routes are not published.
+
+
+**Execution checkpoint:** Sections SEO-02.1–02.4 and each documentation-level subtask verified by the artifacts below; SEO-02.5 stays unchecked because no qualified technical/editorial/rights approval of real publishable page copy has occurred. The evidence pipeline is SPECIFIED here and must be IMPLEMENTED and tested in SEO-03, not falsely claimed live. [Completion report](SEO_02_COMPLETION_REPORT.md), [successful data/schema validation](SEO_02_VALIDATION_RESULTS.md), [SEO-03 integration handoff](SEO_02_TO_SEO_03_HANDOFF.md).
 
 ## SEO-03 — Technical SEO and website template implementation
 **Priority:** P0 | **Owner:** AI/DEV in the actual website repo  

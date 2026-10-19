@@ -79,3 +79,11 @@ Phase 5 foundation is established: all 20 launch products have structured produc
 - Proposed canonical architecture and machine-readable templates/claims created on feat/twd-seo-phase-02. SEO01 47 candidate pages retained plus 11 new.
 - Three unverified service URLs suppressed; held SP211P304 and SP111P340 remain non-transactional. Human source/seller decisions pending.
 - Documentation-only: no live routes, redirects, deployments, RFQ, crawl or approved product publication.
+
+
+### SEO-02 final design status — 2026-10-19
+- SEO-02.1 URL/navigation specification COMPLETE; SEO-02.2 eleven page model/template definitions COMPLETE; SEO-02.3 Phase4-preserving evidence pipeline SPECIFIED (site code pending SEO-03); SEO-02.4 link graph COMPLETE.
+- SEO-02.5 editorial standards drafted and independent schema/architecture tests PASS, but real technical/rights/commercial page approval remains PENDING and must not be marked complete.
+- GitHub Actions validation passed 11 examples, 10 architectural cases, 58 proposed pages and two internal HOLD records. See SEO_02_COMPLETION_REPORT.md.
+- SEO-03 PR #7 has its own independent preview; handoff SEO_02_TO_SEO_03_HANDOFF.md documents route, metadata, status and source-adapter integration; no other branch changed.
+- Vercel failure on docs-only branch is missing expected app root (50-Code/site), not JSON Schema failure. Do not change production settings or website just for this check.
