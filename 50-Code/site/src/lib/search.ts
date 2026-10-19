@@ -1,6 +1,6 @@
 /** Safe formatting search: punctuation normalizes identifiers but never establishes equipment fitment. */
-import type { SearchableRecord } from "./seo";
-import { isHeldProduct } from "./seo";
+import type { SearchableRecord } from "./seo.ts";
+import { isHeldProduct } from "./seo.ts";
 export type SearchMatchKind = "exact-part" | "model-family" | "related" | "review" | "no-match";
 export interface SearchMatch { kind: SearchMatchKind; record?: SearchableRecord; message: string; }
 export function normalizeIdentifier(input: string): string {

@@ -1,4 +1,5 @@
 ---
+import SeoHead from "../components/SeoHead.astro";
 import "../styles/global.css";
 import "../styles/experience-core.css";
 import "../styles/experience-hero.css";
@@ -11,6 +12,8 @@ interface Props {
   description?: string;
   canonicalUrl?: string;
   structuredData?: Record<string, unknown>[];
+  robots?: string;
+  ogImage?: string;
 }
 
 const {
@@ -18,24 +21,18 @@ const {
   description = "Independent sourcing and RFQ support for Twin Disc PTO, clutch, friction and pump-drive parts.",
   canonicalUrl,
   structuredData = [],
+  robots,
+  ogImage,
 } = Astro.props;
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en-CA">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0b1116" />
-    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
-    <title>{title}</title>
-    {structuredData.map((schema) => (
-      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
-    ))}
+    <SeoHead title={title} description={description} pathname={Astro.url.pathname}
+      canonicalUrl={canonicalUrl} structuredData={structuredData} robots={robots} ogImage={ogImage} />
   </head>
   <body>
     <div class="xp-reading-progress" aria-hidden="true"></div>

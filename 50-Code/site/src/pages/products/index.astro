@@ -6,7 +6,7 @@ import { publicProducts } from "../../data/products";
 
 const families = [...new Set(publicProducts.map((product) => product.family))];
 ---
-<BaseLayout title="Product Catalogue | Powertrain Parts">
+<BaseLayout title="Product Catalogue | Powertrain Parts" description="Explore reference Twin Disc power take-off, clutch, drive ring and pump-drive part records. Verify model and serial details before ordering." robots="noindex, follow">
   <section class="page-masthead catalogue-masthead">
     <div class="shell masthead-grid">
       <div>
@@ -106,6 +106,7 @@ const families = [...new Set(publicProducts.map((product) => product.family))];
   </section>
 
   <script>
+    import { normalizeIdentifier } from "../../lib/search";
     const input = document.querySelector<HTMLInputElement>("#product-search");
     const cards = [...document.querySelectorAll<HTMLElement>(".catalogue-card")];
     const chips = [...document.querySelectorAll<HTMLButtonElement>(".filter-chip")];
@@ -116,12 +117,12 @@ const families = [...new Set(publicProducts.map((product) => product.family))];
     let selectedFamily = "";
 
     const applyFilters = (query: string, family: string, updateUrl = true) => {
-      const normalized = query.trim().toLowerCase();
+      const normalized = normalizeIdentifier(query);
       const normalizedFamily = family.trim().toLowerCase();
       let visible = 0;
 
       cards.forEach((card) => {
-        const matchesQuery = !normalized || (card.dataset.search ?? "").includes(normalized);
+        const matchesQuery = !normalized || normalizeIdentifier(card.dataset.search ?? "").includes(normalized);
         const matchesFamily = !normalizedFamily || card.dataset.family === normalizedFamily;
         const show = matchesQuery && matchesFamily;
         card.hidden = !show;
