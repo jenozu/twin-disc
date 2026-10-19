@@ -14,7 +14,19 @@ async function walk(dir) {
 const htmlFiles=await walk(dist);
 const canonicals=new Map();
 const routeSet = new Set(htmlFiles.map(u => ("/" + decodeURIComponent(u.pathname.replace(dist.pathname,"")).replace(/index\.html$/,"").replace(/\.html$/,"")).replace(/\/+$/,"") || "/"));
-const localHosts=new Set(["twd.andel-vps.space"]);
+const origin = process.env.APPROVED_CANONICAL_ORIGIN || "https://twd.andel-vps.space";
+const titles=new Map();
+const expectedFixtures=[
+ "/products/power-take-offs/","/power-take-offs/sp211/","/parts/sp211c006/",
+ "/resources/identify-twin-disc-pto/","/resources/sp111-vs-sp211/",
+ "/resources/pto-clutch-slipping/","/resources/pto-inspection-maintenance/",
+ "/resources/industrial-pto-repair-vs-replacement/",
+ "/industries/wood-chippers/","/solutions/twin-disc-pto-clutch-replacement/"
+];
+for(const fixture of expectedFixtures){
+ if(!routeSet.has(fixture.replace(/\\/$/,""))) errors.push("Missing SEO-02 preview route "+fixture);
+}
+if(routeSet.has("/locations/hamilton"))errors.push("Unapproved Hamilton fixture was rendered");
 for(const file of htmlFiles) {
  const source=await readFile(file,"utf-8");
  const route=decodeURIComponent(file.pathname.replace(dist.pathname,""));
@@ -24,6 +36,19 @@ for(const file of htmlFiles) {
  if(!/<meta name="description" content="[^"]+"/.test(source))errors.push(route+": missing description");
  if(!canonical || !/^https:\/\/twd\.andel-vps\.space\//.test(canonical))errors.push(route+": missing/wrong canonical");
  if(count(/<link rel="canonical"/g)!==1)errors.push(route+": duplicate canonicals");
+ if(!/<meta property="og:url" content="[^"]+"/.test(source))errors.push(route+": OG URL missing");
+ const title=source.match(/<title>([^<]+)<\\/title>/)?.[1];
+ if(title){if(titles.has(title))errors.push(route+": duplicate page title "+title);titles.set(title,route);}
+ if(canonical){
+  try{
+   const url=new URL(canonical);
+   const routeCanonical=("/"+route).replace(/index\\.html$/,"").replace(/\\.html$/,"").replace(/\\/+$/,"")+"/";
+   const wantPath=routeCanonical==="//"?"/":routeCanonical;
+   if(url.origin!==origin)errors.push(route+": canonical origin mismatch");
+   if(url.pathname!==wantPath)errors.push(route+": non-self-canonical route: "+url.pathname+" vs "+wantPath);
+   if(url.pathname!=="/" && !url.pathname.endsWith("/"))errors.push(route+": canonical slash missing");
+  }catch(e){errors.push(route+": invalid canonical URL "+String(e))}
+ }
  if(count(/<h1\b/g)!==1)errors.push(route+": h1 count "+count(/<h1\b/g));
  if(!/<meta name="robots" content="noindex,/.test(source))errors.push(route+": preview page is indexable");
  if(canonical) {const other=canonicals.get(canonical);if(other && other!==route)errors.push(route+": shared canonical with "+other);canonicals.set(canonical,route)}

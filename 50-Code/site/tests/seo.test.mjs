@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { canonicalUrl, approvedSitemapPaths, isApprovedProduction, relationshipState, sitemapXml, webpageSchema, validateCanonicalOrigin } from "../src/lib/seo.ts";
 import { validateSEOPage, validateContentBatch, mayPublishPage, claimIsPublishable, approvedOemAliases, projectPublicLinks, adaptPhase5Product } from "../src/lib/seo-content.ts";
 import { normalizeIdentifier, searchProducts } from "../src/lib/search.ts";
+import fixtures from "../src/contracts/seo02/examples.json" with { type: "json" };
 const preview={ VERCEL_ENV:"preview", SEO_APPROVED_FOR_INDEXING:"true" };
 const production={ VERCEL_ENV:"production", SEO_APPROVED_FOR_INDEXING:"true", APPROVED_CANONICAL_ORIGIN:"https://twd.andel-vps.space" };
 const records=[
@@ -136,4 +137,15 @@ test("related pages require published destinations; cards cannot claim unsupport
 });
 test("invalid SKU record fails safely and does not ingest private fields",()=>{
  assert.throws(()=>adaptPhase5Product({SKU:"",TwinDiscPartNumber:"",ProductTitle:""} ,[]),/Incomplete/);
+});
+
+test("all eleven SEO-02 architectural examples stay draft and validate syntactically",()=>{
+ assert.equal(fixtures.length,11);
+ assert.equal(validateContentBatch(fixtures).valid,true,validateContentBatch(fixtures).errors.join("; "));
+ assert.ok(fixtures.every(page=>page.status==="Research"&&!mayPublishPage(page)));
+ assert.equal(new Set(fixtures.map(page=>page.canonicalPath)).size,11);
+});
+test("trailing slash policy prevents duplicate canonical variants",()=>{
+ assert.equal(canonicalUrl("/parts/sp211c006"),canonicalUrl("/parts/sp211c006/"));
+ assert.equal(canonicalUrl("/parts/sp211c006/"),"https://twd.andel-vps.space/parts/sp211c006/");
 });
