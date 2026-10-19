@@ -1,4 +1,4 @@
-name: TWD SEO-04 RFQ verification
+name: SEO-04 self-hosted RFQ checks
 on:
   push:
     branches: [feat/twd-seo-phase-04]
@@ -12,24 +12,51 @@ jobs:
   site:
     runs-on: ubuntu-latest
     defaults:
-      run:
-        working-directory: 50-Code/site
+      run: {working-directory: 50-Code/site}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-      - name: Install dependency graph
-        run: npm install --no-audit --no-fund
-      - name: RFQ unit and contract tests
-        run: npm run test:rfq
-      - name: SEO regression tests and Astro static+server build
-        run: npm run build
-      - name: Check generated preview policy
-        run: |
+        with: {node-version: "22"}
+      - run: npm install --no-audit --no-fund
+      - run: npm run build
+      - run: |
           ROOT=dist/client; test -f "$ROOT/index.html" || ROOT=dist
           test -f "$ROOT/index.html"
-          test -f "$ROOT/rfq/index.html" || test -f "$ROOT/rfq.html" || test -f "$ROOT/rfq/index.htm"
-          if grep -RIl "SUPABASE_SERVICE_ROLE_KEY\|RFQ_RATE_SALT\|RESEND_API_KEY" "$ROOT/_astro" --exclude='*.map' 2>/dev/null | grep -q .; then
-            echo "Server secret name appeared in public assets"; exit 1
-          fi
+          test -f "$ROOT/rfq/index.html"
+          ! grep -RIl "RFQ_BACKEND_SHARED_TOKEN" "$ROOT/_astro" 2>/dev/null | grep -q .
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: rfq_owner
+          POSTGRES_PASSWORD: test_ci_only
+          POSTGRES_DB: twd_rfq
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U rfq_owner -d twd_rfq"
+          --health-interval 10s --health-timeout 5s --health-retries 10
+    defaults:
+      run: {working-directory: 50-Code/site/backend}
+    env:
+      TEST_DATABASE_URL: postgresql://rfq_owner:test_ci_only@127.0.0.1:5432/twd_rfq
+      DATABASE_URL_MIGRATE: postgresql://rfq_owner:test_ci_only@127.0.0.1:5432/twd_rfq
+      PGHOST: 127.0.0.1
+      PGUSER: rfq_owner
+      PGPASSWORD: test_ci_only
+      PGDATABASE: twd_rfq
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: "22"}
+      - run: npm install --no-audit --no-fund
+      - run: npm run migrate
+      - run: npm run check
+      - run: npm run test
+      - name: Real PostgreSQL logical backup and isolated restoration
+        run: |
+          pg_dump -h 127.0.0.1 -Fc --no-owner --no-acl -f /tmp/twd-rfq-ci.dump twd_rfq
+          createdb -h 127.0.0.1 twd_rfq_restore_ci
+          pg_restore -h 127.0.0.1 --no-owner --no-acl -d twd_rfq_restore_ci /tmp/twd-rfq-ci.dump
+          psql -h 127.0.0.1 -d twd_rfq_restore_ci -Atc "SELECT count(*) FROM rfq_inquiries" | grep -Eq '^[1-9][0-9]*$'
