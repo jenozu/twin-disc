@@ -4,8 +4,8 @@
  * a reviewed snapshot update, not a silent schema replacement.
  */
 import type { SEOPage, CompatibilityEvidence, InternalLink, PublicationApproval, Phase4Relationship, Phase5PublicProduct } from "../contracts/seo02/content-model.types";
-import pageTypes from "../contracts/seo02/page-types.json";
-import { canonicalPath, HELD_SKUS } from "./seo";
+import pageTypes from "../contracts/seo02/page-types.json" with { type: "json" };
+import { canonicalPath, HELD_SKUS } from "./seo.ts";
 export type { SEOPage, CompatibilityEvidence, InternalLink };
 export type RecordValidation = { valid: boolean; errors: string[] };
 const schemaTypes = new Map(pageTypes.templates.map(x => [x.type, x]));
@@ -99,7 +99,7 @@ export function projectPublicLinks(page:SEOPage, allPages:SEOPage[]): InternalLi
   if((link.relation==="exact-equipment-fit"||link.relation==="replacement")&&
        !link.evidenceClaimIds.every(id=>page.claims.some(c=>c.claimId===id&&claimIsPublishable(c)&&
           (link.relation==="exact-equipment-fit"?c.Scope==="Exact-equipment":c.RelationshipType!=="SUPERSEDED_BY"&&c.RelationshipType!=="SERVICE_REPLACED_BY")))continue;
-  if(link.relation==="replacement"&&link.evidenceClaimIds.length===0)continue;
+  if(link.relation==="replacement")continue; // Replacement requires separate verified orderability and fit approval
   seen.add(key);out.push({...link,href:key});
   if(out.length>=6)break;
  }
