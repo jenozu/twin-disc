@@ -173,3 +173,13 @@ This is **not a replacement or renumbering** of Phases 0–15. It is a cross-pha
 - **Critical holds:** SP211P304-TWD and SP111P340-TWD remain on HOLD until replacement/orderability verified.
 - **Business gates:** no authorized-dealer claims, guaranteed repair/service availability, public inventory/prices, city offices or exact-fit substitutions without applicable evidence/approval.
 - **Website repo/production boundary:** this planning repository may differ from the deployed website's source repository; identify the website repo and use isolated branches/previews. Do not merge/deploy without approval.
+
+
+### SEO-00 / SEO-01 research execution checkpoint — 2026-10-19
+
+- **SEO-00:** researched independent reseller/RFQ business model, seller/service permissions, 23 proposed claim verifications and replacements, Phase4 compatibility restrictions and technical editorial governance. **Business-owner/supplier permissions remain blocked.**
+- **SEO-01:** reviewed actual Astro source at `50-Code/site/` on `feat/twd-ondine-editorial-rfq` and Vercel project/deployment records; documented **source-level** RFQ and public-claim risks. **No live production crawl or confirmed production URL**, rankings, keyword volumes, traffic or Core Web Vitals.
+- **Research:** 137 search-intent candidate phrases; 43 proposed canonical mappings; 45 content briefs across legacy marine, industrial PTO, exact SKU, equipment applications and geographic pages; dated competitor and Ontario economic-source research.
+- **Deliverables:** see `10-Strategy/SEO_00_BUSINESS_SCOPE_AND_CLAIMS.md`, `10-Strategy/SEO_01_CONTENT_GAP_ANALYSIS.md`, `70-Project-State/SEO_01_PRIORITIZED_RECOMMENDATIONS.md` and linked CSV evidence registers. Original SEO backlog entries preserved, additional candidate entries appended.
+- **Next dependency:** confirm independent business identity, written supplier/resale & brand permissions, actual repair/service scope, who receives customer RFQs, legal/fulfillment terms, actual public canonical domain and Search Console/analytics access. **SEO-02 documentation design is permissible; not authorization for website changes or publication.**
+- The earlier SEO workstream status “NOT STARTED/NOT VERIFIED” describes the state at creation of the original strategy; **this checkpoint is the later, authoritative research-progress update**. No existing project phases 0–15 are changed.
