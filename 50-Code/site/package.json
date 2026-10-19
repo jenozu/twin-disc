@@ -9,13 +9,12 @@
     "test:seo": "node --experimental-strip-types --test tests/seo.test.mjs",
     "test:rfq": "node --experimental-strip-types --test tests/rfq.test.mjs",
     "validate:seo": "node scripts/validate-seo.mjs",
-    "check": "astro check",
-    "audit:deps": "node scripts/dependency-audit.mjs"
+    "audit:deps": "node scripts/dependency-audit.mjs",
+    "check": "astro check"
   },
   "dependencies": {
     "astro": "^5.0.0",
-    "@astrojs/vercel": "^9.0.0",
-    "@supabase/supabase-js": "^2.0.0"
+    "@astrojs/vercel": "^9.0.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",

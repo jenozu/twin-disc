@@ -1,0 +1,28 @@
+{
+  "name": "twd-rfq-backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --import tsx src/index.ts",
+    "check": "tsc --noEmit",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "migrate": "node --import tsx scripts/migrate.ts",
+    "admin:create": "node --import tsx scripts/create-admin.ts",
+    "backup:verify": "node --import tsx scripts/check-backup.ts"
+  },
+  "dependencies": {
+    "fastify": "^5.5.0",
+    "@fastify/cookie": "^11.0.0",
+    "@fastify/multipart": "^9.2.1",
+    "argon2": "^0.44.0",
+    "pg": "^8.16.0",
+    "nodemailer": "^7.0.0",
+    "tsx": "^4.20.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/pg": "^8.15.0",
+    "@types/nodemailer": "^7.0.0",
+    "typescript": "^5.9.0"
+  }
+}
