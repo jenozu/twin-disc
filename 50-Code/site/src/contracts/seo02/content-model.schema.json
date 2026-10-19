@@ -159,6 +159,48 @@
     "extra": {
       "type": "object",
       "description": "Template-specific fields, not authorisation of technical claims"
+    },
+    "authorId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Human author/editor identity; required for Approved/Published"
+    },
+    "sourceRevision": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Main source edition or immutable verified source snapshot"
+    },
+    "lastVerifiedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "nextReviewAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "primaryCta": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Approved conversion intent with independently verified intake state"
+    },
+    "relatedIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
     }
   },
   "$defs": {
@@ -562,10 +604,36 @@
                 "const": false
               }
             }
+          },
+          "authorId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceRevision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "lastVerifiedAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "nextReviewAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "primaryCta": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "required": [
-          "extra"
+          "extra",
+          "authorId",
+          "sourceRevision",
+          "lastVerifiedAt",
+          "nextReviewAt",
+          "primaryCta",
+          "relatedIds"
         ]
       }
     },

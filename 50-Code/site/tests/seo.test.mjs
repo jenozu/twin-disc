@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { canonicalUrl, approvedSitemapPaths, isApprovedProduction, relationshipState, sitemapXml, webpageSchema, validateCanonicalOrigin } from "../src/lib/seo.ts";
 import { validateSEOPage, validateContentBatch, mayPublishPage, claimIsPublishable, approvedOemAliases, projectPublicLinks, adaptPhase5Product } from "../src/lib/seo-content.ts";
 import { normalizeIdentifier, searchProducts } from "../src/lib/search.ts";
+import fixtures from "../src/contracts/seo02/examples.json" with { type: "json" };
 const preview={ VERCEL_ENV:"preview", SEO_APPROVED_FOR_INDEXING:"true" };
 const production={ VERCEL_ENV:"production", SEO_APPROVED_FOR_INDEXING:"true", APPROVED_CANONICAL_ORIGIN:"https://twd.andel-vps.space" };
 const records=[
@@ -65,14 +66,16 @@ test("production indexation fails closed without an approved canonical domain",(
  assert.throws(()=>validateCanonicalOrigin("http://example.com"),/Invalid/);
 });
 const review={technicalApproved:true,commercialApproved:true,assetsApproved:true,identityApproved:true,privacyApproved:true,
- technicalReviewerId:"technical-tester",commercialReviewerId:"commercial-tester",nextReviewAt:"2099-12-31"};
+ technicalReviewerId:"technical-tester",commercialReviewerId:"commercial-tester",technicalReviewedAt:"2026-10-01",commercialReviewedAt:"2026-10-01",nextReviewAt:"2099-12-31"};
 const page=(over={})=>({
  id:"test-sp211c006",type:"sku",canonicalPath:"/parts/sp211c006/",intent:"part number lookup",
  title:"Twin Disc SP211C006 Reference Part",h1:"Twin Disc SP211C006",
  metaDescription:"Reference test fixture for a specific part number with required model verification.",
  status:"Published",sourceIds:["fake-source"],claims:[],review,sections:["Identification","Compatibility limits"],
  links:[],sku:"SP211C006-TWD",partNumber:"SP211C006",contentHash:"fixture-hash",
- extra:{partDefinitionClaimIds:["fixture-claim"]},...over
+ authorId:"fixture-author",sourceRevision:"fixture-2026",lastVerifiedAt:"2026-10-01",nextReviewAt:"2099-12-31",
+ primaryCta:"Prepare identification",relatedIds:[],
+ extra:{sku:"SP211C006-TWD",partNumber:"SP211C006",partDefinitionClaimIds:["fixture-claim"],illustrativeOnly:false},...over
 });
 const claim=(over={})=>({SourceSKU:"SP211C006-TWD",RelationshipType:"OEM_CROSS_REFERENCE",
  TargetType:"OEM-part",Target:"900-6943-78",Scope:"Exact",EvidenceLevel:"Official",
@@ -128,7 +131,7 @@ test("related pages require published destinations; cards cannot claim unsupport
   {href:"/parts/sp211p304/",anchor:"Held",relation:"related",evidenceClaimIds:[]},
  ]});
  const target=page({id:"guide",type:"identification",canonicalPath:"/resources/identification/",
-  extra:{identificationChecklist:["serial"],safeObservationScope:"nameplate only"}});
+  extra:{identificationChecklist:["serial"],safeObservationScope:"nameplate only",illustrativeOnly:false}});
  const held=page({id:"held",canonicalPath:"/parts/sp211p304/",sku:"SP211P304-TWD"});
  const links=projectPublicLinks(parent,[target,held]);
  assert.equal(links.length,1);
@@ -136,4 +139,29 @@ test("related pages require published destinations; cards cannot claim unsupport
 });
 test("invalid SKU record fails safely and does not ingest private fields",()=>{
  assert.throws(()=>adaptPhase5Product({SKU:"",TwinDiscPartNumber:"",ProductTitle:""} ,[]),/Incomplete/);
+});
+
+test("all eleven SEO-02 architectural examples stay draft and validate syntactically",()=>{
+ assert.equal(fixtures.length,11);
+ assert.equal(validateContentBatch(fixtures).valid,true,validateContentBatch(fixtures).errors.join("; "));
+ assert.ok(fixtures.every(page=>page.status==="Research"&&!mayPublishPage(page)));
+ assert.equal(new Set(fixtures.map(page=>page.canonicalPath)).size,11);
+});
+test("trailing slash policy prevents duplicate canonical variants",()=>{
+ assert.equal(canonicalUrl("/parts/sp211c006"),canonicalUrl("/parts/sp211c006/"));
+ assert.equal(canonicalUrl("/parts/sp211c006/"),"https://twd.andel-vps.space/parts/sp211c006/");
+});
+
+test("SEO-02 final published requirements cannot be bypassed by setting status alone",()=>{
+ assert.equal(validateSEOPage(page({authorId:undefined})).valid,false);
+ assert.equal(validateSEOPage(page({sourceRevision:""})).valid,false);
+ assert.equal(validateSEOPage(page({nextReviewAt:"2000-01-01"})).valid,false);
+ assert.equal(validateSEOPage(page({extra:{sku:"SP211C006-TWD",partNumber:"SP211C006",partDefinitionClaimIds:["fixture-claim"],illustrativeOnly:true}})).valid,false);
+ assert.equal(validateSEOPage(page({review:{...review,commercialReviewedAt:null}})).valid,false);
+});
+
+test("final JSONSchema 2020-12 enforces typed extra SKU identity and signed review fields",()=>{
+ assert.equal(validateSEOPage(page({extra:{partDefinitionClaimIds:["fixture-claim"],illustrativeOnly:false}})).valid,false);
+ assert.equal(validateSEOPage(page({review:{...review,commercialReviewerId:""}})).valid,false);
+ assert.equal(validateSEOPage(page({relatedIds:undefined})).valid,false);
 });

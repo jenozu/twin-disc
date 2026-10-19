@@ -3,8 +3,14 @@
  * any draft to an approved public page. Any future SEO-02 revision requires
  * a reviewed snapshot update, not a silent schema replacement.
  */
-import type { SEOPage, CompatibilityEvidence, InternalLink, PublicationApproval, Phase4Relationship, Phase5PublicProduct } from "../contracts/seo02/content-model.types";
+import type { SEOPage, CompatibilityEvidence, InternalLink, PublicationApproval, Phase4Relationship, Phase5PublicProduct, PublicationReadyFields } from "../contracts/seo02/content-model.types";
 import pageTypes from "../contracts/seo02/page-types.json" with { type: "json" };
+import schema from "../contracts/seo02/content-model.schema.json" with { type: "json" };
+import Ajv2020 from "ajv/dist/2020.js";
+import addFormats from "ajv-formats";
+const ajv=new Ajv2020({allErrors:true,strict:false});
+addFormats(ajv);
+const validateAgainstFinalSchema=ajv.compile(schema);
 import { canonicalPath, HELD_SKUS } from "./seo.ts";
 export type { SEOPage, CompatibilityEvidence, InternalLink };
 export type RecordValidation = { valid: boolean; errors: string[] };
@@ -40,7 +46,7 @@ function validateRequiredFields(page:SEOPage, errors:string[]):void {
  const spec=schemaTypes.get(page.type);
  if(!spec){errors.push("Unrecognized template type");return}
  for (const field of spec.required) {
-  const value = (page as unknown as Record<string, unknown>)[field] ?? page.extra?.[field];
+  const value = page.status==="Approved"||page.status==="Published" ? page.extra?.[field] : (page as unknown as Record<string, unknown>)[field] ?? page.extra?.[field];
   if (value===undefined || value===null || value==="" || (Array.isArray(value) && !value.length)) errors.push("Missing required "+field);
  }
 }
@@ -48,6 +54,7 @@ export function validateSEOPage(input: unknown): RecordValidation {
  const e:string[]=[];
  if(!input || typeof input!=="object" || Array.isArray(input))return {valid:false,errors:["Page must be an object"]};
  const p=input as SEOPage;
+ if(!validateAgainstFinalSchema(p)) e.push(...(validateAgainstFinalSchema.errors??[]).map(error=>"SEO-02 schema: "+error.instancePath+" "+error.message));
  if(!/^[a-z][a-z0-9-]+$/.test(p.id??""))e.push("Invalid page ID");
  if(!schemaTypes.has(p.type))e.push("Invalid page type");
  if(!legalStatuses.has(p.status))e.push("Invalid status");
@@ -63,6 +70,16 @@ export function validateSEOPage(input: unknown): RecordValidation {
  if(!p.review||typeof p.review!=="object"||["technicalApproved","commercialApproved","assetsApproved","identityApproved","privacyApproved"].some(k=>typeof (p.review as unknown as Record<string,unknown>)[k]!=="boolean"))e.push("Invalid approval review fields");
  if(p.sku && HELD_SKUS.has(p.sku.toUpperCase()) && (p.status==="Published"||p.status==="Approved"))e.push("HOLD SKU cannot become Approved or Published");
  if(Array.isArray(p.links))for(const l of p.links)if(!l || typeof l.href!=="string"||!l.href.startsWith("/")||l.href.startsWith("//")||!l.anchor?.trim()||!Array.isArray(l.evidenceClaimIds))e.push("Invalid internal link");
+ if(p.status==="Approved"||p.status==="Published"){
+  const approved=p as SEOPage & Partial<PublicationReadyFields> & {contentHash?:string};
+  if(!Array.isArray(p.sourceIds)||p.sourceIds.length===0)e.push("No evidence sources for approved page");
+  if(p.extra?.illustrativeOnly!==false)e.push("Illustrative fixture cannot become Approved or Published");
+  if(!approved.authorId?.trim()||!approved.sourceRevision?.trim()||!approved.primaryCta?.trim())e.push("Missing approved author, source revision or CTA");
+  if(!validISODate(approved.lastVerifiedAt)||!validISODate(approved.nextReviewAt)||approved.nextReviewAt!<today())e.push("Missing or expired page review");
+  if(!Array.isArray(approved.relatedIds))e.push("Missing reviewed related IDs");
+  const r=p.review as PublicationApproval & {technicalReviewedAt?:string|null;commercialReviewedAt?:string|null};
+  if(!enabledReview(r)||!validISODate(r.technicalReviewedAt)||!validISODate(r.commercialReviewedAt))e.push("Missing signed human review");
+ }
  if(p.status!=="Research"&&p.status!=="AIDraft")validateRequiredFields(p,e);
  return {valid:e.length===0, errors:e};
 }
