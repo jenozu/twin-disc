@@ -1,20 +1,18 @@
-# SEO-04 normalized schema
-
-Apply in order:
-1. \`supabase/migrations/202610190001_rfq.sql\`
-2. \`supabase/migrations/202610190002_rfq_admin.sql\`
+# SEO-04 PostgreSQL database and migrations
+Active migration: \`backend/migrations/001_init.sql\`, applied once with \`backend/scripts/migrate.ts\` using \`DATABASE_URL_MIGRATE\`. Version tracking in \`schema_migrations\`. The historical Supabase migrations were removed from the working tree (available in Git history only).
 
 Tables:
-- \`rfq_inquiries\`: unique idempotency key, random human reference, urgency, status, hashed visitor key, source attribution, follow-up date, quote and loss data.
-- \`rfq_contacts\`: name, company, email or phone, location and separate privacy/marketing consent timestamps.
-- \`rfq_equipment\`: optional manufacturer, model, OEM/serial/BOM, engine and configuration attributes.
-- \`rfq_attachments\`: private object key and validated media metadata.
-- \`rfq_activities\`: ordered private audit entries.
-- \`rfq_compatibility_reviews\`: manual candidate, evidence scope, publication rule and reviewer identity.
-- \`rfq_notifications\`: persistent outbox, delivery status, attempts and errors.
+- \`rfq_inquiries\`: UUID, random public reference, idempotency UUID + SHA256 payload hash, salted visitor hash, category, reason, condition, urgency, request, qualification state, attribution, follow-up, quotation/loss, timestamps.
+- \`rfq_contacts\`: contact fields, preferred channel, privacy acknowledgement timestamp, separate opt-in and timestamp.
+- \`rfq_equipment\`: manufacturer, machine/engine data, optional model, serial, BOM and technical notes.
+- \`rfq_attachments\`: private UUID storage key/filename/type/size.
+- \`rfq_activities\`: audit history per inquiry.
+- \`rfq_compatibility_reviews\`: manually reviewed candidate and evidence/source/approval; constraint prevents verified held parts.
+- \`rfq_notifications\`: persistent outbox, retry/failure and lock timestamps.
+- \`admin_users\`, \`admin_sessions\`, \`admin_login_attempts\`: no signup, Argon2id hash, opaque cookie sessions and login rate records.
 
-RLS enabled and anonymous/authenticated clients denied direct database table access. Only server-side service-role calls can submit or mutate using privileged RPC and only after server validation/authorization. \`rfq_submit\` is an atomic Postgres transaction; it stores the lead, contact, equipment, creation audit entry and notification outbox entry together. Rate limiting obtains a per-hash advisory lock before counting submissions.
+Atomic submission uses \`BEGIN\` transaction, advisory locks for idempotency and visitor limit, foreign-key writes, creation activity and queued notification. Retry with same UUID + payload returns existing RFQ. Same key and different payload rejects with 409. Validation failure or DB failure must not show success.
 
-\`rfq_admin_action\` validates status transitions inside the database and enforces exact, Yes + verified + sourced non-held review before READY_TO_QUOTE. Audit events are stored in the same transaction. No explicit replacement graph is automatically trusted.
+Dedicated runtime DB login \`rfq_app\` is created on first private Postgres volume initialization by \`backend/initdb/01_app_role.sh\`. Migrator grants DML and sequence use after applying versioned schema, but not DDL. No published database port. Owner credential only supplied to migration/admin bootstrap job.
 
-Data deletion must include private storage objects BEFORE deleting matching lead database rows; cascading DB deletes do not automatically remove storage objects. Establish retention and backup review before launch. Do not import employer SAP exports.
+Backup: \`backend/scripts/backup.sh\` stores daily \`pg_dump -Fc\` with a 14-day on-host retention window; include the private upload volume in a separate secure encrypted offsite backup. A dump listing is NOT a restore test. Restore to an isolated disposable PostgreSQL DB, check table counts and private file mapping before release.

@@ -1,13 +1,15 @@
-# SEO-04 API contract
+# SEO-04 REST interface / same-origin gateway
+Vercel route \`POST /api/rfq\` proxies multipart \`payload\` JSON and UUID \`idempotency_key\` plus up to 3 JPEG/PNG/PDF \`attachments\` to VPS. Server validates category/reason/condition/urgency, required name, city, province, privacy acknowledgment, valid email **or** telephone, optional technical ID fields. Max request 3.5 MB; max 3 files/1 MB each, signature sniffing; files in private storage. A persisted inquiry returns 201 \`{accepted:true,reference,status,duplicate:false,attachmentFailures:0}\`; idempotent retry returns 200. 422 validation and attachment errors; 409 duplicate-key conflict; 429 rate limit; 503 unavailable. No fake success. Failed uploads after a successful DB transaction return the same reference and nonzero \`attachmentFailures\`.
 
-All responses JSON, \`Cache-Control: no-store\`.
+All /api/admin endpoints require an authenticated session cookie. Mutations additionally require an anti-CSRF header and gateway Origin check:
+- POST \`/api/admin/login\` email/password; sets HttpOnly Secure same-origin cookie and returns initial CSRF.
+- GET \`/api/admin/session\`: validates session, rotates CSRF, returns user email/role.
+- POST \`/api/admin/logout\`: revokes session.
+- GET \`/api/admin/rfqs\`: status, urgency, category, city, source, from/to filters, max 100.
+- GET \`/api/admin/rfqs/:id\`: private contact/equipment/reviews/notes/files/history.
+- PATCH \`/api/admin/rfqs/:id\`: actions \`status\`, \`note\`, \`followup\`, \`review\`, \`quote\`.
+- GET \`/api/admin/attachments/:id\`: authorized raw file download, forced Content-Disposition attachment, no public URL.
+- GET \`/api/admin/notifications\`: private delivery state; POST: admin-only SMTP send/retry, 503 without configured account.
+- GET \`/healthz\`: minimal service health; \`/readyz\` checks private PostgreSQL connection and requires gateway token.
 
-- \`POST /api/rfq\` accepts multipart \`payload\` JSON plus \`idempotency_key\` UUID and up to 3 \`attachments\`. Requires privacy acknowledgment, name, city, province, valid enum choices, and email **or** phone. All technical fields optional. Returns \`201 {accepted:true,reference,status,duplicate:false,attachmentFailures:N}\` only after DB persistence; retries return 200 with duplicate true. 422 field errors / unsupported file content, 429 rate limit, 503 configuration or persistence failure. Request body 3.5 MB ceiling, attachments 1 MB each JPEG/PNG/PDF signature-checked. Note: uploads happen **after** the DB transaction; partial upload problems are reported and never delete a valid inquiry.
-- \`GET /api/admin/rfqs\`: Bearer Supabase JWT + allowlisted user ID. Optional status, urgency, category, city, source, from, to filters. Last 100 matching leads; client filters for city/source are applied within the fetched window.
-- \`GET /api/admin/rfqs/:id\`: private detail, equipment, contact, activity, reviews, attachments.
-- \`PATCH /api/admin/rfqs/:id\`: \`{action:"status",status,reason?}\`, \`{action:"note",notes}\`, \`{action:"followup",date:"YYYY-MM-DD"}\`, \`{action:"review",candidate_part,relationship_type,scope,publish_rule,source_url,verified}\`, \`{action:"quote",reference,amount}\`. DB rejects invalid transitions and unverified readiness.
-- \`GET /api/admin/attachments/:id\`: creates authenticated short-lived 60s signed download URL for private storage.
-- \`GET /api/admin/notifications\`: view delivery outbox.
-- \`POST /api/admin/notifications\`: authorized operator invokes delivery/retry; disabled without approved Resend settings. Messages contain only reference, product category and urgency; never customer documents.
-
-No public GET endpoint exposes customer contact details. No frontend writes with service-role credentials.
+Errors are JSON without SQL strings, credentials, personal data or stack traces. API disables CORS and redirects. VPS reverse proxy should expose only this service through TLS after owner approval, restricted to gateway requests; direct callers still need a secret.
