@@ -4,13 +4,14 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && npm run test:rfq && npm run test:seo && npm run validate:seo && npm run audit:deps && npm run check",
+    "build": "astro build && npm run test:rfq && npm run test:seo && npm run validate:seo && npm run audit:deps && npm run check && npm run check:backend",
     "preview": "astro preview",
     "test:seo": "node --experimental-strip-types --test tests/seo.test.mjs",
     "test:rfq": "node --experimental-strip-types --test tests/rfq.test.mjs",
     "validate:seo": "node scripts/validate-seo.mjs",
     "audit:deps": "node scripts/dependency-audit.mjs",
-    "check": "astro check"
+    "check": "astro check",
+    "check:backend": "npm --prefix backend install --no-audit --no-fund && npm --prefix backend run check"
   },
   "dependencies": {
     "astro": "^5.0.0",
