@@ -62,7 +62,9 @@ export async function createApp(pool:DB,config:Settings){
  await registerAuth(app,pool,config.rateSalt);
  registerAdmin(app,pool,config);
  app.setErrorHandler((error,_req,reply)=>{
-  const status=error.statusCode&&error.statusCode>=400&&error.statusCode<500?error.statusCode:503;
+  const code=error instanceof Error && "statusCode" in error && typeof error.statusCode==="number"
+   ?error.statusCode:503;
+  const status=code>=400&&code<500?code:503;
   reply.code(status).send({error:status===503?"SERVICE_UNAVAILABLE":"INVALID_REQUEST"});
  });
  return app;
