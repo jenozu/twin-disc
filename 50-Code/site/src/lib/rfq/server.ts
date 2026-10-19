@@ -1,13 +1,13 @@
 /** Backend-only Supabase access. Never import from an Astro client script. */
 import { createClient } from "@supabase/supabase-js";
 import { createHash, randomUUID } from "node:crypto";
-import type { RFQInput } from "./schema";
-import { initialStatus } from "./workflow";
+import type { RFQInput } from "./schema.ts";
+import { initialStatus } from "./workflow.ts";
 
 export type DB=ReturnType<typeof createClient>;
 export function db():DB {
-  const url=import.meta.env.SUPABASE_URL || process.env.SUPABASE_URL;
-  const key=import.meta.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const url=process.env.SUPABASE_URL;
+  const key=process.env.SUPABASE_SERVICE_ROLE_KEY;
   if(!url||!key) throw new Error("BACKEND_NOT_CONFIGURED");
   return createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}});
 }
@@ -15,7 +15,7 @@ export function digest(s:string):string{return createHash("sha256").update(s).di
 export async function submit(dbClient:DB,input:RFQInput,key:string,ip:string,salt:string){
   if(!salt) throw new Error("BACKEND_NOT_CONFIGURED");
   if(!/^[0-9a-f-]{36}$/i.test(key)) throw new Error("INVALID_IDEMPOTENCY");
-  const payload={...input,status:initialStatus(input)};
+  const payload={...input,status:initialStatus({part_number:String(input.part_number||""),model_number:String(input.model_number||""),serial_number:String(input.serial_number||""),bom_number:String(input.bom_number||"")})};
   const hash=digest(JSON.stringify(payload));
   const ipHash=digest(salt+":"+ip);
   const {data,error}=await dbClient.rpc("rfq_submit",{
@@ -79,7 +79,7 @@ export function json(data:unknown,status=200):Response{
   }});
 }
 export async function requireAdmin(request:Request,client:DB){
-  const allowed=(process.env.RFQ_ADMIN_USER_IDS||import.meta.env.RFQ_ADMIN_USER_IDS||"").split(",").map(s=>s.trim()).filter(Boolean);
+  const allowed=(process.env.RFQ_ADMIN_USER_IDS||"").split(",").map(s=>s.trim()).filter(Boolean);
   if(!allowed.length) throw new Error("ADMIN_DISABLED");
   const bearer=request.headers.get("authorization")||"";
   if(!bearer.startsWith("Bearer ")) throw new Error("UNAUTHORIZED");
