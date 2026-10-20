@@ -95,7 +95,7 @@ if(form){
     body.set("idempotency_key",key);
     for(const file of [...(attachments.files||[])])body.append("attachments",file,file.name);
     try{
-      const response=await fetch("/api/rfq",{method:"POST",body,headers:{"accept":"application/json"},credentials:"omit"});
+      const response=await fetch("/api/rfq",{method:"POST",body,headers:{"accept":"application/json"},credentials:"same-origin"});
       const result=await response.json();
       if(!response.ok||!result.accepted){
         if(result.fields){const first=Object.values(result.fields)[0];throw new Error(String(first));}
