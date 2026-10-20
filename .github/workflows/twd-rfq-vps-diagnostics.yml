@@ -33,7 +33,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check shell scripts
-        run: bash -n ops/vps/twd-rfq-diagnostics.sh ops/vps/twd-rfq-ssh-entry.sh ops/vps/setup-readonly-ssh.sh
+        run: |
+          for script in ops/vps/twd-rfq-diagnostics.sh ops/vps/twd-rfq-ssh-entry.sh ops/vps/setup-readonly-ssh.sh; do
+            bash -n "$script"
+          done
 
   staging:
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
