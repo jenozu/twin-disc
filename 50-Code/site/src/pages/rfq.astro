@@ -1,159 +1,143 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/rfq-04.css";
 ---
-<BaseLayout title="Prepare a Part Identification Request | Powertrain Parts" description="Gather part numbers, model and serial details for technical identification. Prototype request form; details are not transmitted." robots="noindex, follow">
+<BaseLayout
+  title="Twin Disc Parts Identification & Replacement Quote | Ontario"
+  description="Request help identifying Twin Disc PTO, clutch or marine parts in Ontario. Model, serial and BOM numbers are optional. All fitment requires review."
+  robots="noindex, follow"
+>
   <section class="page-masthead">
     <div class="shell masthead-grid">
       <div>
-        <p class="kicker">RFQ / Part Identification</p>
-        <h1>Send the details you have.</h1>
+        <p class="kicker">PART IDENTIFICATION / QUOTE REQUEST</p>
+        <h1>Tell us what you know.</h1>
       </div>
-      <p class="masthead-copy">
-        A tag, serial number or OEM number is usually more useful than a long description. Complete only the fields you know.
-      </p>
+      <p class="masthead-copy">You can request a replacement without knowing your Twin Disc model, serial number or BOM. Every compatibility recommendation requires review.</p>
     </div>
   </section>
-
-  <section class="section shell rfq-layout">
-    <aside class="rfq-guide">
-      <div class="guide-block">
-        <span class="guide-label">BEST IDENTIFIER</span>
-        <strong>PTO / clutch tag or serial</strong>
-        <p>A clear model or serial number usually provides the fastest path to verification.</p>
+  <div class="shell rfq04-wrap">
+    <aside class="rfq04-aside">
+      <p class="kicker">HOW THIS WORKS</p>
+      <h2>Start with the problem. We'll review the details.</h2>
+      <p>Describe what needs replacing, provide any available machine information, and choose how to be contacted. You do not need an account.</p>
+      <ol>
+        <li>Your inquiry is stored securely and assigned a reference.</li>
+        <li>Identification and compatibility are reviewed before a quote.</li>
+        <li>Someone will follow up using your preferred contact method when the team is configured and available.</li>
+      </ol>
+      <div class="rfq04-notice">
+        <strong>Photos are optional.</strong>
+        <p>Only photograph equipment and identification plates when safely accessible. Never remove guards, dismantle or operate equipment for a photograph.</p>
       </div>
-      <div class="guide-block">
-        <span class="guide-label">ALSO USEFUL</span>
-        <strong>Machine & engine details</strong>
-        <p>Equipment make/model and engine make/model help narrow the application.</p>
-      </div>
-      <div class="guide-block">
-        <span class="guide-label">IF AVAILABLE</span>
-        <strong>OEM part number</strong>
-        <p>Cross-reference numbers can help identify a service or replacement path.</p>
-      </div>
+      <p class="rfq04-small">This is an independent parts inquiry service, not a manufacturer fitment guarantee or confirmed stock offer.</p>
     </aside>
-
-    <div class="rfq-panel">
-      <div class="rfq-panel__header">
-        <span>TECHNICAL INTAKE</span>
-        <span>Fields marked * are required</span>
+    <section class="rfq04-panel" aria-labelledby="rfq04-title">
+      <div class="rfq04-panelhead">
+        <div><span>REPLACEMENT INQUIRY</span><h2 id="rfq04-title">Request identification or a quote</h2></div>
+        <span id="rfq-progress-caption" aria-live="polite">Step 1 of 3</span>
       </div>
-
-      <form id="rfq-form" novalidate>
-        <fieldset>
-          <legend>Part Information</legend>
-          <div class="form-grid">
-            <label>
-              Part Number
-              <input id="part" name="part" placeholder="SP318C003…" autocomplete="off" spellcheck="false" />
+      <ol class="rfq04-progress" aria-label="Form progress">
+        <li class="is-current" data-progress="1">1. Requirement</li>
+        <li data-progress="2">2. Identification</li>
+        <li data-progress="3">3. Contact</li>
+      </ol>
+      <form id="rfq04-form" novalidate>
+        <fieldset data-step="1">
+          <legend>01 / What do you need?</legend>
+          <div class="rfq04-fields">
+            <label>Replacement type <span aria-hidden="true">*</span>
+              <select required name="category">
+                <option value="">Choose one</option><option value="pto">Complete PTO assembly</option>
+                <option value="clutch">Clutch assembly</option><option value="component">Individual replacement component</option>
+                <option value="marine">Marine transmission or component</option><option value="unsure">Not sure</option>
+              </select>
             </label>
-            <label>
-              OEM Part Number
-              <input name="oem" placeholder="If available…" autocomplete="off" spellcheck="false" />
+            <label>Reason for replacing <span aria-hidden="true">*</span>
+              <select required name="reason"><option value="">Choose one</option>
+                <option value="failed">Damaged or failed</option><option value="worn">Worn component</option>
+                <option value="maintenance">Planned maintenance</option><option value="upgrade">Equipment upgrade</option>
+                <option value="unknown">Unknown</option></select>
+            </label>
+            <label>Equipment condition <span aria-hidden="true">*</span>
+              <select required name="condition"><option value="">Choose one</option>
+                <option value="out_of_service">Out of service</option><option value="operational">Still operational</option>
+                <option value="planned">Planned maintenance</option></select>
+            </label>
+            <label>When do you need it? <span aria-hidden="true">*</span>
+              <select required name="urgency"><option value="">Choose one</option>
+                <option value="asap">As soon as possible</option><option value="one_week">Within one week</option>
+                <option value="one_month">Within one month</option><option value="planning">Planning ahead</option></select>
             </label>
           </div>
+          <label>Describe the problem (optional)
+            <textarea name="description" maxlength="2000" rows="4" placeholder="Symptoms, damaged part, quantity or work planned..."></textarea>
+          </label>
         </fieldset>
-
-        <fieldset>
-          <legend>Equipment Information</legend>
-          <div class="form-grid">
-            <label>
-              Equipment Make & Model
-              <input name="equipment" placeholder="Bandit Beast 3680…" autocomplete="off" />
-            </label>
-            <label>
-              Engine Make & Model
-              <input name="engine" placeholder="If known…" autocomplete="off" />
+        <fieldset data-step="2" hidden>
+          <legend>02 / Equipment identification</legend>
+          <p>All fields on this step are optional. Missing numbers do not prevent submission.</p>
+          <label class="rfq04-check"><input id="rfq-unknown-ids" type="checkbox" /> I don't know my model, serial or BOM numbers</label>
+          <p id="rfq-unknown-help" class="rfq04-help" hidden>That's fine. A machine manufacturer/model or safe photos may help begin identification.</p>
+          <div class="rfq04-fields">
+            <label>Twin Disc model number<input name="model_number" data-identifier maxlength="160" placeholder="If known" /></label>
+            <label>Serial number<input name="serial_number" data-identifier maxlength="160" /></label>
+            <label>BOM number<input name="bom_number" data-identifier maxlength="160" /></label>
+            <label>Original part number<input id="rfq-part-number" name="part_number" data-identifier maxlength="160" /></label>
+            <label>OEM part number<input name="oem_part_number" maxlength="160" /></label>
+            <label>Equipment manufacturer<input name="equipment_manufacturer" maxlength="160" /></label>
+            <label>Equipment model<input name="equipment_model" maxlength="160" /></label>
+            <label>Equipment type/application<input name="equipment_type" maxlength="160" /></label>
+            <label>Engine make and model<input name="engine" maxlength="160" /></label>
+            <label>Engine horsepower<input name="horsepower" inputmode="decimal" maxlength="160" /></label>
+            <label>Rated RPM<input name="rpm" inputmode="numeric" maxlength="160" /></label>
+            <label>Drive arrangement<input name="drive_arrangement" maxlength="160" /></label>
+          </div>
+          <label>Technical notes<textarea name="technical_notes" maxlength="2000" rows="3"></textarea></label>
+          <label>Safe photographs or a PDF (optional)
+            <input type="file" id="rfq-attachments" name="attachments" accept="image/jpeg,image/png,application/pdf,.jpg,.jpeg,.png,.pdf" multiple />
+            <span class="rfq04-help">Up to 3 files, maximum 1 MB each. JPEG, PNG, and PDF only. Files are private and require authorized review.</span>
+          </label>
+          <p id="rfq-file-message" class="rfq04-help" role="status" aria-live="polite"></p>
+        </fieldset>
+        <fieldset data-step="3" hidden>
+          <legend>03 / How may we contact you?</legend>
+          <div class="rfq04-fields">
+            <label>Contact name *<input name="name" required autocomplete="name" maxlength="100" /></label>
+            <label>Company (optional)<input name="company" autocomplete="organization" maxlength="160" /></label>
+            <label>Email (email or phone required)<input type="email" name="email" autocomplete="email" maxlength="160" /></label>
+            <label>Telephone (email or phone required)<input type="tel" name="phone" autocomplete="tel" maxlength="160" /></label>
+            <label>City or town *<input name="city" required autocomplete="address-level2" maxlength="100" /></label>
+            <label>Province *<input name="province" value="Ontario" required autocomplete="address-level1" maxlength="100" /></label>
+            <label>Postal code (optional)<input name="postal_code" autocomplete="postal-code" maxlength="160" /></label>
+            <label>Preferred contact method *
+              <select name="preferred_contact" required><option value="either">Either</option>
+                <option value="email">Email</option><option value="phone">Phone</option></select>
             </label>
           </div>
-
-          <label>
-            PTO / Clutch / Transmission Model or Serial
-            <input name="drive" placeholder="Tag, serial number or model…" autocomplete="off" spellcheck="false" />
-          </label>
+          <label>Additional comments<textarea name="comments" rows="3" maxlength="2000"></textarea></label>
+          <div class="rfq04-consent">
+            <label class="rfq04-check"><input type="checkbox" name="privacy_acknowledged" required /> I understand the information supplied will be used to review and respond to my parts inquiry. *</label>
+            <p class="rfq04-help">Photos and contact details are retained for inquiry follow-up and reviewed only by authorized personnel. Contact the business for access, corrections or deletion requests. A formal privacy notice and retention policy require owner approval before launch.</p>
+            <label class="rfq04-check"><input type="checkbox" name="marketing_consent" /> Separately, I would like optional product updates and marketing communications.</label>
+          </div>
+          <label class="rfq04-honeypot" aria-hidden="true">Website<input type="text" name="honeypot" tabindex="-1" autocomplete="off" /></label>
         </fieldset>
-
-        <fieldset>
-          <legend>Request Details</legend>
-          <label>
-            What Do You Need?
-            <textarea name="message" placeholder="Part needed, quantity, failure symptoms or application details…"></textarea>
-          </label>
-
-          <label>
-            Photos (Optional)
-            <input
-              id="photos"
-              type="file"
-              name="photos"
-              accept="image/*,.heic,.heif"
-              multiple
-            />
-            <span class="field-help">Add up to 5 nameplate, serial-tag, equipment or damage photos.</span>
-          </label>
-
-          <label>
-            Email Address *
-            <input
-              type="email"
-              name="email"
-              required
-              placeholder="you@company.com…"
-              autocomplete="email"
-              spellcheck="false"
-            />
-          </label>
-        </fieldset>
-
-        <div class="form-submit">
-          <button class="button button-large" type="submit">Check preview form (not submit)</button>
-          <p><strong>Prototype only:</strong> No data is sent or stored. Do not enter private information. Real submission and secure uploads belong to SEO-04.</p>
+        <div id="rfq04-error" role="alert" aria-live="assertive" hidden></div>
+        <div class="rfq04-actions">
+          <button class="button" id="rfq04-prev" type="button" hidden>Previous</button>
+          <button class="button" id="rfq04-next" type="button">Next step</button>
+          <button class="button" id="rfq04-submit" type="submit" hidden>Submit secure inquiry</button>
+          <span id="rfq04-state" role="status" aria-live="polite"></span>
         </div>
       </form>
-
-      <div id="rfq-result" class="result-panel" role="status" aria-live="polite" hidden>
-        <strong>RFQ Prepared Locally — Not Submitted</strong>
-        <p id="rfq-summary">Local validation only. Not submitted.</p>
+      <div id="rfq04-success" role="status" aria-live="polite" hidden tabindex="-1">
+        <h3>Inquiry received</h3>
+        <p>Your inquiry reference: <strong id="rfq04-reference"></strong></p>
+        <p id="rfq04-success-message">Your details have been stored for review. An exact replacement or availability has not yet been confirmed.</p>
+        <a href="/products">Browse parts catalogue</a>
       </div>
-    </div>
-  </section>
-
-  <script>
-    const params = new URLSearchParams(location.search);
-    const part = document.querySelector<HTMLInputElement>("#part");
-    if (part && params.get("part")) part.value = params.get("part") ?? "";
-
-    const form = document.querySelector<HTMLFormElement>("#rfq-form");
-    const photos = document.querySelector<HTMLInputElement>("#photos");
-    const result = document.querySelector<HTMLElement>("#rfq-result");
-    const summary = document.querySelector<HTMLElement>("#rfq-summary");
-
-    photos?.addEventListener("change", () => {
-      const count = photos.files?.length ?? 0;
-      photos.setCustomValidity(count > 5 ? "Please select no more than 5 images." : "");
-      photos.setAttribute("aria-invalid", count > 5 ? "true" : "false");
-    });
-
-    form?.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      const email = form.elements.namedItem("email") as HTMLInputElement | null;
-      if (email && !email.validity.valid) {
-        email.setAttribute("aria-invalid", "true");
-        email.focus();
-        return;
-      }
-      email?.removeAttribute("aria-invalid");
-
-      if (photos && !photos.validity.valid) {
-        photos.reportValidity();
-        photos.focus();
-        return;
-      }
-
-      if (summary) summary.textContent = "No details were sent, saved, or copied.";
-      if (result) result.hidden = false;
-      result?.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
-  </script>
+    </section>
+  </div>
+  <script>import "../scripts/rfq-wizard";</script>
 </BaseLayout>

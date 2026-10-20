@@ -1,0 +1,99 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/rfq-04.css";
+---
+<BaseLayout title="Protected RFQ Lead Queue | Internal" description="Authorized business users only." robots="noindex, nofollow, noarchive">
+  <section class="page-masthead">
+    <div class="shell masthead-grid">
+      <div><p class="kicker">INTERNAL / RESTRICTED</p><h1>Inquiry management</h1></div>
+      <p class="masthead-copy">Private inquiries are only loaded after authentication and server-side authorization. This shell contains no customer records.</p>
+    </div>
+  </section>
+  <main class="shell rfq04-admin" style="padding-top:3rem;padding-bottom:6rem">
+    <p id="admin-alert" role="alert" aria-live="polite"></p>
+    <form id="admin-login" class="rfq04-panel" style="padding:2rem;max-width:520px">
+      <h2>Authorized access</h2>
+      <label>Email <input type="email" name="email" autocomplete="username" required /></label>
+      <label>Password <input type="password" name="password" autocomplete="current-password" required /></label>
+      <button class="button" type="submit">Sign in</button>
+    </form>
+    <div id="admin-workspace" hidden>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
+        <h2>Lead queue</h2>
+        <button class="button" id="admin-refresh" type="button">Refresh</button>
+        <button class="button" id="admin-notifications" type="button">Dispatch notification queue</button>
+        <button class="button" id="admin-signout" type="button">Sign out</button>
+      </div>
+      <div id="admin-counts" role="status"></div>
+      <form id="admin-filters" class="rfq04-admin-filters">
+        <label>Status <select name="status"><option value="">All</option>
+          <option>NEW</option><option>NEEDS_IDENTIFICATION</option><option>FAMILY_IDENTIFIED</option>
+          <option>AWAITING_INFORMATION</option><option>COMPATIBILITY_REVIEW</option><option>TECHNICAL_HOLD</option>
+          <option>READY_TO_QUOTE</option><option>QUOTED</option><option>FOLLOW_UP</option>
+          <option>WON</option><option>LOST</option><option>CLOSED</option></select></label>
+        <label>Urgency <select name="urgency"><option value="">All</option><option value="asap">ASAP</option><option value="one_week">Week</option><option value="one_month">Month</option><option value="planning">Planning</option></select></label>
+        <label>Category <select name="category"><option value="">All</option><option value="pto">PTO</option><option value="clutch">Clutch</option><option value="component">Component</option><option value="marine">Marine</option><option value="unsure">Unknown</option></select></label>
+        <label>City <input name="city" /></label><label>Source <input name="source" /></label>
+        <label>From <input name="from" type="date" /></label><label>To <input name="to" type="date" /></label>
+        <button class="button" type="submit">Filter</button>
+      </form>
+      <div class="rfq04-admin-grid">
+        <div class="rfq04-panel" style="padding:1.2rem"><h3>Inquiries</h3>
+          <div id="admin-list" aria-live="polite"></div></div>
+        <section class="rfq04-panel" style="padding:1.4rem" aria-labelledby="admin-detail-heading">
+          <h3 id="admin-detail-heading">Select an inquiry</h3>
+          <div id="admin-detail"></div>
+          <form id="admin-actions" hidden>
+            <fieldset><legend>Qualification and follow-up</legend>
+              <label>New status<select name="status">
+                <option>NEEDS_IDENTIFICATION</option><option>FAMILY_IDENTIFIED</option>
+                <option>COMPATIBILITY_REVIEW</option><option>AWAITING_INFORMATION</option>
+                <option>TECHNICAL_HOLD</option><option>READY_TO_QUOTE</option><option>QUOTED</option>
+                <option>FOLLOW_UP</option><option>WON</option><option>LOST</option><option>CLOSED</option>
+              </select></label>
+              <label>Lost reason / change note <input name="reason" maxlength="1000" /></label>
+              <button class="button" name="action" value="status" type="submit">Update status</button>
+              <label>Internal note <textarea name="notes" maxlength="2000" rows="3"></textarea></label>
+              <button class="button" name="action" value="note" type="submit">Save private note</button>
+              <label>Next follow-up <input type="date" name="date" /></label>
+              <button class="button" name="action" value="followup" type="submit">Record follow-up</button>
+            </fieldset>
+            <fieldset><legend>Compatibility evidence (manual review only)</legend>
+              <label>Proposed part <input name="candidate_part" maxlength="100" /></label>
+              <label>Relationship type <input name="relationship_type" value="POSSIBLE_COMPATIBILITY" maxlength="100" /></label>
+              <label>Evidence scope <select name="scope"><option value="Unverified">Unverified</option>
+                <option value="Family">Family</option><option value="Exact">Exact</option><option value="Exact-equipment">Exact equipment</option></select></label>
+              <label>Publication rule <select name="publish_rule"><option>Review</option><option>Hold</option><option>Family-only</option><option>Yes</option><option>No</option></select></label>
+              <label>Evidence URL <input name="source_url" type="url" /></label>
+              <label><input type="checkbox" name="verified" /> I personally verified exact evidence. Never check based on family association alone.</label>
+              <button class="button" name="action" value="review" type="submit">Record review</button>
+            </fieldset>
+            <fieldset><legend>Quotation details (only once ready)</legend>
+              <label>Quote reference <input name="reference" maxlength="100" /></label>
+              <label>Quote amount (CAD) <input name="amount" type="number" step="0.01" min="0" /></label>
+              <button class="button" name="action" value="quote" type="submit">Save quotation</button>
+            </fieldset>
+          </form>
+        </section>
+      </div>
+    </div>
+  </main>
+  <script>import "../../scripts/rfq-admin";</script>
+  <style>
+    .rfq04-admin input,.rfq04-admin select,.rfq04-admin textarea{display:block;width:100%;box-sizing:border-box;min-height:40px;padding:.55rem;margin:.35rem 0 1rem;border:1px solid #9eaaa8;border-radius:3px;background:white;color:#15252a}
+    .rfq04-admin label{display:block;font-size:.87rem;font-weight:600}
+    .rfq04-admin label input[type=checkbox]{width:auto;display:inline;min-height:0}
+    .rfq04-admin-filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem 1rem;margin:1.5rem 0}
+    .rfq04-admin-grid{display:grid;grid-template-columns:minmax(250px,1fr) minmax(0,2fr);gap:1.2rem}
+    #admin-list button{width:100%;display:block;border:0;border-bottom:1px solid #c5cfcb;padding:1rem;text-align:left;background:transparent;color:#21353c;cursor:pointer}
+    #admin-list button:hover,#admin-list button:focus{background:#e4eae4}
+    #admin-detail{overflow-wrap:anywhere}
+    #admin-detail dl{display:grid;grid-template-columns:160px 1fr;gap:.5rem}
+    #admin-detail dt{font-weight:650}
+    #admin-actions fieldset{border:1px solid #c7d0c8;padding:1rem;margin-top:1.5rem}
+    #admin-actions legend{font-weight:700}
+    #admin-actions button{margin:0 0 1rem}
+    @media(max-width:900px){.rfq04-admin-grid{grid-template-columns:1fr}.rfq04-admin-filters{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:550px){.rfq04-admin-filters{grid-template-columns:1fr}#admin-detail dl{grid-template-columns:1fr}}
+  </style>
+</BaseLayout>

@@ -1,5 +1,10 @@
-import { readdir, readFile } from "node:fs/promises";
-const dist = new URL("../dist/", import.meta.url);
+import { readdir, readFile, access } from "node:fs/promises";
+const roots=["../dist/client/","../.vercel/output/static/","../dist/"];
+let dist=new URL(roots[roots.length-1],import.meta.url);
+for(const root of roots){
+ const testRoot=new URL(root,import.meta.url);
+ try{await access(new URL("robots.txt",testRoot));dist=testRoot;break;}catch{}
+}
 const errors = [];
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes:true });

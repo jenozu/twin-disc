@@ -1,0 +1,11 @@
+# SEO-04 privacy/security release gates
+- Supabase removed from active code. Server-only secrets: \`RFQ_BACKEND_SHARED_TOKEN\` (Vercel) matches \`BACKEND_SHARED_TOKEN\` (VPS); \`RFQ_RATE_SALT\`, DB passwords and SMTP credentials exist only on VPS. No credentials in repository.
+- Site uses Vercel HTTPS same-origin Astro proxy and no wildcard CORS. Server token authenticates Vercel-to-VPS hop. Do not blindly accept arbitrary client IP headers. Secure HttpOnly SameSite=Lax 8-hour database-hashed sessions with active-account checks, CSRF token for administrative mutations, Argon2id credentials, repeated-failure login limit, revocable logout.
+- Input and uploaded files limited and validated server-side. Files stored outside any web root with 0600 mode and UUID-based paths; downloads require staff session and set \`application/octet-stream\`, \`attachment\`, \`nosniff\`, no-store. No direct public file URL.
+- Signatures only are not malware scanning. Before production decide whether to disable PDFs, add antivirus scanning or accept explicit staff handling risk. Never automatically render untrusted PDF inline.
+- Inquiry privacy acknowledgment required; optional marketing consent separate and unchecked by default. A privacy notice with contact, purposes, retention, access/correction/deletion mechanism, cross-border processors and complaint contact must be approved before real customer collection.
+- PIPEDA compliance requires operational safeguards, not merely schema. CRTC/CASL marketing obligations may include identifying information, consent proof and unsubscribe mechanism. No marketing sends implemented in this phase.
+- Owner chooses retention schedule and backup policy; schema deletion cascades DO NOT delete files. Add a controlled two-phase deletion and offsite backup procedure before launch. Access logs must avoid serials, documents and PII.
+- SMTP outbox sends no contact fields or attachments.
+- Existing npm audit from prior preview reported critical/high advisories in Astro 5 and Vercel adapter. Dependency remediation should be coordinated with SEO-03 before production.
+- Existing VPS reverse-proxy/firewall/Docker infrastructure has NOT been inspected. No VPS changes authorized, no ports/DNS modified and no production rollout.

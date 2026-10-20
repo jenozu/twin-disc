@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/rfq-04.css";
+const faqs=[
+ {q:"What if I cannot find my Twin Disc model number?",a:"Submit the equipment make, equipment model, engine details or a safe photograph if available. The model number, serial number and BOM are optional."},
+ {q:"Can you confirm a replacement from a model family alone?",a:"No. A model-family association is not confirmation of the exact configuration. Fitment and replacement claims require separate evidence review."},
+ {q:"Can I request a discontinued or older clutch part?",a:"Yes. Identify the component with any information available. The inquiry may require additional technical review; availability and supersession are not guaranteed."},
+ {q:"Do I need to operate the machine for photos?",a:"No. Do not remove guards, dismantle equipment, start machinery or expose yourself to unsafe conditions to obtain photos."},
+ {q:"Does submitting confirm stock or a quote?",a:"No. Submission begins an identification and quotation inquiry. Compatibility, supply and commercial terms must be verified separately."}
+];
+---
+<BaseLayout
+ title="Twin Disc PTO & Clutch Replacement Identification | Ontario"
+ description="Don't know your Twin Disc PTO or clutch model? Request replacement part identification and a quotation inquiry. Serial and BOM information optional."
+ robots="noindex, follow"
+>
+  <section class="page-masthead">
+    <div class="shell masthead-grid">
+      <div>
+        <p class="kicker">INDUSTRIAL PARTS / ONTARIO</p>
+        <h1>Need a Twin Disc PTO or Clutch Replacement?</h1>
+      </div>
+      <div>
+        <p class="masthead-copy">Don't know your model or BOM number? Tell us what equipment you have and what needs replacing. Include any identification details you know and optional safe photographs.</p>
+        <div class="rfq04-herolinks">
+          <a href="/rfq" class="button">Find My Replacement</a>
+          <a href="/rfq?source=replacement-page" class="rfq04-link">Request a Parts Quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="shell rfq04-content">
+    <section>
+      <p class="kicker">THE PROCESS</p><h2>Start with the equipment, not a perfect part number.</h2>
+      <div class="rfq04-cards">
+        <article><span>01</span><h3>Explain what needs replacing</h3><p>A complete PTO, clutch, component, drive ring or marine gear. Include the equipment condition and timeline.</p></article>
+        <article><span>02</span><h3>Share what you can identify</h3><p>Model, serial, BOM, OEM number, equipment and engine details are useful, but optional.</p></article>
+        <article><span>03</span><h3>Receive a review reference</h3><p>Once a configured RFQ service stores your request, you receive a reference for follow-up. Technical fitment is not automatically confirmed.</p></article>
+      </div>
+    </section>
+    <section class="rfq04-content-section">
+      <h2>Useful details for hard-to-identify industrial equipment</h2>
+      <p>Power take-offs and industrial clutches are used in driven-equipment applications such as processing machinery, pumps and specialty equipment. An assembly's exact configuration can depend on its nameplate, engine and drive arrangement.</p>
+      <p>For difficult or legacy inquiries, a machine manufacturer, machine model, engine maker, previously recorded part number, maintenance record or parts manual can be more useful than a guess at a model family. Compatibility is never inferred from a family name alone.</p>
+      <h3>Safe identification photographs</h3>
+      <p>If a nameplate is already visible and the machine is safely secured, a clear picture may be helpful. Never operate machinery, remove a safety guard, or dismantle an assembly to take a picture.</p>
+      <p><strong>Ontario inquiries:</strong> Provide your city or town so the team can review the request in the context of your location. This page does not promise emergency dispatch, field repair, a specific service territory, stock or authorization by Twin Disc.</p>
+      <a href="/rfq" class="button">Begin Three-Step Inquiry</a>
+    </section>
+    <section class="rfq04-content-section">
+      <h2>Frequently asked questions</h2>
+      {faqs.map(f=><details class="rfq04-faq"><summary>{f.q}</summary><p>{f.a}</p></details>)}
+    </section>
+  </div>
+</BaseLayout>
