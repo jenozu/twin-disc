@@ -1,0 +1,91 @@
+name: Twin Disc RFQ VPS staging diagnostics
+
+on:
+  workflow_dispatch:
+    inputs:
+      probe:
+        description: "Read-only staging probe"
+        required: true
+        default: status
+        type: choice
+        options: [status, rfq-check]
+  # A manually committed run-request.txt permits testing on this feature branch
+  # BEFORE this workflow reaches GitHub's default branch.
+  push:
+    branches: [feat/twd-rfq-vps-actions, feat/twd-seo-phase-04]
+    paths: [ops/vps/run-request.txt]
+  pull_request:
+    paths:
+      - "ops/vps/**"
+      - ".github/workflows/twd-rfq-vps-diagnostics.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: twd-rfq-vps-diagnostics
+  cancel-in-progress: false
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check shell scripts
+        run: |
+          for script in ops/vps/twd-rfq-diagnostics.sh ops/vps/twd-rfq-ssh-entry.sh ops/vps/setup-readonly-ssh.sh; do
+            bash -n "$script"
+          done
+
+  staging:
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select allowlisted command
+        id: probe
+        env:
+          DISPATCH_PROBE: ${{ inputs.probe }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            PROBE="$DISPATCH_PROBE"
+          else
+            [[ -f ops/vps/run-request.txt ]] || exit 31
+            PROBE="$(tr -d '\r\n' < ops/vps/run-request.txt)"
+          fi
+          case "$PROBE" in status|rfq-check) ;; *) echo "Invalid probe"; exit 32 ;; esac
+          echo "probe=$PROBE" >> "$GITHUB_OUTPUT"
+
+      - name: SSH to restricted Twin Disc staging probe
+        env:
+          TWD_VPS_HOST: ${{ secrets.TWD_VPS_HOST }}
+          TWD_VPS_USER: ${{ secrets.TWD_VPS_USER }}
+          TWD_VPS_SSH_KEY: ${{ secrets.TWD_VPS_SSH_KEY }}
+          TWD_VPS_KNOWN_HOSTS: ${{ secrets.TWD_VPS_KNOWN_HOSTS }}
+          PROBE: ${{ steps.probe.outputs.probe }}
+        run: |
+          set -euo pipefail
+          [[ "$TWD_VPS_HOST" == "2.25.108.3" ]] || { echo "Unexpected host"; exit 41; }
+          [[ "$TWD_VPS_USER" == "twdrfqci" ]] || { echo "Unexpected user"; exit 42; }
+          [[ -n "$TWD_VPS_SSH_KEY" && -n "$TWD_VPS_KNOWN_HOSTS" ]] || { echo "SSH secrets not yet configured"; exit 43; }
+          umask 077
+          mkdir -p "$HOME/.ssh"
+          printf '%s\n' "$TWD_VPS_SSH_KEY" > "$HOME/.ssh/twd_rfq_ci"
+          printf '%s\n' "$TWD_VPS_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/twd_rfq_ci" "$HOME/.ssh/known_hosts"
+          trap 'rm -f "$HOME/.ssh/twd_rfq_ci" "$HOME/.ssh/known_hosts"' EXIT
+          ssh-keygen -y -f "$HOME/.ssh/twd_rfq_ci" >/dev/null
+          ssh-keygen -F "$TWD_VPS_HOST" -f "$HOME/.ssh/known_hosts" >/dev/null
+          ssh -T -p 22 -i "$HOME/.ssh/twd_rfq_ci" \
+            -o IdentitiesOnly=yes \
+            -o BatchMode=yes \
+            -o PasswordAuthentication=no \
+            -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile="$HOME/.ssh/known_hosts" \
+            -o ConnectTimeout=12 \
+            "$TWD_VPS_USER@$TWD_VPS_HOST" "$PROBE"
