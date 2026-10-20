@@ -63,3 +63,15 @@ test("frontend references only self-hosted proxy, no Supabase",()=>{
  assert.match(admin,/credentials:"same-origin"/);
  assert.match(wizard,/rfq_submit_success/);
 });
+
+test("Vercel preview POSTs retain Astro CSRF checks with verified forwarded hosts",()=>{
+ const astro=readFileSync(new URL("../astro.config.mjs",import.meta.url),"utf8");
+ const gateway=readFileSync(new URL("../src/lib/rfq/gateway.ts",import.meta.url),"utf8");
+ const wizard=readFileSync(new URL("../src/scripts/rfq-wizard.ts",import.meta.url),"utf8");
+ assert.match(astro,/checkOrigin:\s*true/);
+ assert.match(astro,/allowedDomains:\s*\[/);
+ assert.match(astro,/hostname:\s*"\*\.vercel\.app"/);
+ assert.match(gateway,/ORIGIN_REJECTED/);
+ assert.match(gateway,/x-gateway-origin-verified/);
+ assert.match(wizard,/credentials:"same-origin"/);
+});
