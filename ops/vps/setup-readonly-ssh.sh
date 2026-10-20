@@ -58,7 +58,7 @@ fi
 chown "$ACCOUNT:$ACCOUNT" "$AUTH"
 chmod 600 "$AUTH"
 
-/bin/bash -n /usr/local/sbin/twd-rfq-diagnostics "$COMMAND"
+for script in /usr/local/sbin/twd-rfq-diagnostics "$COMMAND"; do /bin/bash -n "$script"; done
 echo "Restricted Twin Disc SSH runner provisioned."
 echo "ACCOUNT=$ACCOUNT"
 echo "PRIVATE_KEY_FILE=$KEY (do NOT share in chat)"
