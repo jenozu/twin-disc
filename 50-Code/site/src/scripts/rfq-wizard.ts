@@ -96,6 +96,8 @@ if(form){
     for(const file of [...(attachments.files||[])])body.append("attachments",file,file.name);
     try{
       const response=await fetch("/api/rfq",{method:"POST",body,headers:{"accept":"application/json"},credentials:"same-origin"});
+      if(!response.headers.get("content-type")?.toLowerCase().includes("application/json"))
+        throw new Error("The inquiry service returned HTTP "+response.status+". No success has been confirmed; please retry later.");
       const result=await response.json();
       if(!response.ok||!result.accepted){
         if(result.fields){const first=Object.values(result.fields)[0];throw new Error(String(first));}
